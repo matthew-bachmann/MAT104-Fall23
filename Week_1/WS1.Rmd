@@ -2,7 +2,7 @@
 title: "Worksheet 1 : Introduction to R"
 output:
   html_document:
-    css: /Users/matthewbachmann/MAT104_Fall23/MAT104_style.css
+    css: MAT104-Fall23/style.css
     toc: yes
     toc_float: yes
     theme: cosmo
@@ -100,13 +100,13 @@ head(gapminder)
 
 Now let's load the data from last class. If you are using jupyter, the file should already be in your file manager. If so, right click to import the data. Otherwise, you will need to download it from Moodle and run the following:
 
-```{r eval = FALSE}
-questionnaire <- read.csv(file = "questionnaire_104.csv")
+```{r eval = TRUE}
+questionnaire <- read.csv(file = "MAT104-Fall23/Week_1/questionnaire_104.csv")
 questionnaire
 ```
 
 To view all the responses for only one question we use <code> \$ <\code> 
-```{r eval = FALSE}
+```{r eval = TRUE}
 questionnaire$pop.tart
 ```
 
@@ -114,7 +114,7 @@ questionnaire$pop.tart
 
 Now we will plot some data from the file:
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_point()
 ```
 
