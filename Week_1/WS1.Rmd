@@ -2,7 +2,7 @@
 title: "Worksheet 1 : Introduction to R"
 output:
   html_document:
-    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/style.css
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/style.css
     toc: yes
     toc_float: yes
     theme: cosmo
@@ -90,23 +90,23 @@ The Tidyverse packages share common philosophies and are designed to work togeth
 We can obtain data a number of ways. One way is to create data explicitly, we will learn more about that later. Another way is to load data from a library. Since we have already loaded the gapminder package, let's get some data from it.
 
   
-```{r eval = TRUE}
+```{r}
 view(gapminder)
 ```
 
-```{r eval = TRUE, include = TRUE , echo = TRUE}
+```{r}
 head(gapminder)
 ```
 
 Now let's load the data from last class. If you are using jupyter, the file should already be in your file manager. If so, right click to import the data. Otherwise, you will need to download it from Moodle and run the following:
 
-```{r eval = TRUE}
-questionnaire <- read.csv(file = "/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week_1/questionnaire_104.csv")
+```{r}
+questionnaire <- read.csv(file = "/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/questionnaire_104.csv")
 questionnaire
 ```
 
 To view all the responses for only one question we use \$
-```{r eval = TRUE}
+```{r}
 questionnaire$pop.tart
 ```
 
@@ -114,7 +114,7 @@ questionnaire$pop.tart
 
 Now we will plot some data from the file:
 
-```{r eval = TRUE}
+```{r}
 ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_point()
 ```
 
@@ -125,13 +125,13 @@ We use the <code>ggplot()</code> function to build plots. You should see the plo
 -Finally, you use another layer, separated by a <code>+</code> to specify the geometric object for the plot. Since we want points, we use <code>geom_point()</code>.
 For instance, if you wanted to visualize the above plot using a line graph, you would replace <code>geom_point()</code> with <code>geom_line()</code>.
 
-```{r eval = TRUE}
+```{r}
 ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_line()
 ```
 
 You might wonder how you are supposed to know the syntax for the <code>ggplot</code> function. Thankfully, R documents all of its functions extensively. To learn what a function does and its arguments that are available to you, just type in a question mark followed by the name of the function that you’re interested in. Try the following in your console:
 
-```{r eval = TRUE}
+```{r}
 ?ggplot
 ```
 
@@ -150,7 +150,13 @@ In this activity you will practice the skills we learned today with a different 
 ##Type your code here##
 ```
 
-2. Now install *and* load the package palmerpenguins
+2. *Install* the package palmerpenguins
+
+```{r message=FALSE, eval=FALSE}
+##Type your code here##
+```
+
+2. Now *load* the package palmerpenguins
 
 ```{r}
 ##Type your code here##
@@ -164,7 +170,7 @@ In this activity you will practice the skills we learned today with a different 
 
 4. The package comes with a data table called penguins. The package tidyverse comes with a function <code>glimpse()</code> that lets you take a peek at the data. Add code that will only display the column of data corresponding to bill_depth_mm.
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 glimpse(penguins)
 ##Add code here##
 ```
