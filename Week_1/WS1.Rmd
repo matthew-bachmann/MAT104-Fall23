@@ -2,7 +2,7 @@
 title: "Worksheet 1 : Introduction to R"
 output:
   html_document:
-    css: MAT104-Fall23/style.css
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/style.css
     toc: yes
     toc_float: yes
     theme: cosmo
@@ -19,7 +19,7 @@ editor_options:
 library(knitr)
 library(datasets)
 library(tidyverse)
-knitr::opts_chunk$set(eval = TRUE, results = FALSE)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
 ```
 
 ---
@@ -94,18 +94,18 @@ We can obtain data a number of ways. One way is to create data explicitly, we wi
 view(gapminder)
 ```
 
-```{r eval = TRUE}
+```{r eval = TRUE, include = TRUE , echo = TRUE}
 head(gapminder)
 ```
 
 Now let's load the data from last class. If you are using jupyter, the file should already be in your file manager. If so, right click to import the data. Otherwise, you will need to download it from Moodle and run the following:
 
 ```{r eval = TRUE}
-questionnaire <- read.csv(file = "MAT104-Fall23/Week_1/questionnaire_104.csv")
+questionnaire <- read.csv(file = "/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week_1/questionnaire_104.csv")
 questionnaire
 ```
 
-To view all the responses for only one question we use <code> \$ <\code> 
+To view all the responses for only one question we use \$
 ```{r eval = TRUE}
 questionnaire$pop.tart
 ```
@@ -118,119 +118,64 @@ Now we will plot some data from the file:
 ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_point()
 ```
 
+We use the <code>ggplot()</code> function to build plots. You should see the plot appear under the Plots tab of the lower right panel of RStudio. The code <code>ggplot()</code> follows a pattern:
 
-## Class Activity
+-The first argument is always the dataset
+-Next, you provide the variables from the dataset to be assigned to <code>aes</code>thetic elements of the plot, e.g. the x and the y axes.
+-Finally, you use another layer, separated by a <code>+</code> to specify the geometric object for the plot. Since we want points, we use <code>geom_point()</code>.
+For instance, if you wanted to visualize the above plot using a line graph, you would replace <code>geom_point()</code> with <code>geom_line()</code>.
 
-We are going to practice finding, loading, and dealing with messy data.
+```{r eval = TRUE}
+ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_line()
+```
 
-- About the data
-  + United Nations Office for the Coordination of Humanitarian Affairs
-  + Humanitarian Data Exchange (HDX)
-  + [https://data.humdata.org](https://data.humdata.org)
-  + [https://data.humdata.org/about/terms](https://data.humdata.org/about/terms)
-  + What are the benefits of "open data?"
-  
+You might wonder how you are supposed to know the syntax for the <code>ggplot</code> function. Thankfully, R documents all of its functions extensively. To learn what a function does and its arguments that are available to you, just type in a question mark followed by the name of the function that you’re interested in. Try the following in your console:
+
+```{r eval = TRUE}
+?ggplot
+```
+
+
 ---
 
-### Getting the Data
+## Class Activity/ Homework
 
-- Go to: [https://data.humdata.org/dataset](https://data.humdata.org/dataset)
-  + Search for "Caribbean"
-  + Select: "Caribbean Hurricanes: Regional Who is Doing What Where (3W)"
-  + Download the data
-  + Load the `tidyverse` package
-  
 ---
 
-### Utilize This Code with a Partner
+In this activity you will practice the skills we learned today with a different dataset.
 
-```{r eval = FALSE}
-#Figure out what working directory R is currently utilizing
-getwd()
+1. Let's begin by using R as a calculator: calculate 7 to the fifth power
+
+```{r}
+##Type your code here##
 ```
 
-```{r eval = FALSE}
-#Where did you download the data (i.e., desktop, download folder, etc.)
-#Do you need to change your working directory to ensure that you can load the data?
-setwd("insert your working directory here")
+2. Now install *and* load the package palmerpenguins
+
+```{r}
+##Type your code here##
 ```
 
-```{r eval = FALSE}
-#Once you have set your working directory, make sure to read the data into R
-#I just changed the name of the file to "caribbean_hurricanes" feel free to name the data set whatever you want
-carib <- read_csv("caribbean_hurricanes.csv")
+3. Packages have documentation just as functions did. Use the command that displays the documentation for the palmerpenguin package. 
+
+```{r}
+##Type your code here##
 ```
 
-```{r eval = FALSE}
-glimpse(carib)
-```
-
-1. What is going on with the first row? Let's remove it.
+4. The package comes with a data table called penguins. The package tidyverse comes with a function <code>glimpse()</code> that lets you take a peek at the data. Add code that will only display the column of data corresponding to bill_depth_mm.
 
 ```{r eval = FALSE}
-#We are going to delete the first row of the data
-#carib[rownumber, columnnumber]
-carib <- carib[-1, ]
-#
-#Check to see if it worked
-View(carib)
+glimpse(penguins)
+##Add code here##
 ```
 
-Do we notice any issues with the data set?
+5. Now plot the data where the x-axis is <code>bill_length_mm</code> and the y-axis is <code>flipper_length_mm</code>
 
 ```{r eval = FALSE}
-View(carib)
+##Type your code here##
 ```
 
-The first thing you should notice is that most of the variable types are still characters. Additionally,
-most of the variable names are too long and complicated.
-
-```{r eval = FALSE}
-class(carib$`Island Name`)
-```
-
-2. What does R mean when it says a variable (in this case the column for "Island Names") is a character class?
-
-3. What do you notice about the column "Island Names"?
-
-```{r eval = FALSE}
-carib$`Island Name`
-```
-
-4. What is the code below showing you?
-```{r eval = FALSE}
-carib$`Island Name`[1:5]
-```
-
-5. Which island names are represented in this dataset?
-```{r eval = FALSE}
-unique(carib$`Island Name`)
-```
-
-Let's create a plot 
-```{r eval = FALSE}
-ggplot(carib, aes(x = `Input Date (yyyy/mm/dd)`)) + 
-  geom_bar() + 
-  coord_flip()
-```
-
-Reformat the date variable so that they appear as dates with a consistent format
-```{r eval = FALSE}
-install.packages("lubridate")
-library(lubridate)
-
-carib$`Input Date (yyyy/mm/dd)` <- ymd(carib$`Input Date (yyyy/mm/dd)`)
-#
-#Now we are going to create a plot of dates
-ggplot(carib, aes(x = `Input Date (yyyy/mm/dd)`)) + geom_bar() + coord_flip()
-```
-
-6. Rename the "Area of Expertise" and "Assessment" variables
-```{r eval = FALSE}
-colnames(dataFrame)[colnames(dataFrame) == "oldName"] <- "newName"
-# OR
-rename(dataFrame, NewName = OldName)
-```
+When you have finished, Knit your project as an html document and submit the html document in Moodle with the following file name: "yourlastname_WS1.html"
 
 
 
