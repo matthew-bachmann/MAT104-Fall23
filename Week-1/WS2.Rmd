@@ -1,0 +1,171 @@
+---
+title: "Worksheet 2 : Data Matrices"
+output:
+  html_document:
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(datasets)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+- Variable types
+- Associations
+
+---
+
+## Variable Types
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/variables.png)
+---
+
+### Variable Types: Numerical
+Numerical data is data involving numbers where it makes sense to add, multiply, or take the average.
+
+- Continuous
+  + Regular numbers that can take on a range of infinitely many values
+  + Think of all the decimal numbers between $0$ and $1$, there are no gaps
+  + Common examples: income, duration, percentage, length
+
+- Discrete
+  + Still numeric, but representing a countable options where there are gaps
+  + Think of the numbers $0$, $1$, $2$, ...
+  + Common examples: graduation year, number of siblings
+  
+Age is a good example for understanding the difference between continuous and discrete variables. Age is technically continuous because any person is some number of seconds or milliseconds, or nanoseconds... old. However, age is often treated like a discrete variable since we usually just say the year. 
+  
+It is not unusual to be able to interpret a variable as either discrete or continuous, we often need to determine which is most appropriate.
+
+Just because data involves numbers *does not* mean it is numerical data. Take, for example, a phone number. Adding two phone numbers doesn't necessarily produce something that is a phone number. What would the "average" phone number even mean and why would you want to know it? Phone numbers are categorical data.a
+
+### Variable Types: Categorical
+
+- Nominal
+  + No inherent order
+  + Common examples: gender, color, ethnicity
+  
+- Ordinal
+  + Order matters
+  + Common examples: high -> medium -> low, Davidson Class (First year, second year, etc.)
+
+These distinctions are important because we will need to use different data visualizations, build different statistical models, and perform different statistical tests depending on the type of data we are working with.
+
+If not already loaded to your environment, add the questionnaire csv from the first day now. Recall, this is done with the following command (once you change the file path to include your workding directory <code>getwd()</code>):
+
+```{r}
+questionnaire <- read.csv("/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/questionnaire_104.csv")
+```
+
+1. How many variables are there? How many observations? What is the number of grapes Matthew thinks he can fit in his mouth?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+2. For each variable, identify what type it is: numerical (discrete or continuous) or categorical (nominal or ordinal)?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+3. How many people in the questionnaire dataset think a pop-tart is a type of ravioli and imagined a red car?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+Consider the plot:
+
+```{r}
+ggplot(questionnaire, aes(x=pop_tart, y=car_color))+geom_point()
+```
+
+4. What are some the shortcomings with how the data from the questionnaire is presented in the graph above?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+We need to take care to represent our data honestly and effectively. That is, we should not use graphs to hide data when it doesn't support our narrative (more on this when we talk about biases). Furthermore, effectively presenting our data means communicating information in a clear and concise way. Graphs should make the data *easier* to understand and communicate. All of these are reasons why we need to understand what type of data we are working with and choose our graphical representations accordingly.
+  
+---
+
+## Association
+
+First let's make sure the package palmerpenguins is loaded
+```{r}
+library(palmerpenguins)
+```
+
+Let's look at the plot from the last worksheet:
+
+```{r}
+ggplot(penguins, aes(x=bill_length_mm,flipper_length_mm)) + geom_point()
+```
+
+5. Do the variables seem to be associated? If so, explain the relationship i.e. (as bill length gets bigger/smaller flipper length gets bigger/smaller). Is this a positive or negative association?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+Now let's look at another plot
+```{r}
+ggplot(penguins, aes(x = bill_length_mm , y = bill_depth_mm)) + geom_point()
+```
+
+6. Do the variables seem to be associated? If so, explain the relationship i.e. (as bill length gets bigger/smaller bill depth gets bigger/smaller). Is this a positive or negative association?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+When you have finished, Knit your project as an html document and submit the html document in Moodle with the following file name: "yourlastname_WS1.html"
+
+
+
+
+
+
+
+
