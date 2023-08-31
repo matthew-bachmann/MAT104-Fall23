@@ -38,21 +38,28 @@ A programming language is just the language for telling the computer what to do.
 
 ## RStudio Interface
 
-Launch RStudio either from jupyter.davidson.edu or locally from your laptop. Once it has booted up you should see an interface with a panel on the left and two panels on the right. 
+Launch RStudio from jupyter.davidson.edu. Once it has booted up you should see an interface with a panel on the left and two panels on the right. 
 
 The panel on the left is the most important one; this is where R is working. The <code> > </code> indicates the line you are on with R ready to run. Test that R is working by running the command <code>3+5</code>. R can be used as a calculator. Now try to run <code>3+*5 </code> and notice that R tells you that it doesn't understand what you're saying to it. Errors often contain information about how to fix the error. This panel is called the console, we will explore more of what we can do here later. 
 
 If we execute code line by line, as we did in the last example, our work is not being saved. You will often want to re-run large chunks of your code and it would be a large waste of time to retype all of your commands every time you want to re-run code. Therefore, we should always be running our code in an R Markdown file. In the very top left of R Studio find the icon that is a sheet of paper with a green plus symbol on it and select a new R Markdown file and give it the name Testing. Once this has been opened you should have a new panel in the top left and the console you were using before is in the bottom left. Most the work we do from now on will be in an R Markdown file, not in the console, let's see how it works.
 
-Let's delete everything below the part that says <code> \#\# R Markdown </code> (you can read this later by opening a new R Markdown file the same way as before). Now in the top right of the R Markdown panel is a green C with a plus over it. Click that and select R. This creates a little code area that will run R code. Try typing <code> 3+5 </code> inbetween the single quotes and the press the play button.
+Let's delete everything below the part that says <code> \#\# R Markdown </code> (you can read this later by opening a new R Markdown file the same way as before). Now in the top right of the R Markdown panel is a green C with a plus over it. Click that and select R. This creates a little code area that will run R code. Try typing <code> 3+5 </code> in between the single quotes and the press the play button.
+
 ```{r}
 3+5
 ```
+
 If you look down to your console you will see that the code ran there. You can press play again to run the code again without having to retype anything. This is a great tool to avoid errors in your code because you can see how each piece is working individually. Doing your work in an R Markdown file is a best practice that you should adopt and will be required for the assignment submissions.
 
-The panel in the upper right has information about data you have stored in your computer. Try to run the following command <code>a<-3+5</code> by creating another R chunk. On the next line (still inside the same chunk type) <code> a </code>. You have told your computer to remember the calculation $3+5$ and store the sum in the variable <code> a </code>. Any time you want to access the sum again you can just type the name you gave it. Also notice that the value of the variable <code> a </code> is shown in the upper right panel.
+The panel in the upper right has information about data you have stored in your computer. 
 
-In the lower right panel has a lot of useful information. You can see the file manager where you can load data into R and download updated files if you are using jupyter. This is also where any plots you make will be displayed. Another useful feature is that the current packages you have loaded will also be displayed here. 
+1. Try to run the following command <code>a<-3+5</code> by creating another R chunk. On the next line (still inside the same chunk) type <code> a </code>.
+
+
+You have told your computer to remember the calculation $3+5$ and store the sum in the variable <code> a </code>. Any time you want to access the sum again you can just type the name you gave it. Also notice that the value of the variable <code> a </code> is shown in the upper right panel.
+
+In the lower right panel has a lot of useful information. You can see the file manager where you can load data into R. This is also where any plots you make will be displayed. Another useful feature is that the current packages you have loaded will also be displayed here. 
 
 ### R Packages
 
@@ -62,16 +69,14 @@ R is an open-source programming language, meaning that users can contribute pack
 - **openintro**: for data and custom functions with the OpenIntro resources
 - **gapminder**: for easy access to an excerpt of the Gapminder data on life expectancy, GDP per capita, and population by country
 
-If these packages are not already available in your R environment, install them by typing the following lines of code into the console of your RStudio session, pressing the enter/return key after each one. Note that you can check to see which packages (and which versions) are installed by inspecting the Packages tab in the lower right panel of RStudio.
+Note that you can check to see which packages (and which versions) are installed by inspecting the Packages tab in the lower right panel of RStudio. Notice that tiduverse and openintro are already installed but we need to install gapminder.
 
 ```{r install-packages, message= FALSE,  eval=FALSE}
-install.packages("tidyverse")
-install.packages("openintro")
 install.packages("gapminder")
 ```
 
 
-You may need to select a server from which to download; any of them will work. Next, you need to load these packages in your working environment. We do this with the <code>library</code> function. Run the following lines in your console.
+Next, you need to load these packages in your working environment. We do this with the <code>library</code> function. Run the following lines in your console.
 
 
 ```{r load-packages, message=FALSE}
@@ -83,31 +88,33 @@ library(gapminder)
 
 You only need to *install* packages once, but you need to *load* them each time you relaunch RStudio.
 
-The Tidyverse packages share common philosophies and are designed to work together. You can find more about the packages in the tidyverse at [https://www.tidyverse.org](https://www.tidyverse.org).
-
 ## Data Basics
 
 We can obtain data a number of ways. One way is to create data explicitly, we will learn more about that later. Another way is to load data from a library. Since we have already loaded the gapminder package, let's get some data from it.
 
-  
 ```{r}
 view(gapminder)
 ```
+
+That's a lot of data to process at once. Sometimes you just want to see a couple rows of data so that you get a sense of what columns exist. We can accomplish that with the <code>head</code> function:
 
 ```{r}
 head(gapminder)
 ```
 
-Now let's load the data from last class. If you are using jupyter, the file should already be in your file manager. If so, right click to import the data. Otherwise, you will need to download it from Moodle and run the following:
+A third way to view some of the data is to use the <code>glimpse()</code> function as part of the tidyverse package. We will use this in a bit.
+
+Now let's load the data from Monday's class. The file should already be in your file manager, right click to import the data and save it as questionnaire. This next chunk of code is another way to load the data in. You can choose either way. 
 
 ```{r}
 questionnaire <- read.csv(file = "/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/questionnaire_104.csv")
 questionnaire
 ```
 
-To view all the responses for only one question we use \$
+To isolate a single column of data we will use \$  to specify the column we want from our data table.
+
 ```{r}
-questionnaire$pop.tart
+questionnaire$pop_tart
 ```
 
 ### Plotting data
@@ -120,16 +127,16 @@ ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_po
 
 We use the <code>ggplot()</code> function to build plots. You should see the plot appear under the Plots tab of the lower right panel of RStudio. The code <code>ggplot()</code> follows a pattern:
 
--The first argument is always the dataset
--Next, you provide the variables from the dataset to be assigned to <code>aes</code>thetic elements of the plot, e.g. the x and the y axes.
--Finally, you use another layer, separated by a <code>+</code> to specify the geometric object for the plot. Since we want points, we use <code>geom_point()</code>.
+- The first argument is always the dataset
+- Next, you provide the variables from the dataset to be assigned to <code>aes</code>thetic elements of the plot, e.g. the x and the y axes.
+- Finally, you use another layer, separated by a <code>+</code> to specify the geometric object for the plot. Since we want points, we use <code>geom_point()</code>.
 For instance, if you wanted to visualize the above plot using a line graph, you would replace <code>geom_point()</code> with <code>geom_line()</code>.
 
 ```{r}
 ggplot(data = questionnaire, mapping = aes(x = num_grapes, y = dream)) + geom_line()
 ```
 
-You might wonder how you are supposed to know the syntax for the <code>ggplot</code> function. Thankfully, R documents all of its functions extensively. To learn what a function does and its arguments that are available to you, just type in a question mark followed by the name of the function that you’re interested in. Try the following in your console:
+You might wonder how you are supposed to know the syntax for the <code>ggplot</code> function. Thankfully, R has extensive documentation. To learn what a function does and its arguments that are available to you, just type in a question mark followed by the name of the function that you’re interested in. Try the following in your console:
 
 ```{r}
 ?ggplot
@@ -144,47 +151,44 @@ You might wonder how you are supposed to know the syntax for the <code>ggplot</c
 
 In this activity you will practice the skills we learned today with a different dataset.
 
-1. Let's begin by using R as a calculator: calculate 7 to the fifth power
+2. Let's begin by using R as a calculator: calculate 7 to the fifth power
 
 ```{r}
 ##Type your code here##
 ```
 
-2. *Install* the package palmerpenguins
+3. *Install* the package palmerpenguins
 
 ```{r message=FALSE, eval=FALSE}
 ##Type your code here##
 ```
 
-2. Now *load* the package palmerpenguins
+4. Now *load* the package palmerpenguins
 
 ```{r}
 ##Type your code here##
 ```
 
-3. Packages have documentation just as functions did. Use the command that displays the documentation for the palmerpenguin package. 
+5. Packages have documentation just as functions did. Use the command that displays the documentation for the palmerpenguin package. 
 
 ```{r}
 ##Type your code here##
 ```
 
-4. The package comes with a data table called penguins. The package tidyverse comes with a function <code>glimpse()</code> that lets you take a peek at the data. Add code that will only display the column of data corresponding to bill_depth_mm.
+6. The package comes with a data table called penguins. The package tidyverse comes with a function <code>glimpse()</code> that lets you take a peek at the data. Add code that will only display the column of data corresponding to bill_depth_mm.
 
 ```{r eval=FALSE}
 glimpse(penguins)
 ##Add code here##
 ```
 
-5. Now plot the data where the x-axis is <code>bill_length_mm</code> and the y-axis is <code>flipper_length_mm</code>
+7. Now plot the data where the x-axis is <code>bill_length_mm</code> and the y-axis is <code>flipper_length_mm</code>
 
-```{r eval = FALSE}
+```{r}
 ##Type your code here##
 ```
 
 When you have finished, Knit your project as an html document and submit the html document in Moodle with the following file name: "yourlastname_WS1.html"
-
-
-
 
 
 
