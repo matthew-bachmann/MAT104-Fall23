@@ -1398,6 +1398,12 @@ padding: 20px;
 margin-bottom: 20px;
 font-size: 10pt;
 }
+div#answer {
+background-color: rgba(193, 225, 193, 0.2);
+padding: 20px;
+margin-bottom: 20px;
+font-size: 10pt;
+}
 div#template {
 margin-top: 30px;
 margin-bottom: 30px;
@@ -1414,7 +1420,8 @@ border:1px solid #4C721D;
 padding: 10px 10px;
 background-color: rgba(76, 114, 29, 0.2);
 border-radius: 5px;
-}</style>
+}
+</style>
 
 
 
@@ -1618,21 +1625,24 @@ explore more of what we can do here later.</p>
 work is not being saved. You will often want to re-run large chunks of
 your code and it would be a large waste of time to retype all of your
 commands every time you want to re-run code. Therefore, we should always
-be running our code in an R Markdown file. In the very top left of R
-Studio find the icon that is a sheet of paper with a green plus symbol
-on it and select a new R Markdown file and give it the name Testing.
-Once this has been opened you should have a new panel in the top left
-and the console you were using before is in the bottom left. Most the
-work we do from now on will be in an R Markdown file, not in the
-console, let’s see how it works.</p>
-<p>Let’s delete everything below the part that says <code> ## R Markdown
-</code> (you can read this later by opening a new R Markdown file the
-same way as before). Now in the top right of the R Markdown panel is a
-green C with a plus over it. Click that and select R. This creates a
-little code area that will run R code. Try typing <code> 3+5 </code> in
-between the single quotes and the press the play button.</p>
-<pre class="r"><code>3+5</code></pre>
-<pre><code>## [1] 8</code></pre>
+be running our code in an R Markdown file.</p>
+<p>In the very top left of R Studio find the icon that is a sheet of
+paper with a green plus symbol on it. Once you select an R Markdown file
+you should have a new panel in the top left and the console you were
+using before is in the bottom left. Most the work we do from now on will
+be in an R Markdown file, not in the console, let’s see how it
+works.</p>
+<p>Let’s load the WS1.Rmd file that should be in your directory. Now in
+the top right of the R Markdown panel is a green C with a plus over it.
+Delete the text below that says “make a code chunk with 3+5 here” and in
+that space click the green C and select R. This creates a little code
+area that will run R code. Try typing <code> 3+5 </code> in between the
+single quotes and the press the play button.</p>
+<ol style="list-style-type: decimal">
+<li>Make an R code chunk below:</li>
+</ol>
+<div id="make-a-code-chunk-with-35-here" class="section level3">
+<h3>MAKE A CODE CHUNK WITH 3+5 HERE</h3>
 <p>If you look down to your console you will see that the code ran
 there. You can press play again to run the code again without having to
 retype anything. This is a great tool to avoid errors in your code
@@ -1641,11 +1651,14 @@ work in an R Markdown file is a best practice that you should adopt and
 will be required for the assignment submissions.</p>
 <p>The panel in the upper right has information about data you have
 stored in your computer.</p>
-<ol style="list-style-type: decimal">
+<ol start="2" style="list-style-type: decimal">
 <li>Try to run the following command <code>a&lt;-3+5</code> by creating
 another R chunk. On the next line (still inside the same chunk) type
 <code> a </code>.</li>
 </ol>
+</div>
+<div id="make-another-r-code-chunk-here" class="section level3">
+<h3>Make another R code chunk here</h3>
 <p>You have told your computer to remember the calculation <span class="math inline">\(3+5\)</span> and store the sum in the variable
 <code> a </code>. Any time you want to access the sum again you can just
 type the name you gave it. Also notice that the value of the variable
@@ -1654,6 +1667,7 @@ type the name you gave it. Also notice that the value of the variable
 the file manager where you can load data into R. This is also where any
 plots you make will be displayed. Another useful feature is that the
 current packages you have loaded will also be displayed here.</p>
+</div>
 <div id="r-packages" class="section level3">
 <h3>R Packages</h3>
 <p>R is an open-source programming language, meaning that users can

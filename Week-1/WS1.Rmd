@@ -42,20 +42,23 @@ Launch RStudio from jupyter.davidson.edu. Once it has booted up you should see a
 
 The panel on the left is the most important one; this is where R is working. The <code> > </code> indicates the line you are on with R ready to run. Test that R is working by running the command <code>3+5</code>. R can be used as a calculator. Now try to run <code>3+*5 </code> and notice that R tells you that it doesn't understand what you're saying to it. Errors often contain information about how to fix the error. This panel is called the console, we will explore more of what we can do here later. 
 
-If we execute code line by line, as we did in the last example, our work is not being saved. You will often want to re-run large chunks of your code and it would be a large waste of time to retype all of your commands every time you want to re-run code. Therefore, we should always be running our code in an R Markdown file. In the very top left of R Studio find the icon that is a sheet of paper with a green plus symbol on it and select a new R Markdown file and give it the name Testing. Once this has been opened you should have a new panel in the top left and the console you were using before is in the bottom left. Most the work we do from now on will be in an R Markdown file, not in the console, let's see how it works.
+If we execute code line by line, as we did in the last example, our work is not being saved. You will often want to re-run large chunks of your code and it would be a large waste of time to retype all of your commands every time you want to re-run code. Therefore, we should always be running our code in an R Markdown file. 
 
-Let's delete everything below the part that says <code> \#\# R Markdown </code> (you can read this later by opening a new R Markdown file the same way as before). Now in the top right of the R Markdown panel is a green C with a plus over it. Click that and select R. This creates a little code area that will run R code. Try typing <code> 3+5 </code> in between the single quotes and the press the play button.
+In the very top left of R Studio find the icon that is a sheet of paper with a green plus symbol on it. Once you select an R Markdown file you should have a new panel in the top left and the console you were using before is in the bottom left. Most the work we do from now on will be in an R Markdown file, not in the console, let's see how it works.
 
-```{r}
-3+5
-```
+Let's load the WS1.Rmd file that should be in your directory. Now in the top right of the R Markdown panel is a green C with a plus over it. Delete the text below that says "make a code chunk with 3+5 here" and in that space click the green C and select R. This creates a little code area that will run R code. Try typing <code> 3+5 </code> in between the single quotes and the press the play button.
+
+1. Make an R code chunk below:
+
+### MAKE A CODE CHUNK WITH 3+5 HERE##
 
 If you look down to your console you will see that the code ran there. You can press play again to run the code again without having to retype anything. This is a great tool to avoid errors in your code because you can see how each piece is working individually. Doing your work in an R Markdown file is a best practice that you should adopt and will be required for the assignment submissions.
 
 The panel in the upper right has information about data you have stored in your computer. 
 
-1. Try to run the following command <code>a<-3+5</code> by creating another R chunk. On the next line (still inside the same chunk) type <code> a </code>.
+2. Try to run the following command <code>a<-3+5</code> by creating another R chunk. On the next line (still inside the same chunk) type <code> a </code>.
 
+### Make another R code chunk here ###
 
 You have told your computer to remember the calculation $3+5$ and store the sum in the variable <code> a </code>. Any time you want to access the sum again you can just type the name you gave it. Also notice that the value of the variable <code> a </code> is shown in the upper right panel.
 
