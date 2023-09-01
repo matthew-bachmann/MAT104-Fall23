@@ -52,7 +52,7 @@ Age is a good example for understanding the difference between continuous and di
   
 It is not unusual to be able to interpret a variable as either discrete or continuous, we often need to determine which is most appropriate.
 
-Just because data involves numbers *does not* mean it is numerical data. Take, for example, a phone number. Adding two phone numbers doesn't necessarily produce something that is a phone number. What would the "average" phone number even mean and why would you want to know it? Phone numbers are categorical data.a
+Just because data involves numbers *does not* mean it is numerical data. Take, for example, a phone number. Adding two phone numbers doesn't necessarily produce something that is a phone number. What would the "average" phone number even mean and why would you want to know it? Phone numbers are categorical data.
 
 ### Variable Types: Categorical
 
@@ -151,6 +151,20 @@ ggplot(penguins, aes(x = bill_length_mm , y = bill_depth_mm)) + geom_point()
 ```
 
 6. Do the variables seem to be associated? If so, explain the relationship i.e. (as bill length gets bigger/smaller bill depth gets bigger/smaller). Is this a positive or negative association?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/causation.png)
+
+
+
+7. In the experiment described in Ch. 1.1 of OIS, what are the explanatory and response variables in the study?
 
 <div>
 :::{#answer}
