@@ -1,5 +1,5 @@
 ---
-title: "Worksheet 3 : Data Matrices"
+title: "Worksheet 3 : Data Visualization-Part 1"
 output:
   html_document:
     css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/style.css
