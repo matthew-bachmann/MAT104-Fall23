@@ -1,0 +1,342 @@
+---
+title: "Worksheet 3 : Data Matrices"
+output:
+  html_document:
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(datasets)
+library(tidyverse)
+library(openintro)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+- Scatter Plots
+- Histograms 
+- Measures of Central Tendency
+
+---
+
+Before we begin, let's load in the questionnaire data:
+
+```{r}
+questionnaire <- read.csv("/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/questionnaire_104.csv")
+```
+
+
+## Scatter Plots
+
++ ### Used to examine the relationship between two **numerical** variables. 
+
+---
+
+#### Catagorical Data
+
+Let's recall why categorical data is not great on a scatter plot. In the questionnaire data we saw that a scatter plot hid information:
+
+```{r}
+ggplot(questionnaire, aes(x=pop_tart, y=car_color))+geom_point()
+```
+
+
+We know there are 20 observations but the graph implies that there are only 10. There are 4 people that think a pop-tart is a ravioli and imagined a red car but we can't see that in the graph. 
+
+This is an example of why scatter plots are not great for examining the relationship between two categorical variables.
+
+---
+
+#### Jitter and Count 
+
+Two alternatives are slight variations on a scatter plot:
+
+```{r}
+ggplot(questionnaire, aes(x=pop_tart, y=car_color))+geom_jitter()
+```
+
+
+The *jitter* option will move the points around a little bit in a random direction. If you run the above code chunk again you will see the points moved. There should be about four points close to the intersection of red and ravioli. This still is not a great option, but at least it shows all 20 observations.
+
+
+The second choice is:
+
+```{r}
+ggplot(questionnaire, aes(x=pop_tart, y=car_color))+geom_count()
+```
+
+The count option is good for instances where the data has a lot of repeated values. 
+
+
+1. Which graph type is best for displaying the observations relating pop-tarts and car color? What can be better about the graph?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+---
+
++ ### Great for visualizing associations
+
+Consider the following plot:
+
+```{r}
+ggplot(questionnaire, aes(x=num_grapes, y=num_skittles))+geom_point()
+```
+
+There is a weak positive correlation between the number of grapes someone can fit in their mouth and the number of skittles they imagine in a jar. A scatter plot allows us to quickly visualize the association and identify **outliers**.
+
+2. Does the positive association indicate that thinking you can fit more grapes in your mouth may cause you to imagine more skittles? 
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+In this case the **explanatory variable** is number of grapes one thinks they can fit in their mouth and the **response variable** is the number of skittles imagined. There can be a hidden **confounding variable** that is positively associated with both other variables. Perhaps how hungry someone was when they answered these questions would affect both their answers. Correlation is not causation. Causation can only be inferred from a randomized experiment.
+
+---
+
++ ### Can be used to identify clusters of data
+
+Consider the following plot:
+```{r}
+library(palmerpenguins)
+ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm))+geom_point()
+```
+
+Though there is a positive association, there are also clear clusters of data. Looking at the data table one could notice that there are three species of penguins represented in the data. Let's add that information to the plot:
+
+```{r}
+ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm))+geom_point(aes(color=species))
+```
+
+---
+
++ ### Suffer from having too much data
+
+The graph of yrbss data had a lot of data and it made it hard to visualize the association:
+
+```{r}
+teen_data <- yrbss
+
+ggplot(teen_data, aes(x=height, y=weight)) + geom_jitter() +
+        labs(x = "height (m)",
+             y = "weight (kg)",
+             title = "Heights and Weights of Teens from the YRBSS Study",
+             caption = "Source: YRBSS")
+
+``` 
+
+I would expect 9th graders to generally be shorter and weigh less than 12th graders, let's see if the data reveals this:
+
+```{r}
+
+# This first line is setting the order of the graphs to be 9th, then 10th, and so on. (You don't need to understand this part of the code) 
+
+teen_data$grade_f = factor(teen_data$grade, levels=c('9','10','11','12','other'))
+
+ggplot(teen_data, aes(x=height, y=weight)) + geom_jitter(aes(color=grade_f)) +
+        labs(x = "height (m)",
+             y = "weight (kg)",
+             title = "Heights and Weights of Teens from the YRBSS Study",
+             caption = "Source: YRBSS")
+
+``` 
+
+The points are simply too close together and we cannot discern any kind of relationship having to do with grade. Maybe there is no association or maybe we need a different way to visualize the data.
+
+---
+
+## Histograms
+
+### Histograms show the **distribution** of data (numerical or categorical)
+The **distribution** of the data describes how frequent different values of a variable occur. Let's look at the height for the yrbss data:
+
+```{r}
+
+ggplot(teen_data, aes(x = height)) + geom_histogram(binwidth = .025) +
+        labs(x = "height (m)",
+             y = "count",
+             title = "Heights of Teens from the YRBSS Study",
+             caption = "Source: YRBSS") 
+
+``` 
+
+Sometimes it is useful to view a histogram with the percentage of the population displayed.
+
+```{r}
+# You don't need to know how graph this yet
+ggplot(teen_data, aes(x = height)) + geom_histogram(aes(y = (..count..)/sum(..count..)*100)) +
+        labs(x = "height (m)",
+             y = "Percent of Total",
+             title = "Heights of Teens from the YRBSS Study",
+             caption = "Source: YRBSS") 
+
+``` 
+
+We can also separate histograms into categories. For example, let's see the height distributions for teens in each grade:
+
+```{r}
+
+ggplot(teen_data, aes(x = height)) + geom_histogram(binwidth = .02) +
+        labs(x = "height(m)",
+             y = "count",
+             title = "Heights of Teens from the YRBSS Study",
+             caption = "Source: YRBSS") + facet_grid(grade_f~.)
+
+``` 
+
+It does seem like students get a tiny bit taller, but it is still difficult to say. Instead, we can look at measures of central tendency.
+
+## Measures of Central Tendency
+
+All measures of central tendency are trying to get at a similar idea: how can we use one number to represent the "center" of our data.
+
+### Mean
+
+The mean is the **most** common option, it is also often called the average. To compute this we simply add up all our values and divide by the number of observations. Since we are often only using a sample of the population we care about, we are usually computing the sample mean:
+
+
+$$ \overline{x} = \frac{x_1+ \dots + x_n}{n}$$
+Let's look at a few ways to compute the mean of a variable by looking at the number of skittles in the questionnaire data:
+
+#### Computing mean "by hand":
+```{r}
+(734+750+412+264+60+1104+5+133+215+227+11+343+2500+52+2460+567+156+300+231+437)/20
+```
+
+3. Use the <code> sum() </code> function
+```{r}
+
+## Type code here ##
+
+```
+
+4.Use the <code> sum() </code> function
+
+```{r}
+
+## Type code here ##
+
+```
+
+We can also find the average height in the yrbss data, try running 
+```{r}
+
+mean(teen_data$height)
+
+```
+
+This doesn't work because there is missing data. We can get R to ignore the missing data by adding the <code>na.rm</code> (NA remove) option:
+
+```{r}
+mean(teen_data$height,na.rm = TRUE)
+```
+
+The mean is very much affected by outliers. Therefore, the mean finds the "center" when our data distribution is pretty centralized.
+
+### Median
+
+The median is the literal middle value in a list of numbers that are in numerical order from smallest to largest. Recall that the median can be found in an odd number of observations by simply selecting the middle value, and in an even number of observations by averaging between the two middle observations
+
+$$\widetilde{x} = \left\{\begin{matrix}
+x(_{\frac{n+1}{2}}) & Where \ n \ is \ odd \\ 
+ & \\
+\frac{1}{2} \left ( x(_{\frac{n}{2}}) + x(_{1 + \frac{n}{2}})\right )& Where \ n \ is \ even
+\end{matrix}\right.$$
+
+It is easy to use R to find the median of a variable, all you have to do is call the <code>median</code> function on the data:
+
+```{r}
+median(questionnaire$num_skittles)
+```
+
+We can also find the median height in the yrbss data, but again we need to remove missing data
+
+```{r}
+median(teen_data$height,na.rm = TRUE)
+```
+
+A quick way to get the mean and median is by using the <code>summary</code> function:
+
+```{r}
+summary(teen_data$height)
+```
+
+Note that the <code>summary</code> function gives other information also, which we will cover soon.
+
+The median is not affected by outliers very much. Therefore, the median is better at finding the "center" when our data distribution has some skew to it.
+
+### Mode
+
+The mode is simply the value that occurs the most frequently. If there is no value that occurs more frequently than the others, then there is not a mode for those observations
+
+Let's use R to compute the mode
+```{r}
+#table() shows how many times each value appeared
+table(teen_data$height)
+#which.max() finds the maximum in the table
+which.max(table(teen_data$height))
+```
+
+The mode is our only measure of central tendency that works for categorical variables. The mode is a great measure of central tendency when you need to be *exactly* correct about something. Choosing the mode of your data will give you the highest probability of being *exactly* correct.
+
+---
+
+## Class Activity
+
+3. Load the data biopics from the `fivethirtyeight` package
+```{r eval = FALSE}
+install.packages("fivethirtyeight")
+
+biopics <- fivethirtyeight::biopics
+
+?biopics
+```
+
+4. Take a glimpse at the data
+```{r}
+#insert code here
+```
+
+5. Demonstrate two different ways to get the mean of box office draws (box_office) for biopics in this dataset
+```{r}
+#insert code here
+```
+
+6. Demonstrate two different ways to get the median of box office draws (box_office) for biopics in this dataset
+```{r}
+#insert code here
+```
+
+7. Why are the mean and median so different
+```{r}
+#insert code here
+```
+
+8. Create a histogram to display information relating to the year of release (year_release). Which year had the most biopics?
+```{r}
+#insert code here
+```
+
+
+When you have finished, Knit your project as an html document and submit the html document in Moodle with the following file name: "yourlastname_WS3.html"
