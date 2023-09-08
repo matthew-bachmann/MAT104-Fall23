@@ -1,0 +1,331 @@
+---
+title: "Worksheet 4 : Data Visualization - Part 2"
+output:
+  html_document:
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(datasets)
+library(tidyverse)
+library(openintro)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+- Scatter Plots
+- Histograms 
+- Measures of Central Tendency
+
+---
+
+Change the path on lines: 5, 156, 164, 172, 272, 284
+
+First let's save the yrbss data to a data frame. We also will be working with the heights quite a bit today, so instead of typing <code>teen_data$height</code> every time, let's save the heights separately and remove all missing data:
+```{r}
+teen_data <- yrbss
+hts <- na.omit(teen_data$height)
+```
+
+
+## Measures of Dispersion
+
+While measures of central tendency tell us information about the "center" of our data, measures of dispersion tell us about how spread out our data is.
+
+### Range
+
+The **range** is the difference between the largest and smallest data values. R can compute the range because it can quickly find the max and min of a data set (since we already removed NAs from heights, we don't need to include <code>na.rm=TRUE</code>, but we would need to otherwise):
+
+```{r}
+max(hts)-min(hts)
+```
+
+### Interquartile Range
+
+The **interquartile range** (IQR) is the middle 50% of the data. A **quartile** is 25% of the data.
+
+The lower and upper boundaries of this range are the first and third quartiles, respectively. 25% of the data is less than or equal to the first quartile value. 75% of the data are less than or equal to the third quartile value.
+
+
+$$IQR = Q3 - Q1$$
+
+We can find the values at each quantile using the <code>quartile()</code> function
+```{r}
+quantile(hts)
+
+1.78-1.60
+```
+
+R also has an interquartile range function:
+
+```{r}
+IQR(hts)
+```
+
+---
+
+### Variance
+
+The variance tells you the degree of spread in the data. Larger spread means the data has a larger variance in relation to the mean:
+  
+$$s^2 = \frac{(x_1-\bar{x})^2+ (x_2-\bar{x})^2 + (x_3-\bar{x})^2 + ...(x_n-\bar{x})^2}{n-1}$$
+Note that we divide by n-1, not by n. The variance is the average squared distance from the mean.
+
+
+```{r}
+var(hts)
+```
+
+---
+
+### Standard Deviation
+
+The standard deviation is a another measure of dispersion closely related to the variance. Since we squared all the distances in the variance calculation, we take the square root of the variance to get the standard deviation:
+
+$$s = s_x = \sqrt{\text{variance}}$$
+
+Therefore, for the heights of teens in the yrbss data,
+
+$$s^2 = 0.01096151$$
+
+```{r}
+sqrt(0.01096151)
+```
+
+
+$$s = 0.1046972$$
+R, of course, has built in functions to calculate standard deviations:
+```{r}
+hts_sd <- sd(hts)
+
+sqrt(var(hts))
+```
+
+Generally about 70% of the data falls within one standard deviation of the mean and about 95% will be within two standard deviations of the mean.
+
+Recall, 
+```{r}
+hts_mean <- mean(hts)
+```
+
+So,
+$$\bar{x} = 1.691241$$
+and 
+
+$$s = 0.1046973$$
+The data within one standard deviation of the mean is all teens with a height between:
+```{r}
+1.691241-0.1046973
+1.691241+0.1046973
+```
+That is, teens with a height in the interval
+$$[1.586544,1.795938]$$
+Let's see what percentage of our data falls within each standard deviation:
+```{r}
+
+length(hts[(hts <= (hts_mean + hts_sd)) & (hts >= (hts_mean - hts_sd))])/length(hts)*100
+
+```
+
+```{r}
+length(hts[(hts <= (hts_mean + 2*hts_sd)) & (hts >= (hts_mean - 2*hts_sd))])/length(hts)*100
+
+```
+
+## Skewness
+
+- Provide information about the distribution of the data
+
+---
+
+### Symmetrical Distribution
+
+- Data sets that show roughly equal trailing off in both directions are called symmetric
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/one.png)
+
+---
+
+### Right Skewed
+
+- When data trail off to the right in this way and has a longer right tail, the shape is said to be right skewed
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/two.png)
+
+---
+
+### Left Skewed
+
+- Data sets with a long, thinner tail to the left are said to be left skewed
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/three.png)
+
+---
+
+**Box Plot**
+
+Summarizes a data set using five statistics while also plotting unusual observations
+
+- Outliers
+  + Observations that appear extreme relative to the rest of the data
+  + These are observations that are greater than 1.5 x IQR
+  
+- Whiskers
+  + Extend to observations that are 1.5 x IQR
+  
+- Top of the Box
+  + 75th percentile (third quartile)
+  + 75 percent of the data fall below this value
+  
+- Bottom of the Box
+  + 25th percentile (first quartile)
+  + 25 percent of the data fall below this value
+  
+1. Find all relevant statistics for the num_skittles in the questionnaire dataset by hand and list the answers here:
+
+<div>
+:::{#answer}
+
+$Q_1 =$
+
+median $=$ 
+
+$Q_3 =$
+
+end of lower whisker $=$
+
+end of top whisker $=$
+
+outliers $=$ 
+
+:::
+</div>
+
+
+
+Recall for the heights data we have
+
+$$ Q_1 = 1.6, \ Q_2 = 1.68, \ Q_3 =1.78, \text{ and } IQR=0.18$$
+So, for a box and whisker plot, we expect the whiskers to extend to 
+```{r}
+1.78 + (1.5*.18)
+```
+
+and
+
+```{r}
+1.6 - 1.5*.18
+```
+
+
+Let's see:
+
+
+```{r}
+ggplot(data = teen_data, aes(x = height)) + 
+  geom_boxplot() +
+  coord_flip() +
+  labs(x = "height (m)") 
+```
+
+It is a little difficult to read this graph, let's add some features that make it a little cleaner. The x-axis doesn't need any numbers because it doesn't have any meaning here. Let's try to add some tick marks to the y-axis to make it more readable
+
+```{r}
+ggplot(data = teen_data, aes(x = height)) + 
+  geom_boxplot() +
+  coord_flip() +
+  scale_x_continuous(breaks = seq(1.25, 2.125, by = .025), limits = c(1.25, 2.125)) +
+  labs(x = "height (m)",
+       title = "Heights of Teens in yrbss Data") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.grid.major = element_line(color='gray')) 
+```
+
+```{r}
+ggplot(data = teen_data, aes(x = height, y = grade)) + 
+  geom_boxplot() +
+  coord_flip() +
+  scale_x_continuous(breaks = seq(1.25, 2.125, by = .025), limits = c(1.25, 2.125)) +
+  labs(x = "height (m)",
+       title = "Heights of Teens in yrbss Data") +
+  theme_bw() +
+  theme(panel.grid.major = element_line(color='gray')) 
+```
+
+
+### Class Activity
+
+2. Identify if (a), (b), or (c) are symmetric, left skewed, right skewed, or none and match them with the appropriate box plot.
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/distributions.png)
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+3. The data below shows a relative frequency histogram for the distribution of estimated infant death rates for 224 countries.
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-2/rel_freq_hist.png)
+
++ Estimate Q1, the median, and Q3 from the histogram.
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
++ Would you expect the mean of this data set to be smaller or larger than the median?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+4. Provide code that will find the quartiles and the interquartile range of the following loan data:
+```{r}
+
+loans <- loans_full_schema
+### Type code here###
+
+```
+
+5. Provide code that will plot a box and whisker plot for the loan data (you do not need to make it look nice, but you are welcome to):
+```{r}
+
+### Type code here###
+
+```
+
+6. Are there outliers in the data? If so, tell me where the outliers are (eg. all outliers have an interest rate less than 2% and higher than 20%).
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
