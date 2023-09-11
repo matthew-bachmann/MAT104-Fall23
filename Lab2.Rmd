@@ -1,0 +1,249 @@
+---
+title: "Lab 2"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-3/style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Instructions
+
+In this lab, you will practice statistical skills and data visualization. 
+
+#### How to **complete** this assignment.
+
+* Attempt each exercise in order.
+
+* Please follow the Davidson Honor Code and rules from the course syllabus regarding seeking help with this assignment.
+
+#### How to **submit** this assignment.
+
+* When you are finished, click the "Knit" button at the top of this panel. If there are no errors, an HTML file should pop up after a few seconds.
+
+* Take a look at the resulting HTML file that pops up. Make sure everything looks correct, your name is listed at the top, and that there is no 'junk' code or output. 
+
+* Save the HTML file (to your local computer) as: **lastname1_lastname2_Lab1**.
+
+* Upload your HTML file to Moodle. **Do not** upload the original .Rmd version. 
+
+* This assignment is <font color="darkred">**due Friday, September 15, 2023, no later than 5:00 pm Eastern**</font>. Points will be deducted for late submissions. 
+
+#### Grading Rubric
+
+There are 5 possible points on this assignment.
+
+**Baseline (C level work)**
+
+- Your .Rmd file knits to HTML without errors.
+- You answer questions correctly but do not use complete sentences.
+- There are typos and 'junk code' throughout the document.
+- You do not put much thought or effort into the Reflection answers.
+
+**Average (B level work)**
+
+- You use complete sentences to answer questions. 
+- You attempt every exercise/question. 
+
+**Advanced (A level work)**
+
+- Your code is simple and concise.
+- Your document is typo-free.
+- At the discretion of the instructor, you give exceptionally thoughtful or insightful responses.
+
+#### **Exercise 1  (0.25 points)**
+
++ Load the `tidyverse`, `openintro`, and `dplyr` packages. We haven't yet used the `dplyr` package, double check that it is installed. If it isn't, install the package in your console before continuing. 
++ Save the `nycflights` dataset from the `openintro` package locally and name it <code>flights</code>. 
++ Take a glimpse of the dataset, once you have it saved.
+
+```{r, message=FALSE}
+#insert code here
+```
+
+
+
+##### **Exercise 2. (0.75 points)**
++ Examine the distribution of departure delays of all flights with a histogram (don't make any modifications to the binwidth). 
+
+```{r}
+#insert code for graph here
+```
+
++ Recreate the histogram from the last part two more times, but change the binwidth to 15 in the first and 150 in the second. 
+
+```{r}
+#insert code for bin width 15 graph here
+```
+
+```{r}
+#insert code for bin width 150 graph here
+```
+
++ Look carefully at these three histograms. How do they compare? Are features revealed in one that are obscured in another? 
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+---
+
+### Filtering data
+
+We can <code> filter() </code> the data to find flights satisfying certain criteria. For example, to locate all flights that either arrived or departed on time we can filter:
+
+```{r, eval=FALSE}
+filter(flights, dep_delay == 0  | arr_delay == 0)
+```
+
+The <code> | </code> means "or" to R. To find all flights that arrived on time but did not depart on time we would change the <code> | </code> to an <code>&</code> and change one of the <code>==</code> to <code> != </code>. The following code tells R to filter all flights where the departure delay is not zero and the arrival delay is 0:
+```{r, eval=FALSE}
+filter(flights, dep_delay != 0  & arr_delay == 0)
+```
+
+To filter by anything that isn't a number you need to put quotes around the name: 
+```{r, eval=FALSE}
+filter(flights, origin == "JFK")
+```
+
+---
+
+##### **Exercise 3. (1.25 points)** 
++ Find all flights that arrived more than 30 minutes late. How many are there?
+```{r, eval=FALSE}
+filter(flights, arr_delay > 60)
+```
+
+<div>
+:::{#answer}
+
+ANSWER "How many are there?" HERE (with a complete sentence)
+
+:::
+</div>
+
+
++ Locally save a new data matrix called sfo_feb_flights that only has flights headed to SFO in February. How many flights meet these criteria? 
+
+```{r}
+#insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER "How many are there?" HERE (with a complete sentence)
+
+:::
+</div>
+
++ Describe the distribution of the arrival delays of these flights using a histogram and appropriate summary statistics (Hint: provide the mean, median, mode, IQR, variance, and standard deviation). 
+
+```{r}
+#insert code here
+```
+
+
+---
+
+### Statistics by group
+
+You can also calculate statistics for certain groups of your data. We know that in order to get the average distance each flight went we would just type <code>mean(flights$distance)</code>. In order to find the average distance for each particular month we would <code>group_by()</code> month:
+
+```{r, eval=FALSE}
+summarize(group_by(flights,month),mean(distance,na.rm=TRUE))
+```
+
+---
+
+##### **Exercise 4. (1.25 points)** 
++ Create a boxplot that displays the distribution of arrival delays by carrier. 
+
+```{r}
+#insert code here
+```
+
++ Calculate the mean and median for arrival delays of flights in the `sfo_feb_flights` data frame, grouped by carrier. Which carrier has the highest mean arrival delay? Which carrier has the highest median arrival delay? 
+
+```{r}
+#insert code here
+```
+
++ What pros and cons do you see between the mean and median? 
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+---
+
+### Mutating data
+
+We can add a column to any data frame with the <code>mutate()</code> function. Let's make a new column that has the flight duration in seconds (it is currently given in minutes). First we need to convert the duration column into seconds by multiplying by 60 and I will give this data a new name <code> duration_seconds </code>. Then we add the column to the flights table:
+
+```{r, eval=FALSE}
+duration_seconds <- flights$air_time*60
+flights <- mutate(flights,duration_seconds)
+```
+
+
+
+
+##### **Exercise 5. (0.75 points)** 
+Mutate the `flights` data frame so that it includes a new variable that contains the average speed traveled by the plane for each flight (in mph). Hint: Average speed can be calculated as distance divided by number of hours of travel, and note that air_time is given in minutes. 
+
+```{r}
+#insert code here
+```
+
+
+
+##### **Exercise 6. (0.5 points)** 
+Make a scatterplot of avg_speed vs. distance. Describe the relationship between average speed and distance. 
+
+```{r}
+#insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+##### **Exercise 7. Reflection (0.25 point)**
+
+##### What were the easiest and hardest parts of this assignment?
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+
+
+
