@@ -1,0 +1,253 @@
+\documentclass[oneside]{amsart}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry,amsmath,xcolor,fancybox,multicol,afterpage,termcal}
+
+\usepackage{lipsum}
+
+\newcommand\textbox[1]{%
+  \parbox{.333\textwidth}{#1}%
+}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\usepackage{pgfplots}
+\pgfplotsset{%
+   every tick label/.append style = {font=\tiny},
+   every axis label/.append style = {font=\scriptsize}
+}
+
+\usepackage{tikz}
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1.5cm,rmargin=1.5cm}
+
+\usepackage{zref-savepos}
+\makeatletter
+% \zsaveposx is defined since 2011/12/05 v2.23 of zref-savepos
+\@ifundefined{zsaveposx}{\let\zsaveposx\zsavepos}{}
+\makeatother
+\newcounter{hposcnt}
+\renewcommand*{\thehposcnt}{hpos\number\value{hposcnt}}
+\newcommand*{\SP}{% set position
+  \stepcounter{hposcnt}%
+  \zsaveposx{\thehposcnt s}%
+}
+\makeatletter
+\newcommand*{\UP}{% use previous position
+  \zsaveposx{\thehposcnt u}%
+  \zref@refused{\thehposcnt s}%
+  \zref@refused{\thehposcnt u}%
+  \kern\zposx{\thehposcnt s}sp\relax
+  \kern-\zposx{\thehposcnt u}sp\relax
+}
+\makeatother
+
+
+\thispagestyle{empty}
+
+\begin{document}
+Probability \hfill {\huge WS 5} \hfill Due: September $15^{th}$ start of class \\
+\begin{flushright}
+    {\Large Name:}\rule[-1mm]{75mm}{.1mm}
+\end{flushright}
+
+ \hrulefill
+\vspace{2mm}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} The set of all possible outcomes in a random experiment is called the \\
+\begin{center}
+   \rule[-1mm]{85mm}{.1mm}
+\end{center}
+
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+
+\vspace{10mm}
+
+Describe the sample space for the following random experiments:
+
+\begin{itemize}
+    \item[1.] Flipping a fair coin twice.
+
+    \vfill
+
+    \item[2.] Three dice are rolled and the sum is computed.
+    \vfill
+
+    \item[3.] Choosing 2 marbles from a bag with 2 red marbles, 2 blue marble, and 1 green marble.
+
+    \vfill
+    
+\end{itemize}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} The \textbf{fundamental counting principle} says that if there $n$ outcomes from one event and $m$ outcomes from the another, then there are   \\
+\begin{center}
+   \rule[-1mm]{85mm}{.1mm}
+\end{center}
+total possible outcomes.
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+
+
+
+
+
+\newpage
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} If all outcomes are equally likely, then the \textbf{probability} of an event occurring is  \\
+\begin{center}
+  $P(E)= $\rule[-7mm]{35mm}{.1mm}.
+\end{center}
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{5mm}
+
+\begin{itemize}
+    \item[3.] What is the probability of rolling a $2$ on a fair six sided die?
+    
+    \vfill
+    
+    \item[4.] What is the probability of getting two heads in a row when flipping a coin twice?
+    
+    \vfill
+    
+    \item[5.] What is the probability of pulling two red marbles from a bag with 2 red marbles, 2 blue marbles, and 1 green marble?
+    
+    \vfill
+
+    \item[6.] What is the probability of rolling an even number or a one?
+    
+    \vfill
+
+     
+\end{itemize}
+
+\newpage
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} Two events are said to be \textbf{disjoint} if they cannot both happen. The probability of disjoint events $A$ or $B$ occurring is  \\
+\begin{center}
+  $P(A \text{ or } B)= $\rule[-2mm]{35mm}{.1mm}.
+\end{center}
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+
+
+\begin{itemize}
+    
+   \item[7.] What is the probability of drawing a jack or a queen from a deck of cards?
+
+   \vfill
+    
+    \item[8.] What is the probability of rolling a number greater than 3 or an even number?
+    
+    \vfill
+    
+\end{itemize}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} The probability of two events (not necessarily disjoint) $A$ or $B$ occurring is  \\
+\begin{center}
+  $P(A \text{ or } B)= $\rule[-2mm]{35mm}{.1mm}.
+\end{center}
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\begin{itemize}
+
+    \item[9.] What is the probability of rolling a number greater than 3 or an even number?
+    
+    \vfill
+    
+   \item[10.] What is the probability of drawing a jack or a queen from a deck of cards?
+
+   \vfill
+    
+\end{itemize}
+
+\newpage
+
+\vhrulefill{2pt}
+
+\vspace{1mm}
+\vhrulefill{2pt}
+\\
+
+{\Large \textbf{ Class Activity}:}
+\\
+
+\begin{itemize}
+    \item[11.] What is the sample space for the following event: a six sided die is rolled.
+    \vfill
+
+    \item[12.] What is the sample space for the following event: two different integers between 1 and 5 are chosen and listed in increasing order.
+    \vfill
+
+    \item[13.] Suppose that $P(A) = .4$, $P(B)=.3$, and $P(A \text{ and } B)= \frac{1}{4}$. Are $A$ and $B$ disjoint events?
+    \vfill
+
+    \item[14.] What is the probability of getting at least one heads if you flip a coin three times?
+    \vfill
+
+    \item[15.] In problem $12.$, what is the probability of the first number being $2$ or $3$? What about the probability of the first number being $5$?
+    \vfill
+
+    
+\end{itemize}
+
+
+
+
+
+
+\end{document}
