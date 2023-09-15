@@ -1,0 +1,263 @@
+\documentclass[oneside]{amsart}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry,amsmath,xcolor,fancybox,multicol,afterpage,termcal}
+
+\usepackage{lipsum}
+
+\newcommand\textbox[1]{%
+  \parbox{.333\textwidth}{#1}%
+}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\usepackage{pgfplots}
+\pgfplotsset{%
+   every tick label/.append style = {font=\tiny},
+   every axis label/.append style = {font=\scriptsize}
+}
+
+\usepackage{tikz}
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1.5cm,rmargin=1.5cm}
+
+\usepackage{zref-savepos}
+\makeatletter
+% \zsaveposx is defined since 2011/12/05 v2.23 of zref-savepos
+\@ifundefined{zsaveposx}{\let\zsaveposx\zsavepos}{}
+\makeatother
+\newcounter{hposcnt}
+\renewcommand*{\thehposcnt}{hpos\number\value{hposcnt}}
+\newcommand*{\SP}{% set position
+  \stepcounter{hposcnt}%
+  \zsaveposx{\thehposcnt s}%
+}
+\makeatletter
+\newcommand*{\UP}{% use previous position
+  \zsaveposx{\thehposcnt u}%
+  \zref@refused{\thehposcnt s}%
+  \zref@refused{\thehposcnt u}%
+  \kern\zposx{\thehposcnt s}sp\relax
+  \kern-\zposx{\thehposcnt u}sp\relax
+}
+\makeatother
+
+
+\thispagestyle{empty}
+
+\begin{document}
+Probability \hfill {\huge WS 6} \hfill Due: September $18^{th}$ start of class \\
+\begin{flushright}
+    {\Large Name:}\rule[-1mm]{75mm}{.1mm}
+\end{flushright}
+
+ \hrulefill
+\vspace{2mm}
+
+    \textbf{Example:} Consider the experiment of choosing 2 marbles from a bag with 2 red marbles, 2 blue marble, and 1 green marble. We will describe the probability of all events from the sample space $S = \{ RR, RB, RG, BB, BG \}$
+
+    \vfill
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} A table of all probabilities for a sample space is called a  \\
+\begin{center}
+   \rule[-1mm]{85mm}{.1mm}
+\end{center}
+
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{3mm}
+
+\textbf{Properties:}
+\begin{itemize}
+    \item Each outcome must be disjoint
+    \item The probabilities must be between $0$ and $1$
+    \item The probabilities add to $1$.
+\end{itemize}
+
+\vspace{3mm}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} When all of the outcomes are equally likely we say that the probability distribution is   \\
+\begin{center}
+   \rule[-1mm]{85mm}{.1mm}
+\end{center}
+
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{2mm}
+
+Recall that when all outcomes are equally likely the probability of an event occurring is
+
+
+$$ P(E) = \displaystyle \frac{\# \text{ favorable outcomes}}{\# \text{ possible outcomes}}$$
+
+\vspace{2mm}
+
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} The \textbf{complement} of a subset are all elements in the set that are not in the subset.   \\
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{5mm}
+
+   \textbf{Example}: Let $S = \{a,b,c,d,e,f,g \}$ and $A = \{a,b \}$ then what is $A^c$ (the complement of $A$)?
+    
+    \vfill
+
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+The complement of a set has the property that  \\
+\begin{center}
+  $P(A \text{ or } A^c)= $\rule[-2mm]{35mm}{.1mm} $=$\rule[-2mm]{35mm}{.1mm}.
+\end{center}
+\vspace{2mm}
+That is, a subset is always disjoint from its complement and the probability that one or the other happens is $1$.
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{3mm}
+
+\newpage
+
+Sometimes it is easier to compute the probability of the complement of an event and then use the above property to compute the probability of the event.
+
+    \textbf{Example:} What is the probability of two people in our class having the same birthday? (there are 20 people in our class)
+    
+    \vfill
+
+    \textbf{Example:} There is a $50 \%$ chance of rain on Saturday and a $50 \%$ chance of rain on Sunday. Someone (not in our class) concludes that it will definitely rain this weekend since
+
+    $$P(\text{rain on Saturday or rain on Sunday}) = P(\text{rain on Saturday}) + P(\text{rain on Sunday}) = 100 \%.$$ 
+    Why is their calculation wrong? How can we correctly compute the probability?
+    \vfill
+
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} Two events are said to be \textbf{independent} if the outcome of one does not affect the probability of the other. The probability of independent events $A$ and $B$ occurring is  \\
+\begin{center}
+  $P(A \text{ and } B)= $\rule[-2mm]{35mm}{.1mm}.
+\end{center}
+
+\vspace{7mm}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{2mm}
+Independent events can sometimes be difficult to recognize, consider the following:
+
+\textbf{Example:} What is the probability of drawing a card that it is both $A=\{$ a heart $\}$ and $B= \{$ an ace $\}$? Are the events independent? What if we remove the 2 of spades from the deck?
+
+\vfill
+
+
+\newpage
+
+\vhrulefill{2pt}
+
+\vspace{1mm}
+\vhrulefill{2pt}
+\\
+
+{\Large \textbf{ Class Activity}:}
+\\
+
+\begin{itemize}
+    \item[1.] Describe the probability distributions for the following random experiments: 
+    \begin{itemize}
+        \item  Flipping a fair coin twice.
+
+        \vfill
+
+        \item Counting the number of heads from flipping a coin three times.
+   
+        \vfill
+
+        \item The sum of rolling two six sided dice.
+
+        \vfill
+
+    \end{itemize}
+   
+
+    \item[2.] What is the probability of rolling doubles from three dice?
+    
+    \vfill
+
+    
+        \item[3.] Assume that there is a one in a million chance that someone is struck by lightning if they are outside during a storm. If there are $50,000$ people outside in a city during a storm, what is the chance that someone is struck by lightning? 
+    
+    \vfill
+
+\newpage
+        \item[4.] Let $A$ and $B$ be events with $P(A)=\frac{1}{2}$ and $P(B)=\frac{1}{3}$. Find $P( A \text{ or } B)$ and $P(A \text{ and }B)$ if:
+        \begin{itemize}
+            \item $A$ and $B$ are disjoint.
+            \vfill
+
+            \item $A$ and $B$ are independent.
+
+            \vfill
+
+            \item $A^c$ and $B$ are independent
+
+            \vfill
+        \end{itemize}
+
+    \item[5.] Roll a die twice and consider the events $A = \{ \text{first roll gives at least 4} \}$, $B = \{ \text{second roll gives at most 4} \}$, and $C = \{ \text{the sum of the rolls is 10\}}$. Find $P(A)$, $P(B)$, $P(C)$, and $P(A \cap B \cap C)$. Are $A$ and $B$ independent? What about $B$ and $C$? Finally, are $A$ and $C$ independent? (we call this \textbf{pairwise independence})
+    
+    \vfill
+    
+
+    
+\end{itemize}
+
+
+
+
+
+
+\end{document}
