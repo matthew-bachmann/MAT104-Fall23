@@ -37,7 +37,7 @@ In this lab, you will practice statistical skills and data visualization.
 
 * Upload your HTML file to Moodle. **Do not** upload the original .Rmd version. 
 
-* This assignment is <font color="darkred">**due Friday, September 12, 2023, no later than 5:00 pm Eastern**</font>. Points will be deducted for late submissions. 
+* This assignment is <font color="darkred">**due Friday, September 22, 2023, no later than 5:00 pm Eastern**</font>. Points will be deducted for late submissions. 
 
 #### Grading Rubric
 
