@@ -1,0 +1,249 @@
+\documentclass[oneside]{amsart}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry,amsmath,xcolor,fancybox,multicol,afterpage,termcal}
+
+\usepackage{lipsum}
+
+\newcommand\textbox[1]{%
+  \parbox{.333\textwidth}{#1}%
+}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\usepackage{pgfplots}
+\pgfplotsset{%
+   every tick label/.append style = {font=\tiny},
+   every axis label/.append style = {font=\scriptsize}
+}
+
+\usepackage{tikz}
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1.5cm,rmargin=1.5cm}
+
+\usepackage{zref-savepos}
+\makeatletter
+% \zsaveposx is defined since 2011/12/05 v2.23 of zref-savepos
+\@ifundefined{zsaveposx}{\let\zsaveposx\zsavepos}{}
+\makeatother
+\newcounter{hposcnt}
+\renewcommand*{\thehposcnt}{hpos\number\value{hposcnt}}
+\newcommand*{\SP}{% set position
+  \stepcounter{hposcnt}%
+  \zsaveposx{\thehposcnt s}%
+}
+\makeatletter
+\newcommand*{\UP}{% use previous position
+  \zsaveposx{\thehposcnt u}%
+  \zref@refused{\thehposcnt s}%
+  \zref@refused{\thehposcnt u}%
+  \kern\zposx{\thehposcnt s}sp\relax
+  \kern-\zposx{\thehposcnt u}sp\relax
+}
+\makeatother
+
+
+\thispagestyle{empty}
+
+\begin{document}
+Probability \hfill {\huge WS 7} \hfill Due: September $22^{nd}$ start of class \\
+\begin{flushright}
+    {\Large Name:}\rule[-1mm]{75mm}{.1mm}
+\end{flushright}
+
+ \hrulefill
+\vspace{2mm}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Definition:} The probability of event $A$ occurring given that event $B$ occurred is called \textbf{conditional probability}, written $P(A|B)$ and is computed via \\
+\begin{center}
+  $P(A|B) =$ \rule[-5mm]{35mm}{.1mm}
+\end{center}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{3mm}
+
+
+\textbf{Example:} What is the probability that a card drawn from a deck is a jack given that it is a heart?
+
+\vfill
+
+\textbf{Example:} Your neighbors have two kids and you know that one of them is a girl. What is the probability that their second child is a girl?
+
+\vfill
+
+
+
+The definition of two events being independent is that $P(A \text{ and } B) = P(A)P(B)$. Make this substitution into the conditional probability formula to get a new characterization of independent events:
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+Suppose events $A$ and $B$ are independent, then: \\
+\begin{center}
+  $P(A|B) =$ \rule[-5mm]{35mm}{.1mm}
+\end{center}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{5mm}
+
+\newpage
+
+\textbf{Example:} You are buying a used car in city where rainfall causes street flooding often. You know that $5 \%$ of used cars have been damaged from flooding and $80 \%$ of those cars will later experience serious engine problems. On the other hand, only $10 \%$ of cars without flood damage will experience the same engine issues. What is the probability the car you buy will later experience engine issues?
+
+\vfill
+\vfill
+
+\vhrulefill{2pt}
+
+\vspace{1mm}
+\vhrulefill{2pt}
+\\
+
+{\Large \textbf{ Class Activity}:}
+\\
+\begin{enumerate}
+ \item[1.] Suppose you flip a fair coin twice:
+    \begin{enumerate}
+        \item What is the probability of \textbf{Event A:} getting at most one heads?
+        \vfill
+        \item What is the probability of \textbf{Event B:} getting two of the same result (both heads or both tails)?
+        \vfill
+        \item What is the probability of \textbf{Event C:} getting heads on the first flip and tails on the second?
+        \vfill
+        \item Are events A and B disjoint? Are they independent? 
+        \vfill
+        \item Are events A and C disjoint? Are they independent? 
+        \vfill
+        \item Are events B and C disjoint? Are they independent? 
+        \vfill
+\end{enumerate}
+
+    \newpage
+
+    \item[2.] Suppose you roll two dice: 
+    \begin{enumerate}
+        \item What is the probability that you roll doubles?
+
+        \vfill
+
+        \item In the board game Monopoly, if you roll doubles you get to roll again. However, if you roll doubles three times in a row you are sent to jail. If you've rolled doubles twice, what is the probability that you will get doubles on your next roll?
+   
+        \vfill
+
+        \item Is the event of rolling the dice the third time disjoint from the event of rolling the dice the second time? Are they independent? 
+
+        \vfill
+
+        \item What is the probability of rolling doubles three times in a row? 
+
+        \vfill
+
+    \end{enumerate}
+   
+
+    \item[3.] You have a box with two balls in it, one red and one blue. We select one ball from the box, put it back and select another. 
+    \begin{enumerate}
+        \item Let's say event $R$ is the event where you get the red ball twice, what is $P(R)$?
+
+        \vfill
+
+        \item Let's say event $F$ is the event that you get the red ball on your first pull, what is $P(R|F)$?
+
+        \vfill
+
+        \item Are $R$ and $F$ independent? Are they disjoint?
+
+        \vfill
+
+        \item Let $S$ be the event that you pull the red ball on the second pick. Are $F$ and $S$ independent? Are they disjoint?
+
+    \end{enumerate}
+    
+    \vfill
+
+    \newpage
+    
+        \item[4.] Consider the following game where there are three dice with sides:
+
+        \begin{align*}
+            \text{Die }A&: \{1,1, 5, 5, 5, 5 \}  \\
+            \text{Die }B&: \{3,3,3, 4, 4, 4 \}  \\
+            \text{Die }C&: \{2,2,2, 2, 6, 6 \}  \\
+        \end{align*}
+        The game is as follows: two players take turns selecting a die and whoever rolls the highest number wins.
+        \begin{enumerate}
+            \item What is the probability that Die $A$ beats Die $B$?
+
+            \vfill 
+            \item What is the probability that Die $B$ beats Die $C$?
+
+            \vfill 
+
+            \item What is the probability that Die $C$ beats Die $A$?
+
+            \vfill 
+
+            \item What can you do to maximize your odds of winning the game?
+
+            \vfill 
+        \end{enumerate}
+        
+
+\newpage
+
+                 \item[5.] A swim team has 150 members. On the team there are 75 advanced swimmers, 47 intermediate swimmers, and the rest are novice swimmers. Many swimmers practice 5 days a week: 40 of the advanced, 30 intermediate, and 10 novices.
+
+             \begin{enumerate}
+                 \item What is the probability that a randomly chosen swimmer is a novice?
+                 \vfill
+                 \item What is the probability that a randomly chosen swimmer is advanced and practices 5 times a week?
+                 \vfill
+                 \item Is being advanced and practicing 4 times a week disjoint events? Are they independent?
+                 \vfill
+             \end{enumerate}
+
+                              \item[6.] On a given day the probability that I go to a coffee shop is $P(CS)=.2$, the probability that I play chess is $P(Chess)=.5$, and $P(Chess|CS)=.8$.
+
+             \begin{enumerate}
+                 \item Find $P(CS$ and $Chess)$.
+                 \vfill
+                 \item Find $P(CS$ or $Chess)$.
+                 \vfill
+             \end{enumerate}
+        
+    
+
+    
+\end{enumerate}
+
+
+
+
+
+
+\end{document}
