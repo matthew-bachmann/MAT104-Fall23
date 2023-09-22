@@ -1,0 +1,228 @@
+\documentclass[oneside]{amsart}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry,amsmath,xcolor,fancybox,multicol,afterpage,termcal}
+
+\usepackage{lipsum}
+
+\newcommand\textbox[1]{%
+  \parbox{.333\textwidth}{#1}%
+}
+
+\makeatletter
+   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\usepackage{pgfplots}
+\pgfplotsset{%
+   every tick label/.append style = {font=\tiny},
+   every axis label/.append style = {font=\scriptsize}
+}
+
+\usepackage{tikz}
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1.5cm,rmargin=1.5cm}
+
+\usepackage{zref-savepos}
+\makeatletter
+% \zsaveposx is defined since 2011/12/05 v2.23 of zref-savepos
+\@ifundefined{zsaveposx}{\let\zsaveposx\zsavepos}{}
+\makeatother
+\newcounter{hposcnt}
+\renewcommand*{\thehposcnt}{hpos\number\value{hposcnt}}
+\newcommand*{\SP}{% set position
+  \stepcounter{hposcnt}%
+  \zsaveposx{\thehposcnt s}%
+}
+\makeatletter
+\newcommand*{\UP}{% use previous position
+  \zsaveposx{\thehposcnt u}%
+  \zref@refused{\thehposcnt s}%
+  \zref@refused{\thehposcnt u}%
+  \kern\zposx{\thehposcnt s}sp\relax
+  \kern-\zposx{\thehposcnt u}sp\relax
+}
+\makeatother
+
+
+\thispagestyle{empty}
+
+\begin{document}
+Probability \hfill {\huge WS 8} \hfill Due: September $25^{th}$ start of class \\
+\begin{flushright}
+    {\Large Name:}\rule[-1mm]{75mm}{.1mm}
+\end{flushright}
+
+ \hrulefill
+\vspace{2mm}
+
+Bayes' Theorem is a way to reverse conditional probability. Remember that we can use a tree diagram to compute some conditional probabilities that encompass all of the outcomes. In a tree diagram:
+
+\begin{itemize}
+    \item the branches multiply together to give a the probability that everything on that branch happened.
+    \item the leafs add together to equal 1, the total probability that one of the events occurs. 
+\end{itemize}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Recall:} That conditional probability can be computed via:\\
+\begin{center}
+  $P(A|B) =$ \rule[-5mm]{35mm}{.1mm}
+\end{center}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{3mm}
+\textbf{Example:}
+
+\begin{itemize} 
+    \item \textbf{The Law of Total Probability} 
+    \begin{align*}
+        P(B \text{ and } A) + P(B \text{ and } A^c) = \text{ \rule[-5mm]{35mm}{.1mm}}
+    \end{align*} 
+\item Rewrite the law of total probability using conditional probabilities.
+\end{itemize}
+
+
+\vfill
+
+\textbf{Example:} Now let's rewrite $P(A|B)$ using the previous example and the definition of conditional probability.
+
+\vfill
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Recall:}  Suppose $A_1,A_2,\dots,A_k$ are all possible out comes for a variable. Then the general law of total probability says:\\
+\begin{center}
+  $P(A|B) =$ \rule[-5mm]{35mm}{.1mm}
+\end{center}
+
+\end{minipage}}
+\end{ovalbox}
+
+\begin{ovalbox}{\begin{minipage}{6.8in}
+\vspace{5mm}
+
+\textbf{Bayes' Theorem}: Suppose $A_1,A_2,\dots,A_k$ are all possible out comes for a variable. Then we have :\\
+\begin{center}
+  $\displaystyle P(A_i|B) = \frac{P(B|A_i) P(A_i)}{P(B)}= \frac{P(B|A_i) P(A_i)}{P(B|A_1)P(A_1)+P(B|A_2)P(A_2) + \dots + P(B|A_k)P(A_k)}$ 
+\end{center}
+
+\end{minipage}}
+\end{ovalbox}
+
+\vspace{2mm}
+
+\newpage
+
+ \textbf{Example:} Consider the following game where there are three dice with sides:
+
+        \begin{align*}
+            \text{Die }A&: \{1,1, 5, 5, 5, 5 \}  \\
+            \text{Die }B&: \{3,3,3, 4, 4, 4 \}  \\
+            \text{Die }C&: \{2,2,2, 2, 6, 6 \}  \\
+        \end{align*}
+        The game is as follows: two players take turns selecting a die and whoever rolls the highest number wins.
+        \begin{enumerate}
+            \item What is the probability that Die $A$ beats Die $B$?
+
+            \vfill 
+            \item What is the probability that Die $B$ beats Die $C$?
+
+            \vfill 
+
+            \item What is the probability that Die $C$ beats Die $A$?
+
+            \vfill 
+            \vfill
+
+            \item What can you do to maximize your odds of winning the game?
+
+            \vfill 
+        \end{enumerate}
+
+\textbf{Example:} Lupus is a medical phenomenon where antibiotics that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that $2 \%$ of the popularion suffer form this disease. The test is $98 \%$ accurate if a person actually has the disease. The test is $74 \%$ accurate if a person does not have the disease. There is a line from the TV show ``House" where after a person tests positive for lupus the doctor says: ``It's never lupus". Find the probability that someone has lupus given that they tested positive for lupus.
+
+\vfill
+\vfill
+\vfill
+\vfill
+
+
+
+
+\newpage
+
+\textbf{Example:} Suppose we have four fair die: one with three sides (1,2,3), one with four sides (1,2,3,4), one with five sides, (1,2,3,4,5) and one
+with six sides (1,2,3,4,5,6). We pick one of the four die randomly and roll the one we picked three times. We get all 4's. What is the probability we chose the 5-sided die to begin with? That is, we want to know $P(\text{chose 5 sided die}|444)$. We will use Bayes' theorem and solve this in steps:
+
+\vfill 
+\vfill
+
+
+\vhrulefill{2pt}
+
+\vspace{1mm}
+\vhrulefill{2pt}
+\\
+
+{\Large \textbf{ Class Activity}:}
+\\
+\begin{enumerate}
+ \item[1.] Suppose $80 \%$ of people like peanut butter, $89 \%$ like jelly and $78 \%$ like both. What's the probability that a randomly sampled person who likes peanut butter will also like jelly?
+    \vfill
+
+    \item[2.] After an intro to stats course $80 \%$ of students can successfully draw box plots. Of those students, $86 \%$ passed while only $65 \%$ of students that couldn't draw box plots passed: 
+    \begin{enumerate}
+        \item Construct a tree diagram for this scenario.
+
+        \vfill
+
+        \item Calculate the probability that a student who passed can draw a box plot.
+   
+        \vfill
+
+
+    \end{enumerate}
+
+   \newpage
+
+    \item[3.] A polygraph is an instrument used to detect physiological signs of deceptive behavior. It is thought that a polygraph is about $95 \%$ accurate. Consider the following events:
+    \begin{align*}
+        L &= \{ \text{the person tells a lie} \} \\
+        L^+ &= \{ \text{the polygraph says the person is lying} \} \\
+        T &= L^c =  \{ \text{the person tells the truth} \} \\
+        T^+ &= (L^+)^c \{ \text{the polygraph says the person is telling the truth} \} \\
+    \end{align*}
+        What is the the probability that a person is lying given that the polygraph says they are lying assuming that only one in a thousand people would lie in this situation?
+
+        \vfill
+
+        \item[4.] Suppose $0.1 \%$ of the population have a new covid variant and there is a test that is $96 \%$ accurate. Suppose you test positive, what is the probability you have it?
+
+        \vfill
+
+
+\end{enumerate}
+
+
+
+\end{document}
