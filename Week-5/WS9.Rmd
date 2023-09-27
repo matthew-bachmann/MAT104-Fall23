@@ -1,0 +1,239 @@
+---
+title: "Summarizing Data: Numerical Data"
+output:
+  html_document:
+    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Define sampling and random variables
+- Discuss probability distributions
+
+---
+
+## Random Variables
+
+- A **random variable** is just a number whose value depends on the outcome of a random event
+
+  + **Example:** Consider the scenario of flipping a coin $3$ times and counting the number of heads. Let $$X= \text{the number of heads that occur}.$$ This random variable can take on the values $\{0,1,2,3 \}$ (the possible values is called the **range** of the random variable) and $$P(X=0) \text{ is the probability that there are zero heads } = \frac{1}{8}$$.
+  
+  1. From the previous example, evaluate $P(X \geq 1)$ and explain what it means.
+  
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+- Random variables introduce convenient notation for things we have already been doing.
+
+  + There are two types of random variables, discrete (DRV) which usually take on whole number values [number of heads when flipping a coin thrice, sum of the values from dice] and continuous (CRV) which usually take on decimal values [height of a person, mile run times].
+  
+
+- A **probability distribution** for the random variable from the example is 
+$$P(X=0)= \frac{1}{8} \ P(X=1)= \frac{3}{8} \ P(X=2)= \frac{3}{8} \ P(X=3)= \frac{1}{8}.$$
+- Since we can plug in different values for $X$ in $P(X)$, this is a function called the **probability mass function (pmf)**. If the variable is continuous we call this a **probability density function (pdf)**. 
+  
+```{r, echo=FALSE}
+data <- data.frame(X = c(0,1,2,3), PX = c(1/8,3/8,3/8,1/8))
+ggplot(data,aes(x=X,y=PX)) + geom_bar(stat="identity") + scale_y_continuous(breaks = seq(0, 1/2, by = 1/8), labels=c("0","1/8","1/4","3/8","1/2")) + labs(x = "X", y = "P(X)", title="number of heads from flipping a coin thrice") 
+```
+  
+    
+---
+
+## Expectation
+
+- How to find the mean of a random variable
+
+  + if we try to take the mean the same way as for a variable in a data frame we end up with something a bit weird.
+
+  + **Example:** Consider the distribution of a loaded 4-sided die where the $1$ and $2$ are both twice as likely as $3$ and $4$ :
+
+```{r, echo=FALSE}
+data <- data.frame(X = c(1,2,3,4), PX = c(1/3,1/3,1/6,1/6))
+ggplot(data,aes(x=X,y=PX)) + geom_bar(stat="identity") + scale_y_continuous(breaks = seq(0, 1/3, by = 1/6), labels=c("0","1/6","1/3")) + labs(x = "X", y = "P(X)", title="loaded 4-sided die") 
+```
+ 
++ The "average" of the outcome is $$\frac{1+2+3+4}{4}=2.5$$
+but this seems wrong since the $1$ and $2$ will occur more frequently.
+
++ If we rewrite the computation above we get $$\frac{1}{4}\cdot1+\frac{1}{4}\cdot2+\frac{1}{4}\cdot3+\frac{1}{4}\cdot4=2.5$$
+and the $\frac{1}{4}$ in front of each outcome is assuming that each outcome occurs with probability $\frac{1}{4}$. To fix this we would instead do the computation:
+$$\frac{1}{3}\cdot1+\frac{1}{3}\cdot2+\frac{1}{6}\cdot3+\frac{1}{6}\cdot4=\frac{13}{6}$$
+Since a random variable occurs with different probabilities, we need to take the probabilities into account when computing the average. We call this the **expected value**. Let $x_1, \dots, x_k$ be the possible values a random variable can take, then the expected value is given by
+$$\mu = E(X) = \sum_{i=1}^{k}x_iP(X=x_i)$$
+
+<br>
+
+**Expected Value of a Discrete Random Variable**
+
+- In a game of cards you win 1 dollar if you draw a heart, 5 dollars if you draw an ace (including the ace of hearts), 10 dollars if you draw the king of spades and nothing for any other card you draw. Write the probability model for your winnings, and calculate your expected winning.
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/13.png)
+
+<br>
+
+- Below is a visual representation of the probability distribution of winnings from this game
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/14.png)
+
+---
+
+### Variability
+
+- We are also often interested in the variability in the values of a random variable.
+
+$$\sigma^2=Var(X)  = \sum_{i=1}^{k}(x_i-E(X))^2P(X=x_i)$$
+
+$$\sigma=SD(X)=\sqrt{Var(X)}$$
+
+<br>
+
+- For the previous card game example, how much would you expect the winnings to vary from game to game?
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/15.png)
+
+
+
+
+ 2. Suppose you are taking a multiple choice test where the options are $(A),(B),(C),(D)$. You get $1$ point for a correct answer, $-0.5$ points for a wrong answer, and if you don't answer it won't affect your score. If you have no idea what the answer is, should you guess or skip?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+
+---
+
+## Continous Distributions
+
+- Below is a histogram of the distribution of heights of US adults
+
+- The proportion of data that falls in the shaded bins gives the probability that a randomly sampled US adult is between 180 cm and 185 cm (about 5’11” to 6’1”)
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/16.png)
+
+<br>
+
+- Since height is a continuous numerical variable, its probability density function is a smooth curve
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/17.png)
+
+<br>
+
+- Therefore, the probability that a randomly sampled US adult is between 180 cm and 185 cm can also be estimated as the shaded area under the curve
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/18.png)
+
+<br>
+
+- Since continuous probabilities are estimated as “the area under the curve”, the probability of a person being exactly 180 cm (or any exact value) is defined as 0
+
+![](/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-5/19.png)
+
+3. For each of the following random variables, state the range (the possible outcomes) and whether the randaom variable is continuous or discrete: 
+  + the number of people born this year
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
++ the amount of time you wait for a bus
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
++ the temperature of *liquid* water in Celsius 
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+  
+4. Suppose you are taking a multiple choice test where the options are $(A),(B),(C),(D)$. You get $1$ point for a correct answer, $-.5$ points for a wrong answer, and if you don't answer it won't affect your score. Suppose you can eliminate one of the options, and you have no idea what is correct from the remaining three options. Should you guess or skip?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+
+5. Suppose you live in a place that floods often. You do a little research and find that,
+based on historical averages, there is a 1.5% chance of your house flooding this year and
+causing $\$30,000$ worth of damage. (A) What is the expected value of your cost in flood damages this year? (B) You can buy flood insurance for $\$200$ per year. That is, you have to pay $200 but if
+there is any flood damage, you don’t have to pay for it. Should you buy the insurance?
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+6. Eric is buying a new cell phone which costs $700 and is offered a two year protection plan
+which costs $150. If the chance that Eric will need to replace his phone within two years
+is 20%, compute expected values of getting the protection plan and of not getting the plan.
+Should Eric buy the plan? Explain your reasoning.
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div> 
+
+
+
+
+
+When you have finished, Knit your project as an html document and submit the html document in Moodle with the following file name: "yourlastname_WS9.html"
+
+
+
+
+
+  
