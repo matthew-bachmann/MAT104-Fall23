@@ -110,7 +110,7 @@ A third way to view some of the data is to use the <code>glimpse()</code> functi
 Now let's load the data from Monday's class. The file should already be in your file manager, right click to import the data and save it as questionnaire. This next chunk of code is another way to load the data in. You can choose either way. 
 
 ```{r}
-questionnaire <- read.csv(file = "/Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/questionnaire_104.csv")
+questionnaire <- read.csv(file = "~/MAT104-Fall23/Week-1/questionnaire_104.csv")
 questionnaire
 ```
 
