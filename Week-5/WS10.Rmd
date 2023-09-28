@@ -1,0 +1,291 @@
+---
+title: "Distributions of Random Variables"
+output:
+  html_document:
+    css: ~/MAT104-Fall23/Week-5/style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Normal Distribution
+
+---
+
+## The Normal Distribution
+
+- The normal distribution is a symmetric, unimodal, bell shaped curve.
+
+![](~/MAT104-Fall23/Week-5/one.png)
+
+  
+- The normal distribution is defined by the mean and standard deviation. Denoted as $$N(\mu, \sigma)$$ 
+  
++ $\mu$ shifts the curve to the left or right
+
++ $\sigma$ stretches or compresses the curve
+
+**Example:** Use R to graph a normal curve with mean 0 and standard deviation 1.
+
+Always graph at least 3 standard deviations worth of the graph. Since the mean is 0 and standard deviation is 1, we need to plot from $-3$ to $3$. The first step is to make an $x$-axis that is large enough, let's go from $-5$ to $5$ by $1$:
+```{r}
+x <- seq(-5,5,1)
+```
+
+Now R has a function `dnorm()` that will calculate the $y$-value for each of our $x$-values based on a normal distribution:
+```{r}
+y <-dnorm(x,0,1)
+df <- data.frame(x,y)
+ggplot(df, aes(x,y))+geom_point()
+```
+
+This doesn't give us enough points, so let's make our $x$ vector have more values and regraph:
+```{r}
+x <- seq(-5,5,.1)
+y <-dnorm(x,0,1)
+df <- data.frame(x,y)
+ggplot(df, aes(x,y))+geom_point()
+```
+
+We can compare this to a normal distribution with mean $19$ and standard deviation $4$, for this we need a different vector of $x$-values in order to get at least $3$ standard deviations:
+```{r}
+x <- seq(7,31,.1)
+y <-dnorm(x,19,4)
+df <- data.frame(x,y)
+ggplot(df, aes(x,y))+geom_point()
+```
+
+These both look basically the same, let's put this on the same graph:
+
+![](~/MAT104-Fall23/Week-5/two.png)
+
++ Another way to plot normal distributions is by using the function `rnorm()` which will produce a given number of outcomes according to a normal distribution. 
+
+-`rnorm()` is different than `dnorm()` because `dnorm()` tells you where a point should lie in a normal distribution. On the other hand `rnorm()` is like a simulation that randamoly produces points according to a normal distribution.
+
+**Example:** Produce 10000 samples according to the normal distribution $N(19,4)$:
+```{r}
+y <- rnorm(10000,19,4)
+df <- data.frame(y)
+ggplot(df, aes(y)) + geom_histogram(binwidth = .5)
+```
+
+Note that this produces something that looks like a normal curve but since the points are randomly generated it doesn't fit exactly. If you increase the sample size, the curve becomes closer to normal.
+
+---
+
+## Standardizing with Z Scores
+
+SAT scores are distributed nearly normally with mean 1500 and standard deviation 300. ACT scores are distributed nearly normally with mean 21 and standard deviation 5. A college admissions officer wants to determine which of the two applicants scored better on their standardized test with respect to the other test takers: Pam, who earned an 1800 on her SAT, or Jim, who scored a 24 on his ACT?
+
+![](~/MAT104-Fall23/Week-5/three.png)
+<br>
+
+- Can we compare their raw scores? 
+
+- What should we do instead? 
+
+- We can compare how many standard deviations beyond the mean that each observation is
+
+  + Pam's score: $\frac{1800-1500}{300} \ = \ 1$
+  
+    + Pam's score is 1 standard deviation above the mean
+    
+    <br>
+    
+  + Jim's score: $\frac{24-21}{5} \ = \ 0.6$
+  
+    + Jim's score is 0.6 standard deviations above the mean
+    
+![](~/MAT104-Fall23/Week-5/four.png)
+
+<br>
+
+- These standardized scores are called Z scores
+
+- The Z score of an observation is the number of standard deviations it falls above or below the mean
+
+<br>
+
+  $Z \ = \ \frac{observation-mean}{SD}$
+
+<br>
+
+- Z scores are defined for distributions of any shape, but only when the distribution is normal can we use Z scores to calculate percentiles
+
+- Observations that are more than two standard deviations away from the mean $(|Z| > 2)$ are usually considered unusual 
+
+---
+
+## Percentiles
+
+- A percentile is the percentage of observations that fall below a given data point
+
+- Graphically, percentile is the area below the probability distribution curve to the left of that observation
+
+![](~/MAT104-Fall23/Week-5/five.png)
+
+---
+
+### Calculating Percentiles 
+
+- There are many ways to compute percentiles/area under the curve
+
+- In R:
+```{r}
+pnorm(1800, mean = 1500, sd = 300)
+```
+
+<br>
+
+### Using Z Score Tables
+
+- We have to calculate our Z score
+
+<br>
+
+  $Z \ = \ \frac{1800-1500}{300} \ = \ 1$
+
+<br>
+
+![](~/MAT104-Fall23/Week-5/six.png)
+
+- The data to the left, under the curve, equals 0.8413
+
+---
+
+## Example
+
+At Heinz ketchup factory the amounts which go into bottles of ketchup are supposed to be normally distributed with mean 36 oz. and standard deviation 0.11 oz. Once every 30 minutes a bottle is selected from the production line, and its contents are noted precisely. If the amount of ketchup in the bottle is below 35.8 oz. or above 36.2 oz., then the bottle fails the quality control inspection. What percent of bottles have less than 35.8 ounces of ketchup?
+
+Let X = amount of ketchup in a bottle: $X ~ N(\mu = 36, \sigma = 0.11)$
+
+![](~/MAT104-Fall23/Week-5/seven.png)
+
+- We need to calculate our Z score
+
+<br>
+
+  $Z = \frac{35.8-36}{0.11} \ = \ -1.82$
+  
+<br>
+
+**Using R**
+
+```{r}
+pnorm(-1.82, mean = 0, sd = 1)
+
+#OR
+
+pnorm(35.8, mean = 36, sd = 0.11)
+```
+
+- What percent of bottles pass the quality control inspection? 
+
+  + (A). 1.82%
+  + (B). 3.44%
+  + (C). 6.88%
+  + (D). 93.12%
+  + (E). 96.56%
+
+<br>
+
+- (D). 93.12%
+
+  + Why? 
+
+![](~/MAT104-Fall23/Week-5/eight.png) 
+
+<br>
+
+   $Z = \frac{35.8-36}{0.11} \ = \ -1.82$
+   
+<br>
+
+  $Z = \frac{36.2-36}{0.11} \ = \ 1.82$
+  
+<br>
+
+  $P(35.8 \ < \ X \ < \ 36.2) \ = \ P(-1.82 \ < \ Z \ < \ 1.82)$
+  
+<br>
+  
+  $= \ 0.9656 - 0.0344$
+  
+<br>
+  
+  $= \ 0.9312$
+  
+---
+
+## 68-95-99.7 Rule
+
+- For nearly normally distributed data:
+
+  + about 68% of all data fall within 1 SD of the mean
+  
+  + about 95% of all data fall within 2 SD of the mean
+  
+  + about 99.7% of all data fall within 3 SD of the mean
+  
+- It is possible for observations to fall 4, 5, or more standard deviations away from the mean, but these occurrences are very rare if the data are nearly normal
+
+![](~/MAT104-Fall23/Week-5/nine.png) 
+
+<br>
+
+**Describing Variability Using the 68-95-99.7 Rule**
+
+- SAT scores are distributed nearly normally with mean 1500 and standard deviation 300.
+
+  + ~68% of students score between 1200 and 1800 on the SAT
+  
+  + ~95% of students score between 900 and 2100 on the SAT
+  
+  + ~99.7% of students score between 600 and 2400 on the SAT
+
+![](~/MAT104-Fall23/Week-5/ten.png) 
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
