@@ -2,7 +2,7 @@
 title: "Worksheet 1 : Introduction to R"
 output:
   html_document:
-    css: /Users/matthewbachmann/Documents/GitHub/MAT104-Fall23/Week-1/style.css
+    css: ~/MAT104-Fall23/Week-1/style.css
     toc: yes
     toc_float: yes
     theme: cosmo
