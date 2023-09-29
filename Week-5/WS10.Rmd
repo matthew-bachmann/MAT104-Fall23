@@ -44,9 +44,9 @@ knitr::opts_chunk$set(eval = TRUE, results = TRUE)
 
 **Example:** Use R to graph a normal curve with mean 0 and standard deviation 1.
 
-Always graph at least 3 standard deviations worth of the graph. Since the mean is 0 and standard deviation is 1, we need to plot from $-3$ to $3$. The first step is to make an $x$-axis that is large enough, let's go from $-5$ to $5$ by $1$:
+Always graph at least 2 standard deviations worth of the graph. Since the mean is 0 and standard deviation is 1, we need to at least include $-2$ to $2$. The first step is to make an $x$-axis that is large enough, let's go from $-4$ to $4$ by $1$:
 ```{r}
-x <- seq(-5,5,1)
+x <- seq(-4,4,1)
 ```
 
 Now R has a function `dnorm()` that will calculate the $y$-value for each of our $x$-values based on a normal distribution:
@@ -56,9 +56,9 @@ df <- data.frame(x,y)
 ggplot(df, aes(x,y))+geom_point()
 ```
 
-This doesn't give us enough points, so let's make our $x$ vector have more values and regraph:
+This doesn't give us enough points, so let's make our $x$ vector have more values and re-graph:
 ```{r}
-x <- seq(-5,5,.1)
+x <- seq(-4,4,.1)
 y <-dnorm(x,0,1)
 df <- data.frame(x,y)
 ggplot(df, aes(x,y))+geom_point()
@@ -66,10 +66,7 @@ ggplot(df, aes(x,y))+geom_point()
 
 We can compare this to a normal distribution with mean $19$ and standard deviation $4$, for this we need a different vector of $x$-values in order to get at least $3$ standard deviations:
 ```{r}
-x <- seq(7,31,.1)
-y <-dnorm(x,19,4)
-df <- data.frame(x,y)
-ggplot(df, aes(x,y))+geom_point()
+# code here
 ```
 
 These both look basically the same, let's put this on the same graph:
@@ -265,11 +262,44 @@ pnorm(35.8, mean = 36, sd = 0.11)
 
 ---
 
+1. What percent of a standard normal distribution $N(\mu = 0,\sigma = 1)$ is
+found in the region with a $Z$-score less than $-1.75$? Use code to find your answer:
 
+```{r}
+#code here
+```
 
+2. What percent of a standard normal distribution $N(\mu = 0,\sigma = 1)$ is
+found in the region with a $Z$-score greater than $-0.35$? Use code to find your answer:
 
+```{r}
+#code here
+```
 
+3. Use `dnorm()` to create a graph for the normal distribution of SAT scores which has a mean of $1500$ and standard deviation $300$:
 
+```{r}
+#code here
+```
+
+4. Use `rnorm()` to create a graph for the normal distribution of SAT scores which has a mean of $1500$ and standard deviation $300$ with $10000$ samples:
+
+```{r}
+set.seed(123)
+#code here
+```
+
+5. Find the percentage of scores that have a $Z$-score less than $1.25$ in the normal distribution for SAT scores.
+
+```{r}
+#code here
+```
+
+6. From the exercise $4$, use `filter()` to figure out how many scores actually had a $Z$-score less than $1.25$ in your data. Is this close to what you would expect?
+
+```{r}
+#code here
+```
 
 
 
