@@ -1,0 +1,305 @@
+---
+title: "Lab 5"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: ./MAT104-Fall23/Week-6/style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Instructions
+
+In this lab, you will practice your statistical skills with the normal distribution. 
+
+#### How to **complete** this assignment.
+
+* Attempt each exercise in order.
+
+* Please follow the Davidson Honor Code and rules from the course syllabus regarding seeking help with this assignment.
+
+#### How to **submit** this assignment.
+
+* When you are finished, click the "Knit" button at the top of this panel. If there are no errors, an HTML file should pop up after a few seconds.
+
+* Take a look at the resulting HTML file that pops up. Make sure everything looks correct, your name is listed at the top, and that there is no 'junk' code or output. 
+
+* Save the HTML file (to your local computer) as: **lastname1_lastname2_Lab3**.
+
+* Upload your HTML file to Moodle. **Do not** upload the original .Rmd version. 
+
+* This assignment is <font color="darkred">**due Friday, October 9, 2023, no later than 5:00 pm Eastern**</font>. Points will be deducted for late submissions. 
+
+#### Grading Rubric
+
+There are 5 possible points on this assignment.
+
+**Baseline (C level work)**
+
+- Your .Rmd file knits to HTML without errors.
+- You answer questions correctly but do not use complete sentences.
+- There are typos and 'junk code' throughout the document.
+- You do not put much thought or effort into the Reflection answers.
+
+**Average (B level work)**
+
+- You use complete sentences to answer questions. 
+- You attempt every exercise/question. 
+
+**Advanced (A level work)**
+
+- Your code is simple and concise.
+- Your document is typo-free.
+- At the discretion of the instructor, you give exceptionally thoughtful or insightful responses.
+
+---
+
+In this lab, you’ll investigate the probability distribution that is most central to statistics: the normal distribution. If you are confident that your data are nearly normal, that opens the door to many powerful statistical methods. Here we’ll use the graphical tools of R to assess the normality of our data and also learn how to generate random numbers from a normal distribution.
+
+We'll be working with fast food data. This data set contains data on 515 menu items from some of the most popular fast food restaurants worldwide.
+
+##### **Exercise 1. (A) Load the `tidyverse` and `openintro` packages. (B) Load the `fastfood` dataset from the `openintro` package. (C) Take a glimpse of the `fastfood` dataset, once you have loaded it. (0.25 points)**
+
+```{r}
+#insert code here
+```
+
+
+
+You’ll see that for every observation there are 17 measurements, many of which are nutritional facts. You’ll be focusing on just three columns to get started: restaurant, calories, calories from fat. Let’s first focus on just products from McDonald's and Taco Bell.
+
+
+
+##### **Exercise 2. (A) Create a data set with only observations from McDonald's and Taco Bell called `mctaco`. (B) Make a box plot to visualize the distributions of the amount of calories from fat `cal_fat` of the options from these two restaurants. (D) What differences do you notice about the distributions and what inferences can you make about the health of these two options? (E) Does it seem like either could be a normal distribution? (0.5 points)**
+
+```{r}
+#insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+
+
+---
+
+##### **The Normal Distribution**
+
+It’s tempting to describe data as normal when faced with a unimodal symmetric distribution.
+
+We'll start by viewing our data in a histogram for just Taco Bell:
+
+##### **Exercise 3. (A) Make a histogram with bin width 50 to visualize the distributions of the amount of calories from fat `cal_fat` for Taco Bell. (B) Add the following code `aes(y = ..density..)` inside `geom_histogram()`. What has changed about the histograms? (0.5 points)**
+
+```{r}
+#insert code for (A) here
+```
+
+```{r}
+#insert code for (B) here
+```
+
+<div>
+:::{#answer}
+
+ANSWER (B) HERE
+
+:::
+</div>
+
+In a density histogram the areas of the bars add up to 1. The area of each bar can be calculated as simply the height times the width of the bar. Using a density histogram allows us to properly overlay a normal distribution curve over the histogram since the curve is a normal probability density function that also has area under the curve of 1. To see how close this is to a normal curve, we can plot a normal distribution curve on top of our histogram to see how closely the data follow a normal distribution. 
+
+##### **Exercise 4. (A) What two statistics are used to define a normal distribution curve? (B) Write code to find those two statistics and save them locally. (C) Take your code from question 3 (B) and add the following code to it: `+ stat_function( fun = dnorm, args = c(stat1,stat2), col="red")` replacing stat1 and stat2 with the stats you saved in part (B).  (0.25 points)**
+
+<div>
+:::{#answer}
+
+ANSWER (A) HERE
+
+:::
+</div>
+
+
+```{r}
+#insert code for (B) here
+```
+
+```{r}
+#insert code for (C) here
+```
+
+##### **Exercise 5.Produce a graph with the same components as in Exercise 4 but now with the McDonalds calories from fat data.  (0.5 points)**
+
+```{r}
+#insert code here
+```
+
+##### **Exercise 6. Based on the plots above, does it appear that either data set follows a nearly normal distribution? Why or why not? Which is closer? (0.25 points)**
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+
+
+
+---
+
+##### **Evaluating the Normal Distribution**
+
+Eyeballing the shape of the histogram is one way to determine if the data appear to be nearly normally distributed, but it can be frustrating to decide just how close the histogram is to the curve. An alternative approach involves constructing a normal probability plot, also called a normal Q-Q plot for “quantile-quantile”.
+
+```{r, eval = FALSE}
+taco <- filter(mctaco, restaurant == "Taco Bell")
+
+ggplot(data = taco, aes(sample = cal_fat)) + 
+  geom_line(stat = "qq") +
+  geom_qq_line(col="red")
+```
+
+It’s important to note that here, instead of using `x` inside `aes()`, you need to use `sample`.
+
+The x-axis values correspond to the quantiles of a theoretically normal curve with mean 0 and standard deviation 1 (i.e., the standard normal distribution). The y-axis values correspond to the quantiles of the original unstandardized sample data. A data set that is nearly normal will result in a plot where the points closely follow a diagonal line. Any deviations from normality leads to deviations of these points from that line.
+
+The plot for Taco Bell’s calories from fat shows points that tend to follow the line but don't go as small or as high as the red line. 
+
+##### **Exercise 7. Why does it make sense for the red line to be smaller than the black line on the left side of the graph? Has your opinion changed about how "close" to normal the Taco Bell data is? (0.25 points)**
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+##### **Exercise 8 Plot the same graph but now for McDonalds. Explain why the black line is larger than the red line on the right side of the graph.  (0.25 points)**
+
+```{r}
+#insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+Although these plots are useful, you’re left with the same problem that we encountered with the histograms: how close is close enough?
+
+A useful way to address this question is to rephrase it as: what do probability plots look like for data that I know came from a normal distribution? We can answer this by simulating data from a normal distribution using `rnorm`.
+
+```{r, eval = FALSE}
+taco <- filter(mctaco,restaurant == "Taco Bell")
+sim_cal_fat <- rnorm(n = nrow(taco), mean = mean(taco$cal_fat) , sd = sd(taco$cal_fat))
+sim_norm <- data.frame(sim_norm)
+```
+
+The first argument indicates how many numbers you’d like to generate, which we specify to be the same number of menu items in the Taco Bell data set using the `nrow()` function. The last two arguments determine the mean and standard deviation of the normal distribution from which the simulated sample will be generated. 
+
+---
+
+##### **Exercise 9. Make a normal probability plot (QQ plot) of `sim_norm`. Do all of the points fall on the line? How does this plot compare to the probability plot for the real data? What does this suggest about whether the real data follows a normal distribution? (0.75 points)**
+
+```{r}
+#insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+
+##### **Exercise 10. As you can see, normal probability plots can be used both to assess normality and visualize skewness. (A) Make a normal probability plot for one of the following variables (calories, carbohydrates ,total_fat, cholesterol, sodium, total_carb) from a restaurant of your choice. (this needs to be different than your partner). (B) Based on this normal probability plot, is this variable left skewed, symmetric, or right skewed? (C) Use a histogram to confirm your findings. (0.75 points)**
+
+```{r}
+#insert code for (A) here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+
+```{r}
+#insert code for (C) here
+```
+
+---
+
+##### **Normal Probabilities**
+
+Okay, so now you have a slew of tools to judge whether or not a variable is normally distributed. Why should you care?
+
+It turns out that statisticians know a lot about the normal distribution. Once you decide that a random variable is approximately normal, you can answer all sorts of questions about that variable related to probability. Take, for example, the question of, “What is the probability that a randomly chosen Taco Bell product has more than 300 calories from fat?”
+
+Assuming Taco Bell calorie from fat data is approximately normal, we can compute the probability in the same we did on the last worksheet:
+
+```{r, eval=FALSE}
+1-pnorm(300,mean(taco$cal_fat),sd(taco$cal_fat))
+```
+
+We can compare this percentage to the actual number of items with more than 300 calories using `filter()`:
+
+```{r, eval=FALSE}
+nrow(filter(taco, cal_fat>300))/nrow(taco)
+```
+
+And see that the percentages are reasonably close. The closer your data is to being normally distributed, the more reliable this measurement is.
+
+
+##### **Exercise 11. Write out two probability questions that you would like to answer about any of the restaurants in this dataset. Calculate those probabilities using `pnorm()` assuming a normal distribution.  Also actually calculate the probabilities using the `filter()` and `nrow()` functions  (four probabilities in all) (These answers need to be different than your partners). (0.75 points)**
+
+<div>
+:::{#answer}
+
+Type questions you want to answer here
+
+:::
+</div>
+
+
+```{r}
+#insert code to find the answers here
+```
+
+
+
+
+
+
+
+
+
+
