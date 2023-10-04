@@ -1,0 +1,171 @@
+---
+title: "Foundations for Inference"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Central Limit Theorem by Example
+
+
+---
+
+## Rolling a six sided die
+
+1. Let $X$ be the random variable that gives the value on a six sided die with probability distribution $P(X=1) = \frac{1}{21}$, $P(X=2) = \frac{2}{21}$, $P(X=3) = \frac{3}{21}$, $P(X=4) = \frac{4}{21}$, $P(X=5) = \frac{5}{21}$, and $P(X=6) = \frac{6}{21}$. How can we be sure this is a valid probability distribution? Find the expected value of $X$ and the standard deviation.
+
+```{r}
+#expected value and standard deviation
+```
+
+Let's graph a histogram for the probability distribution given in Exercise 1.
+
+```{r}
+df <- data.frame(face = c(1:6), prob = c(1/21,2/21,3/21,4/21,5/21,6/21))
+ggplot(df, aes(x=face,y=prob)) + 
+  geom_col() + 
+  scale_y_continuous(breaks = seq(0, 7/21, by = 1/21), labels=c("0","1/21","2/21","3/21","4/21","5/21","6/21","7/21")) +
+  scale_x_continuous(breaks = seq(0,6, by = 1))
+  
+```
+
+
+We found the expected value in Exercise 1 to be $13/3 \approx 4.3333$ and the standard deviation to be $1.4907$. Now we are going to investigate the situation where we don't know the probability associated to the die but we do have time to roll the die many, many times. 
+
+Notice that this investigation is actually a more realistic situation. We often don't have perfect information about the probability of a die roll or a population statistic. We usually need to **estimate** the **parameter of interest** with experiments. This could be rolling a die or polling a subset of the population. In our example the parameter of interest is expected value of the die, if we know the probability of each face occuring then we can just compute it, if we don't, we need to run an experiment.
+
+Let's write a function that will simulate rolling a die $n$ times. Keep in mind that we would not actually know the probabilities if we did this experiment in real life.
+
+```{r}
+roll_loaded_die <- function(n) {
+  die <- c(1:6)
+  replicate(n,sample(die,1,prob = c(1/21,2/21,3/21,4/21,5/21,6/21)))
+}
+```
+
+2. Roll the loaded die one hundred times and find the average outcome  (again, we *could* do this experiment in reality). 
+
+```{r}
+#100 simulations
+```
+
+This is the average outcome for one *sample* with *sample size* $100$. This is called a *sample statistic* because we computed it from a sample. If we take a sample of size $100$ and find the average repeatedly, we now have a new random variable, the *sample mean*. Since the sample mean is a random variable, it has it's own probability distribution. Let's investigate what it is by running our simulation $10000$ times and plotting the results
+(also add this code `+ scale_x_continuous(breaks = seq(3,5, by = .1))`:
+
+```{r}
+#run simulation here and save as mean_outcomes
+```
+
+```{r}
+#graph the histogram here
+```
+
+Now let's find the average of our sample mean and the standard deviation. Then graph a density histogram with a normal curve overlaid (`+ stat_function(fun = dnorm, args = c(avg_sample_mean,sd_sample_mean), col="red"`):
+
+```{r}
+# histogram here
+```
+
+Notice that the average of the outcomes agrees very with the expected value very closely but the standard deviation is off by a factor of 10. It turns out that the standard deviation is directly related to our sample size (which was 100).
+
+### The Central Limit Theorem for Sample Means
+
+Suppose $X$ is a random variable and let $\mu_X$ denote the mean of $X$ and $\sigma_X$ denote the standard deviation of $X$. Then for a sample of size $n$, the random variable $\overline{X}$, which is the sample mean, tends toward a normal distribution with mean $=\mu_X$ and standard deviation $=\frac{\sigma_X}{\sqrt{n}}$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right) $$
+
+### The Central Limit Theorem for Sums of Random Variables
+
+The central limit theorem does not just hold for sample means, it also holds for the sum of a bunch of random variables.
+
+3. What is the expected value of rolling the loaded die from before 100 times and finding the sum of the outcomes?
+
+This would be difficult to compute by hand because we need to list out all possible sums (which can range from $100$ to $600$). Instead, let's use ideas from the central limit theorem and then state the result after.
+
+```{r}
+#roll loaded die 100 times and add up results
+```
+
+```{r}
+#replicate the previous experiment 1000 times and save as sum_outcomes
+```
+
+```{r}
+#graph the histogram
+```
+
+```{r}
+#find the average and standard deviation and graph the density histogram with the normal curve
+```
+
+Because of the central limit theorem we expect the value to be close to $433.3$, which is exaclty the expected value of the original die times $10$.
+
+Suppose $X$ be a random variables with mean $\mu_X$ and standard deviation $\sigma_X$. Then for a sample of size $n$, the random variable $S_n = n \cdot X$  tends toward a normal distribution with mean $=n \cdot \mu_X$ and standard deviation $=\sqrt{n}\sigma_X$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \sim N \left(n \cdot \mu_X,\sqrt{n}\sigma_X \right)$$
+
+- This is a remarkable result! It states that the sum of random variables will follow an approximately normal distribution regardless of the distribution of the variable. If a quantity is the result of many small independent contributions, it very likely follows a normal distribution. For example, the weight of a loaf of bread is the sum of the weights of each individual slice. Regardless of how the weight of each slice is distributed, the weight of the loaf is likely to follow a normal distribution. Or even the movement of a particle in the air. Since it's change in position is the result of a bunch of tiny collisions, when added up the change in coordinates is likely to follow a normal distribution. 
+
+4. Verify the standard deviation from the last example is close to what the central limit theorem predicts.
+
+```{r}
+
+```
+
+
+### The Central Limit Theorem for Proportions
+
+Suppose $\hat{p}$ is the proportion of data points in your sample that satisfy some criteria. Then for a sample of size $n$, the random variable $\hat{p}$  tends toward a normal distribution with mean $=p$ (where $p$ is the proportion of data that actually satisfy the criteria) and standard deviation $=\sqrt{\frac{p(1-p)}{n}}$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \sim N \left(p,\sqrt{\frac{p(1-p)}{n}} \right) $$
+
+---
+Class Activity
+
+An unknown distribution has a mean of $80$ and a standard deviation of $12$. A sample size of $95$ is drawn randomly from the population.
+
+5. Find the probability that the sum of the values is greater than $7500$.
+
+```{r}
+#code here
+```
+
+6. Find the probability that the sum of the values is less than $7100$.
+
+```{r}
+#code here
+```
+
+7. Find the sum that is $1.5$ standard deviations from the mean of the sums.
+
+```{r}
+#code here
+```
+
+8. Find the probability that the mean of the value is less than $81$.
+
+```{r}
+#code here
+```
+
+
