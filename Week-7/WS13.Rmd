@@ -1,0 +1,190 @@
+---
+title: "WS 13: Confidence Intervals"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Finding Z-scores
+- Determine confidence intervals
+
+
+---
+
+### Z-Scores and percentiles
+
+First we will do a bit of review of $Z$-scorse and see how to use `R` to find them.
+
++ Recall, the **$Z$-score** of an observation is the number of standard deviations it is from the mean. 
+
++ **Example:** Suppose normally distributed data has mean $12$ and standard deviation $3$.
+  - The observation $16.5$ has a $Z$-score of $1.5$ ($1.5 \cdot 3 = 4.5$). 
+  - The observation $9$ has a $Z$-score of $-1$.
+
+One of the nice properties of normally distributed data is that we know exactly how much data is in different percentiles. We can use `pnorm()` to find this. 
+
++ **Example:** The observation $16.5$ in $N(12,3)$ is in the:
+```{r}
+pnorm(16.5,12,3)
+#93.3 percentile.
+```
+
+So, $93.3 \%$ of data lies below $16.5$ and $7.7 \%$ of observations are higher than $16.5$.
+
+We often want to find the middle $x \%$ of data. 
+
++ **Example:** To find the middle $90 \%$ of data we need to leave $5 \%$ in the lower tail and $5 \%$ in the upper tail. Thus, we need to find the $5$ percentile and the $95$ percentile. Let's do this again for the distribution $N(12,3)$ now using `qnorm()`:
+```{r}
+qnorm(.05, 12, 3)
+qnorm(.95,12,3)
+```
+So $90 \%$ of the normal distribution $N(12,3)$ is between the values $7.065$ and $16.93$.
+
++ If you know the observation and want the percentile use `pnorm()`
++ If you know the percentile but want the observations use `qnorm()`
++ If you use `qnorm()` for the standard normal distribution $N(0,1)$ it gives $Z$-scores
+
+
+### The Central Limit Theorem for Proportions
+
+Suppose $\hat{p \ }$ is the proportion of data points in your sample that satisfy some criteria. Then for a sample of size $n$, the random variable $\hat{p \ }$  tends toward a normal distribution with mean $=p$ (where $p$ is the proportion of data that actually satisfy the criteria) and standard deviation $=\sqrt{\frac{p(1-p)}{n}}$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \ \sim N \left(p,\sqrt{\frac{p(1-p)}{n}} \right) $$
+
+In order to apply the central limit theorem, the sample size must satisfy the **success-failure condition** and the observations must be **independent**. The success-failure condition requires
+
+$$ np \geq 10 \text{ and } n(1-p) \geq 10 $$
+
+and observations are independent when they are the result of a seemingly random process.
+
+We often need to estimate the population paramaeter using a **point estimate** from a sample. 
+
+**Example:** From a simple random sample of $1000$ Americans we found that $23 \%$ support a recent policy decision. 
+Since
+$$.23 * 1000 = 230 \geq 10 \text{ and } (1-.23)*1000=770 \geq 10,$$
+the success failure condition is satisfied. So, the central limit theorem for population proportions applies and we assume the distribution of $\hat{p \ }$ is normal:
+
+$$N\left(\hat{p \ },\sqrt{\frac{\hat{p \ }(1-\hat{p \ })}{n}}\right) = N(.23,.0133)$$
+Recall that this means that the distribution of $\hat{p \ }$ looks like:
+
+```{r}
+mean <- .23
+sd <- sqrt(.23*.77/1000)
+x <- seq(mean-(3*sd),mean+(3*sd),sd/10)
+y <-dnorm(x,.23,(sqrt(.23*.77/1000)))
+df <- data.frame(x,y)
+ggplot(df, aes(x,y))+geom_line()
+```
+
+Since $\hat{p \ }$ follows a normal distribution, we can find the interval around $\hat{p \ }$ that captures $95%$ of the data and be $95 \%$ confident that the population parameter $p$ lands in that interval. We can use `qnorm()` to find the $Z$-score for a percentile:
+
+```{r}
+qnorm(.025)
+qnorm(.975)
+```
+
+Now we use the $Z$-score to find an interval:
+
+```{r}
+mean - 1.96 * sd
+mean + 1.96 * sd
+```
+
+with $95 \%$ confidence the population of people that support the recent policy decision is between $20.39 \%$ and $25.61 \%$.
+
+### Finding a large enough smaple size
+
+**Example**: Suppose a phone company wants to determine the current percentage of customers over sixty who use text messaging on their cell phones. How many customers over sixty should the company survey in order to be $95 \%$ confident that the estimated (sample) proportion is within three percentage points of the true population proportion of customers over 60 who use text messaging on their cell phones.
+
+In order to get withing $3 \%$ of the target we want to create an interval of $\pm 3 \%$ around $\hat{p \ }$. That is,
+
+$$ \hat{p \ } \pm .03 = \hat{p \ } \pm z \cdot \sigma = \hat{p \ } \pm z \cdot \sqrt{\frac{\hat{p \ }(1-\hat{p \ })}{n}}$$
+So, we really need to find an $n$ big enough so that
+
+$$.03 = z \cdot \sqrt{\frac{\hat{p \ }(1-\hat{p \ })}{n}}.$$
+Solving for $n$ we have 
+
+$$n = z^2 \cdot \frac{\hat{p \ }(1-\hat{p \ })}{.03^2}.$$
+
+Variability will be the largest when $\hat{p \ }= 0.5$, so this is the theoretical "worst case" scenario. We want our $n$ to work even in the worst case, so we will use $0.5$ in our calculation. The last step is to find the appropriate $Z$-score which we already found in the last example is $\pm 1.96$
+
+
+Plugging everything in we get 
+
+```{r}
+(1.96)^2*0.5*0.5/0.03/0.03
+```
+At least $1068$ people need to be sampled in order to be $95 \%$ confident that we are within $3 \%$ of the true population proportion.
+
+
+In summary, if you want to be within $x \%$ of the true population proportion for a given confidence interval then you need to use the formula
+
+$$n = z^2 \cdot \frac{.5^2}{x^2}.$$
+
+where $z$ is the $Z$-score corresponding to the desired confidence interval.
+
+---
+
+## Class Activity
+
+1. Suppose that we want to estimate the percent of adults living in a large city who have cell phones. 700 randomly selected adults are surveyed. Of the 700 people surveyed, 521 reported that they own a cell phone. Using a 95% confidence level, compute a confidence interval estimate for the true proportion of adult residents of this city who have cell phones. (Don't forget to make sure that the success-failure condition is satisfied).
+
+```{r}
+#type your calculations here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+2. Suppose we want to estimate how many people click on an Amazon ad. We want to be within $5 \%$ of the true population proportion with $90 \%$ confidence. How many people should we sample? 
+
+```{r}
+#type your calculations here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+3. In a group of 500 adults over 50, 230 reported using Facebook. Find a 90% confidence interval for the true proportion of adults over 50 who use Facebook.
+
+```{r}
+#type your calculations here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
