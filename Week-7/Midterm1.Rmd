@@ -1,0 +1,413 @@
+---
+title: "Midterm 1"
+author: Student Name
+output:
+  html_document:
+    css: ./style.css
+    theme: cosmo
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+### Instructions
+
++ This is the take home midterm due on Tuesday, October 17th, at 5:00 pm.
+
++ There are 20 possible points on this assignment.
+
++ **Rules:**
+
+  - You are allowed to use any course materials on this midterm. This includes the course texts, previous worksheets, and previous labs.
+
+  - You should not be using google or any other website at any point during this exam. 
+  - If you are having trouble using `R` (graphing, for example), look through old worksheets and labs for example code. You will not be asked to do anything in `R` that you have not done before. (If you really need to, you can google how to do something in `R`, but that is the only time you are permitted to use outside resources)
+  - You are not permitted to speak with any one other than me about the midterm till after the due date. (Even if you finish early, don't talk to your class mates about it since they might not be finished).
+  - Please attempt the exam early so that we can fix any knitting issues on Monday or early Tuesday. Your midterm will not be accepted if it does not knit.
+
++ Answer `R` questions by writing code where you are asked to `## insert code here`
++ Answer written questions in the space provided where it says "Write your answer here".
++ Written answers need to be in complete sentences. 
++ You need to show your work or `R` code for any calculations.
+
+
+#### How to **submit** this assignment.
+
+* When you are finished, click the "Knit" button at the top of this panel. If there are no errors, an HTML file should pop up after a few seconds.
+
+* Take a look at the resulting HTML file that pops up. Make sure everything looks correct, your name is listed at the top, and that there is no 'junk' code or output. 
+
+* Save the HTML file (to your local computer) as: **lastname_midterm1**.
+
+* Upload your HTML file to Moodle. **Do not** upload the original .Rmd version. 
+
+
+
+---
+
+##### **Exercise 1. Load the `tidyverse` and `openintro` packages. Additionally, save the `county` data from openintro locally as `county`. (0.1) points**
+
+```{r}
+## insert code here
+```
+
+
+---
+
+##### **Exercise 2. How many rows and columns are in the data set (REMINDER: answer in complete sentences)? (You don't have to use `R` code to answer this, but you can if you want. Just add an `R` chunk if needed) (0.1) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+---
+
+##### **Exercise 3. View the documentation for the `county` data. What does the column `multi_unit` mean?  (0.1) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+---
+
+##### **Exercise 4. Which variables are numeric? List them, and specify whether each is continuous or discrete. (0.75) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div>
+
+
+---
+
+##### **Exercise 5. Which variables are categorical? List them, and specify whether each is ordinal or nominal. (0.75) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div>
+
+---
+
+##### **Exercise 6. (A.) Create a histogram of the population change across the counties from 2000 to 2017. Choose an appropriate bin width for your histogram, add a title, and label the axis appropriately. (B.) What is the mean, median, IQR, variance, and standard deviation of population change?  (1)points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+B. Write your answer here
+
+:::
+</div>
+
+
+
+---
+
+##### **Exercise 7. (A.) Create a new data set that only contains counties in North Carolina. (B.) How many rows and columns are in this data set? (0.1)points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+B. Write your answer here
+
+:::
+</div> 
+
+---
+
+##### **Exercise 8. (A.) Make a box plot for population change from the North Carolina data. (B.) How many outliers are there? (C.) Note that the edges of the rectangle are approximately at $-1$ and $4$, what does this tell you about the data? (D.) What does the bold line in the middle of the box plot represent? (1)points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+B. Write your answer here
+
+C. Write your answer here
+
+D. Write your answer here
+
+:::
+</div> 
+
+
+---
+
+
+##### **Exercise 9. (A.) Create a scatterplot of household median income and poverty. (B.) Describe the relationship between the two variables. (0.5) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+B. Write your answer here
+
+:::
+</div> 
+
+
+---
+
+##### **Exercise 10. Recreate the scatter plot from Exercise 9, but represent median education with color. (B.) Now create a another plot and split your plot into facets to display scatterplots of your data by median education. (C.) What information do these plots provide about the relationship between median education level and median household income? (1) points**
+
+```{r}
+## insert code for first plot here
+```
+
+```{r}
+## insert code for second plot here
+```
+
+<div>
+:::{#answer}
+
+C. Write your answer here
+
+:::
+</div>  
+
+
+---
+
+##### **Exercise 11. True or False. Random sampling is useful for finding evidence of a causal relationship. (no explanation required) (0.1) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+
+---
+
+##### **Exercise 12. Multiple Choice. A professor states that a majority of her students scored above the mean on her last exam. This means which of the following: (0.5) points**
+
+  **A. The professor is crazy because this is not possible.** <br>
+  **B. The distribution of scores was right-skewed.** <br>
+  **C. The distribution of scores was left-skewed.** <br>
+  **D. the distribution of scores was symmetric.** <br>
+  **E. The distribution of scores was uniform.** <br>
+  
+**Explain why you chose the answer that you did**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+
+---
+
+##### **Exercise 13. Multiple Choice. A professor gives a test to 140 students and determines the median score. After grading the test, she realizes that the 5 students with the highest scores did exceptionally well. She decides to award these 5 students a bonus of 10 more points. The median of the new score distribution will be ______ that of the original score distribution. (0.5) points**
+
+**A. Lower than** <br>
+**B. equal to** <br>
+**C. higher than** <br>
+**D. Depending on skewness, higher or lower than** <br>
+**E. Depending on modality, higher or lower than** <br>
+
+**Explain why you chose the answer that you did**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+---
+
+##### **Exercise 14. At a university, $13 \%$ of students bike to class. (A.) Calculate the expected number of students that bike to class in a random sample of $100$ students from this university. (B.) The university stats class starts at 8 am on Monday mornings. One Saturday morning at 7:55 am there are 27 students outside the classroom waiting for it to open. Should you use the same approach as from part (A.) in order to calculate the expected number of students who bike to class among these 27 students? (1) points**
+
+<div>
+:::{#answer}
+
+A. Write your answer here
+
+B. Write your answer here
+
+:::
+</div> 
+
+
+---
+
+##### **Exercise 15. Suppose there is a disease that is  occurs in $27.2 \%$ of a country’s population. There is a test that is $99.4 \%$ accurate for those who have the disease. For those who do not have the disease, the test is $92.1 \%$ accurate. If an individual from the country tests positive, what is the probability that they have the disease?  (1.5) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+---
+
+
+##### **Exercise 16. A portfolio’s value increases by $16 \%$ during a financial boom and by $8 \%$ during normal times. It decreases by $12 \%$ during a recession. What is the expected percent return on this portfolio if each scenario is equally likely? (1.5) points**
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+---
+
+##### **Exercise 17. In your sock drawer you have 7 blue, 5 gray, and 4 black socks. Half asleep one morning you grab 2 socks at random and put them on. Find the probability you end up wearing (A.) 2 blue socks (B.) No gray socks  (C.) A green sock (D.) matching socks. (1.5) points**
+
+<div>
+:::{#answer}
+
+A. Write your answer here
+
+B. Write your answer here
+
+C. Write your answer here
+
+D. Write your answer here
+
+
+:::
+</div> 
+
+##### **Exercise 18. Suppose you roll 4 dice. Let $A$ be the event that you roll at least one $4$. (A.) Describe in words the event $A^c$. (B.) Find $P(A^c)$. (C.) Find $P(A)$. (1.5) points**
+
+<div>
+:::{#answer}
+
+A. Write your answer here
+
+B. Write your answer here
+
+C. Write your answer here
+
+:::
+</div> 
+
+
+##### **Exercise 19. Sally wears sunscreen $50 \%$ of days during the summer. She goes swimming $15 \%$ of the days during the summer. The probability that she wears sunscreen given that she went swimming is $90 \%$. On a random day in the summer find the probability that Sally: (A.) went swimming and wore sunscreen. (B.) went swimming or wore sunscreen.   (1) points**
+
+<div>
+:::{#answer}
+
+A. Write your answer here
+
+B. Write your answer here
+
+:::
+</div> 
+
+##### **Exercise 20. Suppose the amount of time spent eating dinner follows an approximate normal distribution with mean $40$ minutes and standard deviation $12$ minutes. (A.) Find the probability that a randomly selected person spends less than $30$ minutes eating dinner. (B.) What is the probability that a person spends between $15$ minutes and an hour eating dinner? (C.) What is the $Z$-score of an observation where someone spent $45$ minutes eating dinner?   (2) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+#### **Exercise 21. The height of men in the U.S. is thought to be normally distributed with mean $69.3$ inches. About $18.5 \%$ of men are over $72$ inches. What is the standard deviation of the distribution of hieghts of males in the U.S.? (1) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+#### **Exercise 22. A store randomly samples $707$ shoppers over the course of a year and finds that $142$ of them made their visit because of a coupon they’d received in the mail. Construct a $95 \%$ confidence interval for the fraction of all shoppers during the year whose visit was because of a coupon they’d received in the mail. (1.5) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+#### **Exercise 23. You plan to conduct a survey at Davidson about political awareness of students. You want to estimate the proportion of students who plan to vote in the next presidential election. How many students must you interview in order to have $95 \%$ confidence that the sample proportion is within $7 \%$ of the true proportion? (1) points**
+
+```{r}
+## insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+
+
+
+
+
+
+
