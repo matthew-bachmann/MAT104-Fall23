@@ -20,6 +20,8 @@ knitr::opts_chunk$set(eval = TRUE, results = TRUE)
 
 + There are 20 possible points on this assignment.
 
++ This midterm should take you 1.5-2 hours to complete. Do NOT exceed 4 hours of working on the exam. You may work on the exam at various points between now and the due date but the total time cannot exceed 4 hours. 
+
 + **Rules:**
 
   - You are allowed to use any course materials on this midterm. This includes the course texts, previous worksheets, and previous labs.
