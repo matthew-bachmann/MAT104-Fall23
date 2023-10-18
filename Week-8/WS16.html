@@ -1607,19 +1607,22 @@ condition holds for both groups.</p>
 <p>In practice we don’t know <span class="math inline">\(p_1\)</span>
 and <span class="math inline">\(p_2\)</span> so we use the sample
 proportions <span class="math inline">\(\hat{p_1 \ }\)</span> and <span class="math inline">\(\hat{p_2 \ }\)</span>.</p>
+<hr />
 </div>
 <div id="confidence-intervals" class="section level2">
 <h2><strong>Confidence Intervals</strong></h2>
-<p>We can create confidence intervals in exactly the same way as before,
-we just have to use a different standard deviation.</p>
-<div id="example-according-to-a-report-on-sleep-deprivation-by-the-centers-for-disease-control-and-prevention-the-proportion-of-california-residents-who-reported-insufficient-rest-or-sleep-during-each-of-the-preceding-30-days-is-8.0-while-this-proportion-is-8.8-for-oregon-residents.-these-data-are-based-on-simple-random-samples-of-11545-california-and-4691-oregon-residents.-calculate-a-95-confidence-interval-for-the-difference-between-the-proportions-of-californians-and-oregonians-who-are-sleep-deprived-and-interpret-it-in-context-of-the-data." class="section level4">
-<h4><strong>Example:</strong> According to a report on sleep deprivation
-by the Centers for Disease Control and Prevention, the proportion of
-California residents who reported insufficient rest or sleep during each
-of the preceding <span class="math inline">\(30\)</span> days is <span class="math inline">\(8.0 \%\)</span>, while this proportion is <span class="math inline">\(8.8\%\)</span> for Oregon residents. These data
+<p>We can create confidence intervals in exactly the same way as for a
+single sample proportions, we just have to use a different mean and
+standard deviation.</p>
+<hr />
+<div id="example" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>According to a report on sleep deprivation by the Centers for Disease
+Control and Prevention, the proportion of California residents who
+reported insufficient rest or sleep during each of the preceding <span class="math inline">\(30\)</span> days is <span class="math inline">\(8.0 \%\)</span>, while this proportion is <span class="math inline">\(8.8\%\)</span> for Oregon residents. These data
 are based on simple random samples of <span class="math inline">\(11,545\)</span> California and <span class="math inline">\(4,691\)</span> Oregon residents. Calculate a <span class="math inline">\(95 \%\)</span> confidence interval for the
 difference between the proportions of Californians and Oregonians who
-are sleep deprived and interpret it in context of the data.</h4>
+are sleep deprived and interpret it in context of the data.</p>
 <pre class="r"><code># check success-failure condition
 
 # mean
@@ -1629,15 +1632,14 @@ are sleep deprived and interpret it in context of the data.</h4>
 # confidence interval</code></pre>
 <hr />
 </div>
-<div id="exercise-a-kaiser-family-foundation-poll-for-us-adults-in-2019-found-that-79-of-democrats-55-of-independents-and-24-of-republicans-supported-a-generic-national-health-plan.-there-were-347-democrats-298-republicans-and-617-independents-surveyed.-calculate-a-95-confidence-interval-for-the-difference-between-the-proportion-of-democrats-and-inde--pendents-who-support-a-national-health-plan-p_d-p_i-and-interpret-it-in-this-context." class="section level4">
-<h4><strong>Exercise:</strong> A Kaiser Family Foundation poll for US
-adults in 2019 found that <span class="math inline">\(79 \%\)</span> of
-Democrats, <span class="math inline">\(55 \%\)</span> of Independents,
-and <span class="math inline">\(24 \%\)</span> of Republicans supported
-a generic “National Health Plan”. There were <span class="math inline">\(347\)</span> Democrats, <span class="math inline">\(298\)</span> Republicans, and <span class="math inline">\(617\)</span> Independents surveyed. Calculate a
-95% confidence interval for the difference between the proportion of
-Democrats and Inde- pendents who support a National Health Plan <span class="math inline">\((p_D − p_I )\)</span>, and interpret it in this
-context.</h4>
+<div id="exercise" class="section level4">
+<h4><strong>Exercise:</strong></h4>
+<p>A Kaiser Family Foundation poll for US adults in 2019 found that
+<span class="math inline">\(79 \%\)</span> of Democrats, <span class="math inline">\(55 \%\)</span> of Independents, and <span class="math inline">\(24 \%\)</span> of Republicans supported a generic
+“National Health Plan”. There were <span class="math inline">\(347\)</span> Democrats, <span class="math inline">\(298\)</span> Republicans, and <span class="math inline">\(617\)</span> Independents surveyed. Calculate a
+<span class="math inline">\(95 \%\)</span> confidence interval for the
+difference between the proportion of Democrats and Independents who
+support a National Health Plan and interpret it in this context.</p>
 <pre class="r"><code># check success-failure condition
 
 # mean
@@ -1655,20 +1657,20 @@ to what we did for a single proportion.</p>
 <ul>
 <li>Assume the null hypothesis is true</li>
 <li>for the difference of proportions the null hypothesis is usually
-that there is no difference between the proportions, so <span class="math inline">\(p_1-p_2 = 0\)</span>.</li>
+that there is no difference between the proportions, so <span class="math inline">\(p_1-p_2 = 0\)</span>, or <span class="math inline">\(p_1=p_2\)</span>.</li>
 <li>Since the populations are no different (we are assuming the null
 hypothesis), the sample proportion we use for the success-failure test
 is called the <strong>pooled proportion</strong>.</li>
 <li>The <strong>pooled proportion</strong> is number of successes out of
 total samples.</li>
-<li>This is the best estimate of the proportion if they are equal to
-each other.</li>
+<li>This is the best estimate of the proportion when the two proportions
+are assumed to be equal to each other.</li>
 </ul>
-<div id="example-lets-perform-a-hypothesis-test-to-determine-if-the-data-from-the-last-example-provides-sufficient-evidence-to-think-the-there-is-a-real-difference-in-the-population-proportions." class="section level4">
-<h4><strong>Example:</strong> Let’s perform a hypothesis test to
-determine if the data from the last example provides sufficient evidence
-to think the there is a real difference in the population
-proportions.</h4>
+<div id="example-1" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>Let’s perform a hypothesis test to determine if the data from the
+last example provides sufficient evidence to think the there is a real
+difference in the population proportions.</p>
 <p><span class="math inline">\(H_0:\)</span></p>
 <p><span class="math inline">\(H_A:\)</span></p>
 <pre class="r"><code># check success-failure condition
@@ -1685,15 +1687,17 @@ proportions.</h4>
 </div>
 <hr />
 </div>
-<div id="exercise-a-survey-asked-827-randomly-sampled-registered-voters-in-california-do-you-support-or-do-you-oppose-drilling-for-oil-and-natural-gas-off-the-coast-of-california-or-do-you-not-know-enough-to-say-below-is-the-distribution-of-responses-separated-based-on-whether-or-not-the-respondent-graduated-from-college.-conduct-a-hypothesis-test-to-determine-if-the-data-provide-strong-evidence-that-the-proportion-of-college-graduates-who-do-not-have-an-opinion-on-this-issue-is-different-than-that-of-non-college-graduates." class="section level4">
-<h4><strong>Exercise:</strong> A survey asked <span class="math inline">\(827\)</span> randomly sampled registered voters in
-California “Do you support? Or do you oppose? Drilling for oil and
-natural gas off the Coast of California? Or do you not know enough to
-say?” Below is the distribution of responses, separated based on whether
-or not the respondent graduated from college. Conduct a hypothesis test
-to determine if the data provide strong evidence that the proportion of
-college graduates who do not have an opinion on this issue is different
-than that of non-college graduates.</h4>
+<div id="exercise-1" class="section level4">
+<h4><strong>Exercise:</strong></h4>
+<p>A survey asked <span class="math inline">\(827\)</span> randomly
+sampled registered voters in California “Do you support? Or do you
+oppose? Drilling for oil and natural gas off the Coast of California? Or
+do you not know enough to say?” Below is the distribution of responses,
+separated based on whether or not the respondent graduated from college.
+Conduct a hypothesis test to determine if the data provide strong
+evidence that the proportion of college graduates who do not have an
+opinion on this issue is different than that of non-college
+graduates.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1757,12 +1761,14 @@ tends toward a normal distribution with mean <span class="math inline">\(=\mu_X\
 </div>
 <div id="confidence-intervals-1" class="section level2">
 <h2><strong>Confidence Intervals</strong></h2>
-<div id="example-suppose-average-pizza-delivery-times-are-normally-distributed-with-an-unknown-population-mean-and-a-population-standard-deviation-of-six-minutes.-a-random-sample-of-28-pizza-delivery-restaurants-is-taken-and-has-a-sample-mean-delivery-time-of-36-minutes.-find-a-90-confidence-interval-estimate-for-the-population-mean-delivery-time." class="section level4">
-<h4><strong>Example:</strong> Suppose average pizza delivery times are
-normally distributed with an unknown population mean and a population
-standard deviation of six minutes. A random sample of <span class="math inline">\(28\)</span> pizza delivery restaurants is taken
-and has a sample mean delivery time of <span class="math inline">\(36\)</span> minutes. Find a <span class="math inline">\(90 \%\)</span> confidence interval estimate for
-the population mean delivery time.</h4>
+<div id="example-2" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>Suppose average pizza delivery times are normally distributed with an
+unknown population mean and a population standard deviation of six
+minutes. A random sample of <span class="math inline">\(28\)</span>
+pizza delivery restaurants is taken and has a sample mean delivery time
+of <span class="math inline">\(36\)</span> minutes. Find a <span class="math inline">\(90 \%\)</span> confidence interval estimate for
+the population mean delivery time.</p>
 <pre class="r"><code># There is no success-failure condition for sample means. We just need to be given the population standard deviation and the CLT applies. 
 
 # mean
@@ -1778,16 +1784,15 @@ adjustment (more on this next week).</li>
 </div>
 <div id="hypothesis-testing" class="section level2">
 <h2><strong>Hypothesis Testing</strong></h2>
-<div id="example-suppose-a-baker-claims-that-his-bread-height-is-more-than-15-cm-on-average.-several-of-his-customers-do-not-believe-him.-to-persuade-his-customers-that-he-is-right-the-baker-decides-to-do-a-hypothesis-test.-he-bakes-10-loaves-of-bread.-the-mean-height-of-the-sample-loaves-is-17-cm.-the-baker-knows-from-baking-hundreds-of-loaves-of-bread-that-the-standard-deviation-for-the-height-is-0.5-cm.-and-the-distribution-of-heights-is-normal." class="section level4">
-<h4><strong>Example:</strong> Suppose a baker claims that his bread
-height is more than <span class="math inline">\(15\)</span> cm, on
-average. Several of his customers do not believe him. To persuade his
-customers that he is right, the baker decides to do a hypothesis test.
-He bakes <span class="math inline">\(10\)</span> loaves of bread. The
-mean height of the sample loaves is <span class="math inline">\(17\)</span> cm. The baker knows from baking
-hundreds of loaves of bread that the standard deviation for the height
-is <span class="math inline">\(0.5\)</span> cm. and the distribution of
-heights is normal.</h4>
+<div id="example-3" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>Suppose a baker claims that his bread height is more than <span class="math inline">\(15\)</span> cm, on average. Several of his
+customers do not believe him. To persuade his customers that he is
+right, the baker decides to do a hypothesis test. He bakes <span class="math inline">\(10\)</span> loaves of bread. The mean height of
+the sample loaves is <span class="math inline">\(17\)</span> cm. The
+baker knows from baking hundreds of loaves of bread that the standard
+deviation for the height is <span class="math inline">\(0.5\)</span> cm.
+and the distribution of heights is normal.</p>
 <p><span class="math inline">\(H_0:\)</span></p>
 <p><span class="math inline">\(H_A:\)</span></p>
 <pre class="r"><code># There is no success-failure condition for sample means. We just need to be given the population standard deviation and the CLT applies. 

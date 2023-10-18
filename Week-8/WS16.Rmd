@@ -40,13 +40,16 @@ The sample size is considered sufficiently large when the success-failure condit
 
 In practice we don't know $p_1$ and $p_2$ so we use the sample proportions $\hat{p_1 \ }$ and $\hat{p_2 \ }$.
 
-
+---
 
 ## **Confidence Intervals**
 
-We can create confidence intervals in exactly the same way as before, we just have to use a different standard deviation.
+We can create confidence intervals in exactly the same way as for a single sample proportions, we just have to use a different mean and standard deviation.
 
-#### **Example:** According to a report on sleep deprivation by the Centers for Disease Control and Prevention, the proportion of California residents who reported insufficient rest or sleep during each of the preceding $30$ days is $8.0 \%$, while this proportion is $8.8\%$ for Oregon residents. These data are based on simple random samples of $11,545$ California and $4,691$ Oregon residents. Calculate a $95 \%$ confidence interval for the difference between the proportions of Californians and Oregonians who are sleep deprived and interpret it in context of the data.
+---
+
+#### **Example:** 
+According to a report on sleep deprivation by the Centers for Disease Control and Prevention, the proportion of California residents who reported insufficient rest or sleep during each of the preceding $30$ days is $8.0 \%$, while this proportion is $8.8\%$ for Oregon residents. These data are based on simple random samples of $11,545$ California and $4,691$ Oregon residents. Calculate a $95 \%$ confidence interval for the difference between the proportions of Californians and Oregonians who are sleep deprived and interpret it in context of the data.
 
 ```{r}
 # check success-failure condition
@@ -61,7 +64,8 @@ We can create confidence intervals in exactly the same way as before, we just ha
 
 ---
 
-#### **Exercise:** A Kaiser Family Foundation poll for US adults in 2019 found that $79 \%$ of Democrats, $55 \%$ of Independents, and $24 \%$ of Republicans supported a generic “National Health Plan”. There were $347$ Democrats, $298$ Republicans, and $617$ Independents surveyed. Calculate a 95% confidence interval for the difference between the proportion of Democrats and Inde- pendents who support a National Health Plan $(p_D − p_I )$, and interpret it in this context.
+#### **Exercise:** 
+A Kaiser Family Foundation poll for US adults in 2019 found that $79 \%$ of Democrats, $55 \%$ of Independents, and $24 \%$ of Republicans supported a generic “National Health Plan”. There were $347$ Democrats, $298$ Republicans, and $617$ Independents surveyed. Calculate a $95 \%$ confidence interval for the difference between the proportion of Democrats and Independents who support a National Health Plan and interpret it in this context.
 
 
 ```{r}
@@ -84,12 +88,13 @@ We can create confidence intervals in exactly the same way as before, we just ha
 Using a $p$-test is also similar to what we did for a single proportion. 
 
 + Assume the null hypothesis is true 
-- for the difference of proportions the null hypothesis is usually that there is no difference between the proportions, so $p_1-p_2 = 0$.
+- for the difference of proportions the null hypothesis is usually that there is no difference between the proportions, so $p_1-p_2 = 0$, or $p_1=p_2$.
 + Since the populations are no different (we are assuming the null hypothesis), the sample proportion we use for the success-failure test is called the **pooled proportion**.
 + The **pooled proportion** is number of successes out of total samples.
-+ This is the best estimate of the proportion if they are equal to each other.
++ This is the best estimate of the proportion when the two proportions are assumed to be equal to each other.
 
-#### **Example:** Let's perform a hypothesis test to determine if the data from the last example provides sufficient evidence to think the there is a real difference in the population proportions. 
+#### **Example:** 
+Let's perform a hypothesis test to determine if the data from the last example provides sufficient evidence to think the there is a real difference in the population proportions. 
 
 $H_0:$
 
@@ -118,7 +123,8 @@ Conclusion here.
 
 ---
 
-#### **Exercise:** A survey asked $827$ randomly sampled registered voters in California “Do you support? Or do you oppose? Drilling for oil and natural gas off the Coast of California? Or do you not know enough to say?” Below is the distribution of responses, separated based on whether or not the respondent graduated from college. Conduct a hypothesis test to determine if the data provide strong evidence that the proportion of college graduates who do not have an opinion on this issue is different than that of non-college graduates.
+#### **Exercise:** 
+A survey asked $827$ randomly sampled registered voters in California “Do you support? Or do you oppose? Drilling for oil and natural gas off the Coast of California? Or do you not know enough to say?” Below is the distribution of responses, separated based on whether or not the respondent graduated from college. Conduct a hypothesis test to determine if the data provide strong evidence that the proportion of college graduates who do not have an opinion on this issue is different than that of non-college graduates.
 
 | | College Grad | Not College Grad |
 |:--:|:--:|:--:|
@@ -164,7 +170,8 @@ $$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right
 
 ## **Confidence Intervals**
 
-#### **Example:** Suppose average pizza delivery times are normally distributed with an unknown population mean and a population standard deviation of six minutes. A random sample of $28$ pizza delivery restaurants is taken and has a sample mean delivery time of $36$ minutes. Find a $90 \%$ confidence interval estimate for the population mean delivery time.
+#### **Example:** 
+Suppose average pizza delivery times are normally distributed with an unknown population mean and a population standard deviation of six minutes. A random sample of $28$ pizza delivery restaurants is taken and has a sample mean delivery time of $36$ minutes. Find a $90 \%$ confidence interval estimate for the population mean delivery time.
 
 ```{r}
 # There is no success-failure condition for sample means. We just need to be given the population standard deviation and the CLT applies. 
@@ -182,7 +189,8 @@ $$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right
 
 ## **Hypothesis Testing**
 
-#### **Example:** Suppose a baker claims that his bread height is more than $15$ cm, on average. Several of his customers do not believe him. To persuade his customers that he is right, the baker decides to do a hypothesis test. He bakes $10$ loaves of bread. The mean height of the sample loaves is $17$ cm. The baker knows from baking hundreds of loaves of bread that the standard deviation for the height is $0.5$ cm. and the distribution of heights is normal.
+#### **Example:** 
+Suppose a baker claims that his bread height is more than $15$ cm, on average. Several of his customers do not believe him. To persuade his customers that he is right, the baker decides to do a hypothesis test. He bakes $10$ loaves of bread. The mean height of the sample loaves is $17$ cm. The baker knows from baking hundreds of loaves of bread that the standard deviation for the height is $0.5$ cm. and the distribution of heights is normal.
 
 $H_0:$
 

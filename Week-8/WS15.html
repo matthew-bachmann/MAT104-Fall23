@@ -1601,6 +1601,8 @@ Proportions</h1>
 <p>We can use the statistical tools we’ve learned so far in order to
 test hypothesis with statistical justification.</p>
 <hr />
+<div id="example" class="section level4">
+<h4><strong>Example:</strong></h4>
 <p>A worker at a company feels that there is gender bias associated to
 whether someone gets hired or not. They look at the promotions over the
 last year and see the following data:</p>
@@ -1671,16 +1673,18 @@ last year and see the following data:</p>
 </table>
 <hr />
 <p>We will always try to test a hypothesis against another hypothesis
-where only one can be true (the two hypothesis are contradictory, they
-cannot both be true).</p>
+where only one can be true (the two hypothesis are
+<strong>contradictory</strong>, they cannot both be true).</p>
 <ul>
 <li><p>The <strong>null hypothesis</strong> will usually refer to the
 hypothesis that there is no contributing factor beyond
 randomness.</p></li>
 <li><p>The <strong>alternative hypothesis</strong> is the claim that
-something beyond the scope of randomness occurring.</p></li>
+something beyond the scope of randomness occurring. This is the theory
+we want to test.</p></li>
 </ul>
 <hr />
+</div>
 <div id="back-to-the-example" class="section level4">
 <h4><strong>Back to the example:</strong></h4>
 <p><span class="math display">\[H_0 : \text{ null hypothesis } = \text{
@@ -1747,24 +1751,35 @@ promotions, then:</p>
 </table>
 <hr />
 </div>
-<div id="exercise-a-medical-trial-is-performed-to-test-whether-a-new-medication-will-reduce-the-risk-of-heart-disease-by-10-.-what-is-the-null-hypothesis-and-alternate-hypothesis" class="section level4">
-<h4><strong>Exercise:</strong> A medical trial is performed to test
-whether a new medication will reduce the risk of heart disease by <span class="math inline">\(10 \%\)</span>. What is the null hypothesis and
-alternate hypothesis?</h4>
+<div id="example-1" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>We want to test if it takes on average fewer than <span class="math inline">\(30\)</span> minutes to bake a loaf of bread. State
+the null and alternative hypotheses.</p>
+<p><span class="math inline">\(H_0=\)</span></p>
+<p><span class="math inline">\(H_A=\)</span></p>
+<hr />
+</div>
+<div id="exercise" class="section level4">
+<h4><strong>Exercise:</strong></h4>
+<p>A news article states that <span class="math inline">\(15 \%\)</span>
+of high school students are involved in some sports program and <span class="math inline">\(4 \%\)</span> of those athletes go on to play in
+college. We want to test if the proportion of students that go on to
+play in college is higher than <span class="math inline">\(4
+\%\)</span>. What is the null hypothesis and alternate hypothesis?</p>
 <div>
 <div id="answer">
 <p>Answer Here</p>
 </div>
 </div>
 </div>
-<div id="exercise-a-random-survey-of-75-workers-in-the-country-revealed-that-the-mean-length-of-time-working-at-their-company-is-10.4-years-with-a-standard-deviation-of-4.3-years.-if-you-were-conducting-a-hypothesis-test-to-determine-if-the-population-mean-of-time-working-at-a-company-could-likely-be-6-years-what-would-the-null-and-alternative-hypotheses-be" class="section level4">
-<h4><strong>Exercise:</strong> A random survey of 75 workers in the
-country revealed that the mean length of time working at their company
-is <span class="math inline">\(10.4\)</span> years with a standard
-deviation of <span class="math inline">\(4.3\)</span> years. If you were
-conducting a hypothesis test to determine if the population mean of time
-working at a company could likely be <span class="math inline">\(6\)</span> years, what would the null and
-alternative hypotheses be?</h4>
+<div id="exercise-1" class="section level4">
+<h4><strong>Exercise:</strong></h4>
+<p>A random survey of 75 workers in the country revealed that the mean
+length of time working at their company is <span class="math inline">\(10.4\)</span> years with a standard deviation of
+<span class="math inline">\(4.3\)</span> years. If you were conducting a
+hypothesis test to determine if the population mean of time working at a
+company could likely be <span class="math inline">\(6\)</span> years,
+what would the null and alternative hypotheses be?</p>
 <div>
 <div id="answer">
 <p>Answer Here</p>
@@ -1850,25 +1865,25 @@ are that the sample statistic <span class="math inline">\(\hat{p \
 </table>
 <p>So, <span class="math display">\[ \hat{p \ } =  21/35 = 60
 \%\]</span></p>
-<pre class="r"><code># First we test the success-failure condition
+<pre class="r"><code># first we test the success-failure condition
 
 
-#mean
+# mean
 
 
-#standard deviation</code></pre>
+# standard deviation</code></pre>
 <p>So, a <span class="math inline">\(95 \%\)</span> confidence interval
 is:</p>
-<pre class="r"><code>#Confidence Interval</code></pre>
+<pre class="r"><code># confidence Interval</code></pre>
 <p>We are <span class="math inline">\(95 \%\)</span> confident that the
-true proportion is between <span class="math inline">\(40.1 \%\)</span>
-and <span class="math inline">\(79.9 \%\)</span>.</p>
+true proportion is between <span class="math inline">\(43.8 \%\)</span>
+and <span class="math inline">\(76.2 \%\)</span>.</p>
 <div>
 <div id="answer">
 <p>Since the null hypothesis is that <span class="math inline">\(p =
 0.5\)</span> and this is within our <span class="math inline">\(95
-\%\)</span> confidence interval of <span class="math inline">\((40.1 \%
-, 79.9 \%)\)</span>, we conclude that <strong>there is not sufficient
+\%\)</span> confidence interval of <span class="math inline">\((43.8 \%
+, 76.2 \%)\)</span>, we conclude that <strong>there is not sufficient
 evidence to reject the null hypothesis</strong>.</p>
 </div>
 </div>
@@ -1904,11 +1919,11 @@ sufficient evidence to reject the null hypothesis.</li>
 0.5\)</span>). Then:</p>
 <pre class="r"><code># success-failure condition
 
-#mean
+# mean
 
-#standard deviation
+# standard deviation
 
-#Use pnorm to find the probability of the sample statistic</code></pre>
+# Use pnorm to find the percentile of the sample statistic</code></pre>
 <p>So, assuming that there is no gender discrimination, <span class="math inline">\(11.8 \%\)</span> of the time the proportion of men
 who get promoted is <span class="math inline">\(60 \%\)</span> or
 greater.</p>
@@ -1938,6 +1953,34 @@ hypothesis</strong>.</p></li>
 sufficiently rare and we have <strong>do not reject the null
 hypothesis</strong>.</p></li>
 </ul>
+<hr />
+<div id="example-2" class="section level4">
+<h4><strong>Example:</strong></h4>
+<p>Some people claim that they can tell the difference between a diet
+soda and a regular soda in the first sip. A researcher wanting to test
+this claim randomly sampled <span class="math inline">\(80\)</span> such
+people. He then filled <span class="math inline">\(80\)</span> plain
+white cups with soda, half diet and half regular through random
+assignment, and asked each person to take one sip from their cup and
+identify the soda as diet or regular. <span class="math inline">\(53\)</span> participants correctly identified the
+soda. Does this data provide strong evidence that people can tell the
+difference between regular and diet soda?</p>
+<p><span class="math inline">\(H_0=\)</span></p>
+<p><span class="math inline">\(H_A=\)</span></p>
+<pre class="r"><code># success-failure condition
+
+# mean
+
+# standard deviation
+
+# Use pnorm to find the percentile of the sample statistic</code></pre>
+<div>
+<div id="answer">
+<p>Conclusion</p>
+</div>
+</div>
+<hr />
+</div>
 </div>
 </div>
 <div id="decision-errors" class="section level2">
@@ -1970,15 +2013,16 @@ it.</li>
 it.</li>
 </ul>
 <hr />
-<div id="exercise-if-we-think-of-a-hypothesis-test-as-a-criminal-trial-then-it-makes-sense-to-frame-the-verdict-in-terms-of-the-null-and-alternative-hypotheses-where-h_0-text-defendant-is-innocent-and-h_a-text-defendant-is-guilty-which-type-of-error-is-being-committed-if-a.-the-defendant-is-declared-innocent-when-they-are-actually-guilty.-b.-declaring-the-defendant-guilty-when-they-are-actually-innocent.-c.-which-error-do-you-think-is-the-worse-error-to-make" class="section level4">
-<h4><strong>Exercise</strong>: If we think of a hypothesis test as a
-criminal trial then it makes sense to frame the verdict in terms of the
-null and alternative hypotheses where <span class="math display">\[H_{0}
-\text{: Defendant is innocent}\]</span> and <span class="math display">\[H_{A} \text{: Defendant is guilty}\]</span> Which
-type of error is being committed if: (A.) the defendant is declared
-innocent when they are actually guilty. (B.) Declaring the defendant
-guilty when they are actually innocent. (C.) Which error do you think is
-the worse error to make?</h4>
+<div id="exercise-2" class="section level4">
+<h4><strong>Exercise</strong>:</h4>
+<p>If we think of a hypothesis test as a criminal trial then it makes
+sense to frame the verdict in terms of the null and alternative
+hypotheses where <span class="math display">\[H_{0} \text{: Defendant is
+innocent}\]</span> and <span class="math display">\[H_{A} \text{:
+Defendant is guilty}\]</span> Which type of error is being committed if:
+(A.) the defendant is declared innocent when they are actually guilty.
+(B.) Declaring the defendant guilty when they are actually innocent.
+(C.) Which error do you think is the worse error to make?</p>
 <div>
 <div id="answer">
 <p>Answer Here</p>

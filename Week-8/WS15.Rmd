@@ -13,8 +13,6 @@ editor_options:
 ---
 
 
-
-
 ```{r global_options, include = FALSE}
 library(knitr)
 library(tidyverse)
@@ -38,6 +36,7 @@ We can use the statistical tools we've learned so far in order to test hypothesi
 
 ---
 
+#### **Example:**
 A worker at a company feels that there is gender bias associated to whether someone gets hired or not. They look at the promotions over the last year and see the following data:
 
  <p align="center"> **Promotion Data** </p>
@@ -49,11 +48,11 @@ A worker at a company feels that there is gender bias associated to whether some
 
 ---
 
-We will always try to test a hypothesis against another hypothesis where only one can be true (the two hypothesis are contradictory, they cannot both be true). 
+We will always try to test a hypothesis against another hypothesis where only one can be true (the two hypothesis are **contradictory**, they cannot both be true). 
 
 + The **null hypothesis** will usually refer to the hypothesis that there is no contributing factor beyond randomness. 
 
-+ The **alternative hypothesis** is the claim that something beyond the scope of randomness occurring.
++ The **alternative hypothesis** is the claim that something beyond the scope of randomness occurring. This is the theory we want to test.
 
 ---
 
@@ -78,7 +77,17 @@ $$H_A: p > 0.5$$
 
 ---
 
-#### **Exercise:** A medical trial is performed to test whether a new medication will reduce the risk of heart disease by $10 \%$. What is the null hypothesis and alternate hypothesis?
+#### **Example:**
+We want to test if it takes on average fewer than $30$ minutes to bake a loaf of bread. State the null and alternative hypotheses.
+
+$H_0=$
+
+$H_A=$
+
+---
+
+#### **Exercise:** 
+A news article states that $15 \%$ of high school students are involved in some sports program and $4 \%$ of those athletes go on to play in college. We want to test if the proportion of students that go on to play in college is higher than $4 \%$. What is the null hypothesis and alternate hypothesis?
 
 <div>
 :::{#answer}
@@ -88,7 +97,8 @@ Answer Here
 :::
 </div>
 
-#### **Exercise:** A random survey of 75 workers in the country revealed that the mean length of time working at their company is $10.4$ years with a standard deviation of $4.3$ years. If you were conducting a hypothesis test to determine if the population mean of time working at a company could likely be $6$ years, what would the null and alternative hypotheses be?
+#### **Exercise:** 
+A random survey of 75 workers in the country revealed that the mean length of time working at their company is $10.4$ years with a standard deviation of $4.3$ years. If you were conducting a hypothesis test to determine if the population mean of time working at a company could likely be $6$ years, what would the null and alternative hypotheses be?
 
 <div>
 :::{#answer}
@@ -120,13 +130,13 @@ So, $$ \hat{p \ } =  21/35 = 60 \%$$
 
 
 ```{r}
-# First we test the success-failure condition
+# first we test the success-failure condition
 
 
-#mean
+# mean
 
 
-#standard deviation
+# standard deviation
 
 
 ```
@@ -134,15 +144,15 @@ So, $$ \hat{p \ } =  21/35 = 60 \%$$
 So, a $95 \%$ confidence interval is:
 
 ```{r}
-#Confidence Interval
+# confidence Interval
 
 ```
 
-We are $95 \%$ confident that the true proportion is between $40.1 \%$ and $79.9 \%$. 
+We are $95 \%$ confident that the true proportion is between $43.8 \%$ and $76.2 \%$. 
 
 <div>
 :::{#answer}
-Since the null hypothesis is that $p = 0.5$ and this is within our $95 \%$ confidence interval of $(40.1 \% , 79.9 \%)$, we conclude that **there is not sufficient evidence to reject the null hypothesis**.
+Since the null hypothesis is that $p = 0.5$ and this is within our $95 \%$ confidence interval of $(43.8 \% , 76.2 \%)$, we conclude that **there is not sufficient evidence to reject the null hypothesis**.
 :::
 </div>
 
@@ -169,11 +179,11 @@ Suppose the null hypothesis is true  ($p = 0.5$). Then:
 ```{r}
 # success-failure condition
 
-#mean
+# mean
 
-#standard deviation
+# standard deviation
 
-#Use pnorm to find the probability of the sample statistic
+# Use pnorm to find the percentile of the sample statistic
 
 ```
 
@@ -197,6 +207,36 @@ So, assuming that there is no gender discrimination, $11.8 \%$ of the time the p
 
 - If the $p$-value $> \alpha$, then our sample not sufficiently rare and we have **do not reject the null hypothesis**.
 
+---
+
+#### **Example:**
+Some people claim that they can tell the difference between a diet soda and a regular soda in the first sip. A researcher wanting to test this claim randomly sampled $80$ such people. He then filled $80$ plain white cups with soda, half diet and half regular through random assignment, and asked each person to take one sip from their cup and identify the soda as diet or regular. $53$ participants correctly identified the soda. Does this data provide strong evidence that people can tell the difference between regular and diet soda?
+
+$H_0=$
+
+$H_A=$
+
+```{r}
+# success-failure condition
+
+# mean
+
+# standard deviation
+
+# Use pnorm to find the percentile of the sample statistic
+
+```
+
+<div>
+:::{#answer}
+
+Conclusion
+
+:::
+</div>
+
+---
+
 ## Decision Errors
 
 
@@ -210,7 +250,8 @@ So, assuming that there is no gender discrimination, $11.8 \%$ of the time the p
 
 ---
 
-#### **Exercise**: If we think of a hypothesis test as a criminal trial then it makes sense to frame the verdict in terms of the null and alternative hypotheses where $$H_{0} \text{: Defendant is innocent}$$ and $$H_{A} \text{: Defendant is guilty}$$ Which type of error is being committed if: (A.) the defendant is declared innocent when they are actually guilty. (B.) Declaring the defendant guilty when they are actually innocent. (C.) Which error do you think is the worse error to make?
+#### **Exercise**: 
+If we think of a hypothesis test as a criminal trial then it makes sense to frame the verdict in terms of the null and alternative hypotheses where $$H_{0} \text{: Defendant is innocent}$$ and $$H_{A} \text{: Defendant is guilty}$$ Which type of error is being committed if: (A.) the defendant is declared innocent when they are actually guilty. (B.) Declaring the defendant guilty when they are actually innocent. (C.) Which error do you think is the worse error to make?
 
 <div>
 :::{#answer}
