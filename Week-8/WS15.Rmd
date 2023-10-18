@@ -1,0 +1,283 @@
+---
+title: "WS 15: Hypothesis Testing for Population Proportions"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Continue our discussion of inference
+- Discuss Hypothesis Testings
+
+---
+
+## Testing Hypotheses with Confidence Intervals
+
+### **Forming Hypotheses**
+
+We can use the statistical tools we've learned so far in order to test hypothesis with statistical justification.
+
+---
+
+A worker at a company feels that there is gender bias associated to whether someone gets hired or not. They look at the promotions over the last year and see the following data:
+
+ <p align="center"> **Promotion Data** </p>
+| | | | | Promoted | | | Not Promoted | | | Total | |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| | Male | | | $21$ | | | $3$ | | | $24$ | |
+| | Female | | | $14$ | | | $10$ | | | $24$ | |
+| | Total | | | $35$ | | | $13$ | | | $48$ | |
+
+---
+
+We will always try to test a hypothesis against another hypothesis where only one can be true (the two hypothesis are contradictory, they cannot both be true). 
+
++ The **null hypothesis** will usually refer to the hypothesis that there is no contributing factor beyond randomness. 
+
++ The **alternative hypothesis** is the claim that something beyond the scope of randomness occurring.
+
+---
+
+#### **Back to the example:** 
+$$H_0 : \text{ null hypothesis } = \text{ Promotions are independent of gender, there is not gender bias.}$$
+
+$$H_A : \text{ null hypothesis } = \text{ There is gender discrimination. }$$
+In order to test this using statistical tools, let's phrase these hypotheses mathematically. Let $p$ be the proportion of men getting promotions, then:
+
+$$H_0:p  = 0.5$$
+
+$$H_A: p > 0.5$$
+
+---
+
+| | | | Possible Hypotheses | | | |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | $H_0$ | | | $H_A$ | |
+| | $=$ | | | $\neq$, $>$, or $<$ | |
+| | $\geq$ | | | $<$ | |
+| | $\leq$ | | | $>$ | |
+
+---
+
+#### **Exercise:** A medical trial is performed to test whether a new medication will reduce the risk of heart disease by $10 \%$. What is the null hypothesis and alternate hypothesis?
+
+<div>
+:::{#answer}
+
+Answer Here
+
+:::
+</div>
+
+#### **Exercise:** A random survey of 75 workers in the country revealed that the mean length of time working at their company is $10.4$ years with a standard deviation of $4.3$ years. If you were conducting a hypothesis test to determine if the population mean of time working at a company could likely be $6$ years, what would the null and alternative hypotheses be?
+
+<div>
+:::{#answer}
+
+Answer Here
+
+:::
+</div>
+
+---
+
+### **Confidence Interval**
+
+We can form a $95 \%$ confidence interval around our sample statistic in order to see how confident we are that the sample statistic $\hat{p \ }$ is close to the null hypothesis.
+
+--- 
+ 
+#### **Back to the example:** 
+ Recall,
+ 
+ <p align="center"> **Promotion Data** </p>
+| | | | | Promoted | | | Not Promoted | | | Total | |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| | Male | | | $21$ | | | $3$ | | | $24$ | |
+| | Female | | | $14$ | | | $10$ | | | $24$ | |
+| | Total | | | $35$ | | | $13$ | | | $48$ | |
+
+So, $$ \hat{p \ } =  21/35 = 60 \%$$
+
+
+```{r}
+# First we test the success-failure condition
+
+
+#mean
+
+
+#standard deviation
+
+
+```
+
+So, a $95 \%$ confidence interval is:
+
+```{r}
+#Confidence Interval
+
+```
+
+We are $95 \%$ confident that the true proportion is between $40.1 \%$ and $79.9 \%$. 
+
+<div>
+:::{#answer}
+Since the null hypothesis is that $p = 0.5$ and this is within our $95 \%$ confidence interval of $(40.1 \% , 79.9 \%)$, we conclude that **there is not sufficient evidence to reject the null hypothesis**.
+:::
+</div>
+
+---
+
++ Here we created a confidence interval around our **sample statistic** of $\hat{p \ } = .6$. 
++ This is just **one way** to do hypothesis testing.
++ Another, more common, way to do hypothesis testing is with $p$-values.
+
+---
+
+## Testing Hypotheses with $p$-values
+
+The idea is to use an "innocent till proven guilty approach". We assume that nothing outside of randomness is occurring **(we assume the null hypothesis)**, and then compute how unlikely our sample statistic is.
+
++ If the sample statistic is very unlikely, then we might reject the null hypothesis.
++ If the sample statistic is not very unlikely, then there is not sufficient evidence to reject the null hypothesis.
+
+### $p$-values
+
+#### **Example (revisited)**
+Suppose the null hypothesis is true  ($p = 0.5$). Then:
+
+```{r}
+# success-failure condition
+
+#mean
+
+#standard deviation
+
+#Use pnorm to find the probability of the sample statistic
+
+```
+
+So, assuming that there is no gender discrimination, $11.8 \%$ of the time the proportion of men who get promoted is $60 \%$ or greater.
+
+---
+
+#### The **p-value** is the probability that the results from a random sample are as rare or more rare than the sample statistic.
+
+---
+
+### **Forming Conclusions**
+
++ In the example, the $p$-value is $.118$.
+
++ The closer the $p$-value is to $0$, the more unlikely the result is.
+
++ We often choose the threshold of $\alpha = .05$, called the **significance level**.
+
+- If the $p$-value $< \alpha$, then our sample is extremely rare and we have reason to **reject the null hypothesis**.
+
+- If the $p$-value $> \alpha$, then our sample not sufficiently rare and we have **do not reject the null hypothesis**.
+
+## Decision Errors
+
+
+| |$H_0$ is True | $H_0$ is False |
+|:--|:--|:--|
+|Do not reject $H_0$ | Correct conclusion | Type II error
+|Reject $H_0$ | Type I error | Correct conclusion |
+
++ A **Type I** error is when $H_0$ is true but we incorrectly reject it.
++ A **Type II** error is when $H_0$ is false but we fail to reject it.
+
+---
+
+#### **Exercise**: If we think of a hypothesis test as a criminal trial then it makes sense to frame the verdict in terms of the null and alternative hypotheses where $$H_{0} \text{: Defendant is innocent}$$ and $$H_{A} \text{: Defendant is guilty}$$ Which type of error is being committed if: (A.) the defendant is declared innocent when they are actually guilty. (B.) Declaring the defendant guilty when they are actually innocent. (C.) Which error do you think is the worse error to make?
+
+<div>
+:::{#answer}
+
+Answer Here
+
+:::
+</div>
+
+#### **Exercise**: Suppose our null hypothesis is $H_0:$ Roller coasters are not dangerous. (A.) Which type of error is worse to make? (B.) Which type of error do you think occurs more often?
+
+<div>
+:::{#answer}
+
+Answer Here
+
+:::
+</div>
+
+
+
+---
+
+## Class Activity
+
+1. Suppose that $22 \%$ of Disneyland visitors are from outside the country. If you suspect that the percentage is actually less, what are the null and alternative hypotheses? Describe a type I error for your hypothesis test.
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+2. It is believed that $40 \%$ of people pass their driving test on the first attempt. Suppose you think the percentage is greater than $40 \%$. So, you perform a hypothesis test and sample $100$ people. Of the sampled people, $47$ reply that they passed on their first attempt. Set up a hypothesis test and make a conclusion with a $10 \%$ significance level.
+
+```{r}
+# Insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+3. $400$ students were randomly sampled from a large university, and $289$ said they did not get enough sleep. Conduct a hypothesis test to check whether this represents a statistically significant difference from $50 \%$, and use a significance level of $0.01$.
+
+```{r}
+# Insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div>
+
+
+
+
+  
+
+  
+
