@@ -1,0 +1,565 @@
+---
+title: "WS 15: Hypothesis Testing for Population Proportions"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Continue our discussion of inference
+- Discuss Hypothesis Testings
+
+---
+
+## Testing Hypotheses with Confidence Intervals
+
+### **Forming Hypotheses**
+
+We can use the statistical tools we've learned so far in order to test hypothesis with statistical justification.
+
+---
+
+#### **Example:**
+A worker at a company feels that there is gender bias associated to whether someone gets hired or not. They look at the promotions over the last year and see the following data:
+
+ <p align="center"> **Promotion Data** </p>
+| | | | | Promoted | | | Not Promoted | | | Total | |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| | Male | | | $21$ | | | $3$ | | | $24$ | |
+| | Female | | | $14$ | | | $10$ | | | $24$ | |
+| | Total | | | $35$ | | | $13$ | | | $48$ | |
+
+---
+
+We will always try to test a hypothesis against another hypothesis where only one can be true (the two hypothesis are **contradictory**, they cannot both be true). 
+
+- The **null hypothesis** will usually refer to the hypothesis that there is no contributing factor beyond randomness. 
+
+- The **alternative hypothesis** is the claim that something beyond the scope of randomness occurring. This is the theory we want to test.
+
+---
+
+#### **Back to the example:** 
+$$H_0 : \text{ null hypothesis } = \text{ Promotions are independent of gender, there is not gender bias.}$$
+
+$$H_A : \text{ alternative hypothesis } = \text{ There is gender discrimination. }$$
+In order to test this using statistical tools, let's phrase these hypotheses mathematically. Let $p$ be the proportion of men getting promotions, then:
+
+$$H_0:p  = 0.5$$
+
+$$H_A: p > 0.5$$
+
+---
+
+| | | | Possible Hypotheses | | | |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | $H_0$ | | | $H_A$ | |
+| | $=$ | | | $\neq$, $>$, or $<$ | |
+| | $\geq$ | | | $<$ | |
+| | $\leq$ | | | $>$ | |
+
+---
+
+#### **Example:**
+We want to test if it takes on average fewer than $30$ minutes to bake a loaf of bread. State the null and alternative hypotheses.
+
+$H_0=$ 30 minutes or more, $\mu \geq 30$
+
+$H_A=$ fewer than 30 minutes, $\mu<30$
+
+---
+
+#### **Exercise:** 
+A news article states that $15 \%$ of high school students are involved in some sports program and $4 \%$ of those athletes go on to play in college. We want to test if the proportion of students that go on to play in college is higher than $4 \%$. What is the null hypothesis and alternate hypothesis?
+
+<div>
+:::{#answer}
+
+$H_0= p <= .04$
+
+$H_A= p > .04$ 
+
+:::
+</div>
+
+#### **Exercise:** 
+A random survey of 75 workers in the country revealed that the mean length of time working at their company is $10.4$ years with a standard deviation of $4.3$ years. If you were conducting a hypothesis test to determine if the population mean of time working at a company could likely be $6$ years, what would the null and alternative hypotheses be?
+
+<div>
+:::{#answer}
+
+$H_0=6$
+
+$H_A \neq 6$
+
+:::
+</div>
+
+---
+
+### **Confidence Interval**
+
+We can form a $95 \%$ confidence interval around our sample statistic in order to see how confident we are that the sample statistic $\hat{p \ }$ is close to the null hypothesis.
+
+--- 
+ 
+#### **Back to the example:** 
+ Recall,
+ 
+ <p align="center"> **Promotion Data** </p>
+| | | | | Promoted | | | Not Promoted | | | Total | |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| | Male | | | $21$ | | | $3$ | | | $24$ | |
+| | Female | | | $14$ | | | $10$ | | | $24$ | |
+| | Total | | | $35$ | | | $13$ | | | $48$ | |
+
+So, $$ \hat{p \ } =  21/35 = 60 \%$$
+
+
+```{r}
+# first we test the success-failure condition
+
+21/35*35
+
+(1-(21/35))*35
+
+# mean
+21/35
+
+# standard deviation
+sd <- sqrt((21/35)*(1-(21/35))/35)
+
+```
+
+So, a $95 \%$ confidence interval is:
+
+```{r}
+# confidence Interval
+
+qnorm(.025,21/35,sd)
+qnorm(.975,21/35,sd)
+
+# We are 95% confident that the true proportion is between (43.7,76.2)
+
+```
+
+We are $95 \%$ confident that the true proportion is between $43.8 \%$ and $76.2 \%$. 
+
+<div>
+:::{#answer}
+Since the null hypothesis is that $p = 0.5$ and this is within our $95 \%$ confidence interval of $(43.8 \% , 76.2 \%)$, we conclude that **there is not sufficient evidence to reject the null hypothesis**.
+:::
+</div>
+
+---
+
+- Here we created a confidence interval around our **sample statistic** of $\hat{p \ } = .6$. 
+- This is just **one way** to do hypothesis testing.
+- Another, more common, way to do hypothesis testing is with $p$-values.
+
+---
+
+## Testing Hypotheses with $p$-values
+
+The idea is to use an "innocent till proven guilty approach". We assume that nothing outside of randomness is occurring **(we assume the null hypothesis)**, and then compute how unlikely our sample statistic is.
+
+- If the sample statistic is very unlikely, then we might reject the null hypothesis.
+- If the sample statistic is not very unlikely, then there is not sufficient evidence to reject the null hypothesis.
+
+### $p$-values
+
+#### **Example (revisited)**
+Suppose the null hypothesis is true  ($p = 0.5$). Then:
+
+```{r}
+# success-failure condition
+0.5*35
+(1-0.5)*35
+  
+# mean
+0.5
+
+# standard deviation
+sd <- sqrt(0.5*0.5/35)
+
+# Use pnorm to find the percentile of the sample statistic
+1-pnorm(.6,0.5,sd)
+
+```
+
+So, assuming that there is no gender discrimination, $11.8 \%$ of the time the proportion of men who get promoted is $60 \%$ or greater.
+
+---
+
+#### The **p-value** is the probability that the results from a random sample are as rare or more rare than the sample statistic.
+
+---
+
+### **Forming Conclusions**
+
+- In the example, the $p$-value is $.118$.
+
+- The closer the $p$-value is to $0$, the more unlikely the result is.
+
+- We often choose the threshold of $\alpha = .05$, called the **significance level**.
+  + If the $p$-value $< \alpha$, then our sample is extremely rare and we have reason to **reject the null hypothesis**.
+  + If the $p$-value $> \alpha$, then our sample not sufficiently rare and we have **do not reject the null hypothesis**.
+
+---
+
+#### **Example:**
+Some people claim that they can tell the difference between a diet soda and a regular soda in the first sip. A researcher wanting to test this claim randomly sampled $80$ such people. He then filled $80$ plain white cups with soda, half diet and half regular through random assignment, and asked each person to take one sip from their cup and identify the soda as diet or regular. $53$ participants correctly identified the soda. Does this data provide strong evidence that people can tell the difference between regular and diet soda?
+
+$H_0: p=0.5$
+
+$H_A: p \neq 0.5$
+
+```{r}
+# success-failure condition
+0.5*80
+
+(1-0.5)*80
+
+# mean
+0.5
+
+# standard deviation
+sd <- sqrt(0.5*0.5/80)
+
+# Use pnorm to find the percentile of the sample statistic
+pnorm(53/80,0.5,sd)
+
+```
+
+<div>
+:::{#answer}
+
+Conclusion
+
+:::
+</div>
+
+---
+
+## Day 2
+
+Summary from last time:
+
+- We can use what we know about normal distributions and the CLT in order to test the statistical strength of hypothesis.
+- When forming hypothesis, the null hypothesis is some claim with an equals symbol in it. 
+  + The alternate hypothesis is a contradictory claim.
+  + **The alternate hypothesis is *usually* the question you are asking about the data but not always.**
+
++ We saw two ways to test the strength of the hypotheses:
+  - Form a confidence interval around the sample statistic and see if the null hypothesis land inside or outside the confidence interval.
+  - For the confidence interval, we are testing how confident we are that the null hypothesis is reasonable.
+  - Alternatively, we cand perform a $p$-test. In a $p$-test we assume the null hypothesis is true and find the probability associated with how rare our sample statistic is.
+
+
+#### **Example:**
+Some people claim that they can tell the difference between a diet soda and a regular soda in the first sip. A researcher wanting to test this claim randomly sampled $80$ such people. He then filled $80$ plain white cups with soda, half diet and half regular through random assignment, and asked each person to take one sip from their cup and identify the soda as diet or regular. $53$ participants correctly identified the soda. Does this data provide strong evidence that people can tell the difference between regular and diet soda?
+
+$H_0:$ people cannot tell the difference and are just randomly guessing, $p=0.5$
+
+$H_A:$ people can tell the difference, $p \neq 0.5$
+
+```{r}
+# success-failure condition, assume the null hypothesis is true (proportion* sample size)
+0.5*80
+
+(1-0.5)*80
+
+# mean (p=proportion)
+0.5
+
+# standard deviation (sqrt(p*(1-p)/n))
+sd <- sqrt(0.5*0.5/80)
+
+# Use pnorm to find the percentile of the sample statistic (DRAW A PICTURE DUMMY)
+
+```
+
+<div>
+:::{#answer}
+
+Conclusion here
+
+:::
+</div>
+
+#### **Example**:  
+$400$ students were randomly sampled from a large university, and $249$ said they did not get enough sleep. Conduct a hypothesis test to check whether this represents a statistically significant difference from $50 \%$, and use a significance level of $0.01$. (statistically significant difference means the $p$-value is less than significance level)
+
+$H_0:$ 
+
+$H_A:$ 
+
+```{r}
+# success-failure condition, assume the null hypothesis is true 
+
+
+# mean (p=proportion)
+
+
+# standard deviation (sqrt(p*(1-p)/n))
+
+
+# Use pnorm to find the percentile of the sample statistic (DRAW A PICTURE DUMMY)
+
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div>
+
+
+---
+
+## Decision Errors
+
+
+| |$H_0$ is True | $H_0$ is False |
+|:--|:--|:--|
+|Do not reject $H_0$ | Correct conclusion | Type II error
+|Reject $H_0$ | Type I error | Correct conclusion |
+
++ A **Type I** error is when $H_0$ is true but we incorrectly reject it.
++ A **Type II** error is when $H_0$ is false but we fail to reject it.
+
+---
+
+#### **Example**: 
+If we think of a hypothesis test as a criminal trial then it makes sense to frame the verdict in terms of the null and alternative hypotheses where $$H_{0} \text{: Defendant is innocent}$$ and $$H_{A} \text{: Defendant is guilty}$$ Which type of error is being committed if: (A.) the defendant is declared innocent when they are actually guilty. (B.) Declaring the defendant guilty when they are actually innocent. (C.) Which error do you think is the worse error to make?
+
+<div>
+:::{#answer}
+
+
+:::
+</div>
+
+#### **Exercise**: 
+Suppose our null hypothesis is $H_0:$ Roller coasters are not dangerous. (A.) Which type of error is worse to make? (B.) Which type of error do you think occurs more often?
+
+<div>
+:::{#answer}
+
+
+:::
+</div>
+
+
+---
+
+## CLT for the Difference of Proportions
+
+When observations are independent and the sample size is sufficiently large, the distribution of the difference of two sample proportions $\hat{p_1 \ }- \hat{p_2 \ }$ approaches a normal distribution with
+
+$$N \left( p_1- p_2, \sqrt{ \frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}} \right) $$
+The sample size is considered sufficiently large when the success-failure condition holds for both groups.
+
+In practice we don't know $p_1$ and $p_2$ so we use the sample proportions $\hat{p_1 \ }$ and $\hat{p_2 \ }$.
+
+---
+
+## **Confidence Intervals**
+
+We can create confidence intervals in exactly the same way as for a single sample proportions, we just have to use a different mean and standard deviation.
+
+---
+
+#### **Example:** 
+A survey asked $827$ randomly sampled registered voters in California “Do you support? Or do you oppose? Drilling for oil and natural gas off the Coast of California? Or do you not know enough to say?” Below is the distribution of responses, separated based on whether or not the respondent graduated from college. Calculate a $95 \%$ confidence interval for the difference between the proportion of college grads and non-college grads that don't have an opinion on the matter.
+
+| | College Grad | Not College Grad |
+|:--:|:--:|:--:|
+|Support | $154$ | $132$ | 
+|Oppose | $180$ | $126$ |
+|Don't know | $104$ | $131$ |
+|Total | $438$ | $389$ | 
+
+```{r}
+# check success-failure condition for both groups
+
+
+# mean, (p_1 - p_2)
+
+
+# standard deviation, sqrt(p_1*(1-p_1)/n_1 + p_2*(1-p_2)/n_2)
+
+
+# confidence interval, qnorm(.025, mean, sd) and qnorm(.975, mean, sd)
+
+
+# We are 95% confident that the true difference between college grads and non-college grads that don't know enough is between 3.7% and 16%
+
+```
+
+
+
+---
+
+#### **Exercise:** 
+A Kaiser Family Foundation poll for US adults in 2019 found that $79 \%$ of Democrats, $55 \%$ of Independents, and $24 \%$ of Republicans supported a generic “National Health Plan”. There were $347$ Democrats, $298$ Republicans, and $617$ Independents surveyed. Calculate a $95 \%$ confidence interval for the difference between the proportion of Democrats and Independents who support a National Health Plan and interpret it in this context.
+
+
+```{r}
+# check success-failure condition for both groups
+
+# mean
+
+# standard deviation
+
+# confidence interval
+
+```
+
+
+
+---
+
+## **$p$-test**
+
+Using a $p$-test is also similar to what we did for a single proportion. 
+
++ Assume the null hypothesis is true 
+- for the difference of proportions the null hypothesis is usually that there is no difference between the proportions, so $p_1-p_2 = 0$, or $p_1=p_2$.
++ Since the populations are no different (we are assuming the null hypothesis), the sample proportion we use for the success-failure test is called the **pooled proportion**.
++ The **pooled proportion** is number of successes out of total samples.
++ This is the best estimate of the proportion when the two proportions are assumed to be equal to each other.
+
+#### **Example:** 
+Let's perform a hypothesis test to determine if the data from the oil drilling example provides sufficient evidence to think the there is a statistically significant difference in the proportion of college grads that don't know enough and the proportion of non-college grads that don't know enough. Here is the data again:
+
+| | College Grad | Not College Grad |
+|:--:|:--:|:--:|
+|Support | $154$ | $132$ | 
+|Oppose | $180$ | $126$ |
+|Don't know | $104$ | $131$ |
+|Total | $438$ | $389$ | 
+
+$H_0:$
+
+$H_A:$
+
+
+```{r}
+# Assume the null hypothesis is true. Calculate the pooled proportion.
+
+# Check the success-failure condition for each group with the pooled proportion
+
+# mean, same as before but use the pooled proportion both times (p-p)
+
+# standard deviation, same as before but use the pooled proportion both times sqrt(p*(1-p)/n_1 + (p*(1-p)/n_2))
+
+# p-value, pnorm(actual difference, mean, sd) [DRAW A PICTURE to decide if it is 1-pnorm or just pnorm]
+
+```
+
+<div>
+:::{#answer}
+
+Conclusion here.
+
+:::
+</div>
+
+
+---
+
+
+
+## Class Activity
+
+1. A Kaiser Family Foundation poll for US adults in 2019 found that $79 \%$ of Democrats, $55 \%$ of Independents, and $24 \%$ of Republicans supported a generic “National Health Plan”. There were $347$ Democrats, $298$ Republicans, and $617$ Independents surveyed. Conduct a hypothesis test to determine if the data provide strong evidence that the proportion of Democrats who support a national health plan is different than that of Independents.
+
+$H_0:$
+
+$H_A:$
+
+
+```{r}
+# Assume the null hypothesis is true. Calculate the pooled proportion.
+
+# Check the success-failure condition for each group with the pooled proportion
+
+# mean 0
+
+# standard deviation
+
+# p-value [DRAW A PICTURE]
+
+```
+
+<div>
+:::{#answer}
+
+Write your conclusion here
+
+:::
+</div>
+
+2. Suppose that $22 \%$ of Disneyland visitors are from outside the country. If you suspect that the percentage is actually less, what are the null and alternative hypotheses? Describe a type I error for your hypothesis test.
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+3. It is believed that $40 \%$ of people pass their driving test on the first attempt. Suppose you think the percentage is greater than $40 \%$. So, you perform a hypothesis test and sample $100$ people. Of the sampled people, $47$ reply that they passed on their first attempt. Set up a hypothesis test and make a conclusion with a $10 \%$ significance level.
+
+```{r}
+# Insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+4. According to a report on sleep deprivation by the Centers for Disease Control and Prevention, the proportion of California residents who reported insufficient rest or sleep during each of the preceding $30$ days is $8.0 \%$, while this proportion is $8.8 \%$ for Oregon residents. These data are based on simple random samples of $11,545$ California and $4,691$ Oregon residents. Calculate a $95 \%$ confidence interval for the difference between the proportions of Californians and Oregonians who are sleep deprived and interpret it in context of the data.
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+
+
+
+
+
+  
+
+  
+
