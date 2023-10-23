@@ -1,0 +1,301 @@
+---
+title: "Lab 6"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: ./style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(openintro)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+```{r,include = FALSE}
+set.seed(4738)
+
+test_pop_sd <- function(hts,n,outcomes){
+      sample <- sample(hts,n)
+      sample_mean <- mean(sample)
+      if(mean_ht >= qnorm(.025,sample_mean,sd_ht/sqrt(n)) & mean_ht <=  qnorm(.975,sample_mean,sd_ht/sqrt(n))){
+          append(outcomes,"yes")
+      }
+      else{
+        append(outcomes,"no")
+      }
+}
+
+test_sample_sd <- function(hts,n,outcomes){
+      sample <- sample(hts,n)
+      sample_mean <- mean(sample)
+      sample_sd <- sd(sample)/sqrt(n)
+      if(mean_ht >= qnorm(.025,sample_mean,sample_sd) & mean_ht <=  qnorm(.975,sample_mean,sample_sd)){
+          append(outcomes,"yes")
+      }
+      else{
+        append(outcomes,"no")
+      }
+}
+
+test_tdist <- function(hts,n,outcomes){
+      sample <- sample(hts,n)
+      sample_mean <- mean(sample)
+      sample_sd <- sd(sample)/sqrt(n)
+      if(mean_ht >= (qt(.025,4)*sample_sd - sample_mean) & mean_ht <= (qt(.975,4)*sample_sd + sample_mean)){
+          append(outcomes,"yes")
+      }
+      else{
+        append(outcomes,"no")
+      }
+}
+
+t.stat <- function(hts,n,deviations){
+      sample <- sample(hts,n)
+      sample_mean <- mean(sample)
+      sample_sd <- sd(sample)/sqrt(n)
+      append(deviations,(sample_mean-mean_ht)/sample_sd) 
+}
+```
+
+
+
+## Intro
+
+In this lab, we will explore constructing confidence intervals for sample means. Make sure you run the code on line 24 before we begin.
+
+**Goals:**
+
++ Learn how to construct a confidence interval for the sample mean using the central limit theorem.
++ Observe shortcomings of using the sample standard deviation for finding confidence intervals.
++ Understand the Student's $t$-distribution and when to use it.
++ Learn how to construct a confidence interval for the sample mean using the $t$-distribution.
+
+---
+
+## The data
+
+You will be analyzing the same dataset as in a previous lab, where you delved into a sample from the Youth Risk Behavior Surveillance System (YRBSS) survey, which uses data from high schoolers to help discover health patterns.
+The dataset is called `yrbss`. First we will look at the distribution of height data and the we will construct a confidence interval.
+
+1.  The height data from `yrbss` has some N/A values in it, so I've removed those for you. (A) Add code to the chunk in order to compute the mean and standard deviation of the height data and save these values as `mean_ht` and `sd_ht`. (B) Next, plot a histogram of the height data and choose an appropriate bin width. (C) Describe the distribution of heights in this data set.
+
+```{r}
+hts <- na.omit(yrbss$height)
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+Throughout this lab, the height data will be the population under consideration and we will take samples from this data. So you've already computed:
+
++ population mean: $\mu =$ `mean_ht`
++ population standard deviation: $\sigma =$ `sd_ht`
+
+---
+
+## The Central Limit Theorem for Sample Means
+
+Suppose $X$ is a random variable and let $\mu_X$ denote the mean of $X$ and $\sigma_X$ denote the standard deviation of $X$. Then for a sample of size $n$, the random variable $\overline{X}$, which is the sample mean, tends toward a normal distribution with mean $=\mu_X$ and standard deviation $=\frac{\sigma_X}{\sqrt{n}}$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right) $$
+
+For the sample mean, we still ask the observations to be independent, but we do not need to check a success-failure condition. Instead, we need our data to satisfy a normality condition: 
+
++ $n <30$ and there are no clear outliers
++ $n \geq 30$ and no *extreme* outliers
+
+As $n$ gets larger, outliers become more and more acceptable. In this class, we won't be too concerned with the normality condition. We will also see that for small $n$ we use a different distribution to calculate confidence intervals.
+
+---
+
+## Confidence intervals with known population standard deviation
+
+In this lab, we will collect samples from the yrbss height data. Since we already know the population mean and standard deviation, we can compute sample statistics and compare their accuracy to the true values. 
+
+Recall, to take a random sample of size $n$ from a data set we use the code `sample(dataset,n)`. 
+
+2. Collect a random sample of size $1,000$ from the yrbss height data. (A) What is the sample mean? The population standard deviation $\sigma$ was found in the first exercise, it is `sd_ht`. (B) Use these two values to construct a $95 \%$ confidence interval for the true population mean.
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+Write the conclusion from the confidence interval here.
+
+:::
+</div>
+
+3. Is the true population mean, $\mu$, inside your confidence interval? If we repeated Exercise 2 $3000$ times, how many of the confidence intervals would you expect to contain $\mu$?
+
+<div>
+:::{#answer}
+
+Write the conclusion from the confidence interval here.
+
+:::
+</div>
+
+he code below will take a sample of size $1000$, compute the sample mean, construct a $95 \%$ confidence interval around the sample mean, and then check if $\mu$ is inside the interval. It will run the experiment $3000$ times and the output vector `outcome_popsd` will have a "yes" any time the confidence interval contained $\mu$ and a "no" when it did not. Run the code and change FALSE to TRUE:
+```{r, eval=FALSE}
+outcomes_pop_sd <- c()
+outcomes_pop_sd <- data.frame(contains_mu = replicate(3000,test_pop_sd(hts,1000,outcomes_pop_sd)))
+```
+
+4. Use `table()` on `outcomes_popsd` and compute the percentage of confidence intervals that contain the population mean.
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+Answer here
+
+:::
+</div>
+
+---
+
+## Confidence intervals with unknown population standard deviation
+
+Of course, in practice, we don't usually know the population standard deviation. We have to use our best substitute which is the sample standard deviation $s$ (just like how we used the sample proportion $\hat{p}$ before). 
+
+Next we will compute confidence intervals using the sample standard deviation $s$. Below is the code to run the same experiment $3000$ more times. However, each time a sample is taken, the standard deviation $s$ of that particular sample is computed. Then $s$ is used to compute a confidence interval for that sample and the code checks if $\mu$ is inside that interval. Run the following code and change FALSE to TRUE:
+
+```{r, eval=FALSE}
+outcomes_sample_sd <- data.frame(replicate(3000,test_sample_sd(hts,1000,c())))
+```
+
+5. Again, use `table()` and find the percentage of confidence intervals that contain the population mean. Does the sample standard deviation seem to perform as well as the population standard deviation for computing confidence intervals?
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+Answer here
+
+:::
+</div>
+
+---
+
+## Small sample sizes
+
+Often we have ignored what to do when we have a small sample size and have only worked with large sample sizes. Let's investigate what goes wrong with small sample sizes by running the experiment a final $3000$ times but this time with a sample size $5$ instead of $1000$. Run the following code and change FALSE to TRUE::
+
+```{r, eval=FALSE}
+outcomes_small <- replicate(3000,test_sample_sd(hts,5,c()))
+```
+
+6. Again, use `table()` and find the percentage of confidence intervals that contain the population mean. Does the sample standard deviation still seem to perform well? 
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+Answer here
+
+:::
+</div>
+
+It turns out that using the normal distribution for calculating confidence intervals does not perform well if the sample size is too small. In order to capture what goes wrong, let's measure how many standard deviations $s$ away from $\mu$ each sample mean is. The below code will produce $50000$ sample means and each time see how many sample standard deviations it is from the population mean. (This might take a few seconds to run, change FALSE to TRUE)
+
+```{r,eval=FALSE}
+deviations <- data.frame(T=replicate(50000,t.stat(hts,5,c())))
+```
+
+7. Plot the column `T` from the deviations data frame in a histogram with bin width $.25$. Add the `..density..` option and overlay the histogram with a normal curve that has mean $0$ and standard deviation $1$. Also add the code `+ xlim(-5,5)` at the end.
+
+```{r}
+# insert code here 
+```
+
+Though the fit seems pretty good, notice that the normal curve is smaller than the histogram toward the edges. This difference is what is causing the error in calculating confidence intervals for small samples. Instead of using the normal distribution to find a $95 \%$ confidence interval we will need to use a new distribution called the Student's $t$-distribution.
+
+8. Add the following code to the plot you just created in the last problem: `+ stat_function(fun = dt, args=list(df=5) col="blue")`.
+
+```{r}
+# insert code here
+```
+
+This blue curve is the Student's $t$-distribution. We will learn more about it in the next section. For now, just notice that it fits the histogram a bit better, especially near the tails.
+
+---
+
+## Using the $t$ distribution to calculate a confidence interval
+
+Unlike the normal distribution, which is defined by the mean and standard deviation, the Student's $t$-distribution is defined by only one parameter called the degrees of freedom. When we are building confidence intervals for population means using sample means, we use the distribution with degrees of freedom $=n-1$ where $n$ is the sample size. T 
+
+9. Take a sample of size $5$ from the heights data. Find the mean and standard deviation of your sample and save them as `sample_mean` and `sample_sd`. Just like in the central limit theorem, we find the standard error by dividing the standard deviation by $sqrt(n)$, save this as `sample_error`. 
+
+```{r}
+# insert code here
+```
+
+In a normal distribution, we know the 2.5% and $97.5 \%$ quartiles used for computing a $95 \%$ confidence interval corresponds to a $Z$-score of about $-1.96$ and $1.96$. This means in the normal distribution, $95 \%$ of data is between $-1.96$ and $1.96$ standard deviations away from the center.  We can compute these same values for the $t$-distribution with `qnorm(.025)` and `qnorm(.975)`. The code is simply `qt()`:
+
+```{r}
+qt(.025,4)
+qt(.975,4)
+```
+
+The $4$ in the code is because we are taking samples of size $5$ and so we use the $t$-distribution defined by degrees of freedom $=5-1$. So, in the $t$-distribution for $4$ degrees of freedom $95 \%$ of the data is between $-2.77$ and $2.77$ standard errors from the center. 
+
+We then multiply these by the standard error and add them to the sample mean to find a $95 \%$ confidence interval. Run the following code and change FALSE to TRUE:
+```{r, eval=FALSE}
+qt(.025,4)*sample_error + sample_mean
+qt(.975,4)*sample_error + sample_mean
+```
+
+10. Is the true population mean, $\mu$, inside your confidence interval? 
+
+<div>
+:::{#answer}
+
+Write the conclusion from the confidence interval here.
+
+:::
+</div>
+
+Finally, let's test run the experiment $3000$ more times, but now use the $t$-distribution to make $95 \%$ confidence intervals. Run the following code and change FALSE to TRUE:
+```{r, eval=FALSE}
+outcomes_small_tdist <- replicate(3000,test_tdist(hts,5,c()))
+```
+
+11. Again, use `table()` and find the percentage of confidence intervals that contain the population mean. Does the $t$-distribution seem to work better for small sample sizes?
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+
+Answer here
+
+:::
+</div>
+
