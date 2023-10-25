@@ -1,0 +1,257 @@
+---
+title: "WS 17: Difference of Two Proportions"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- The $t$-distribution
+- Hypothesis testing for sample means
+- Difference of sample means
+
+---
+
+## The $t$-distribution
+
+Recall, 
+
+### The Central Limit Theorem for Sample Means
+
+Suppose $X$ is a random variable and let $\mu_X$ denote the mean of $X$ and $\sigma_X$ denote the standard deviation of $X$. Then for a sample of size $n$, the random variable $\overline{X}$, which is the sample mean, tends toward a normal distribution with mean $=\mu_X$ and standard deviation $=\frac{\sigma_X}{\sqrt{n}}$ as $n$ gets large:
+
+$$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right) $$
+
+---
+
+### Computing confidence intervals
+
++ If we know the population standard deviation $\sigma_X$, this works great.
++ We often only know the sample standard deviation $s$.
++ We can try to just substitute $s$ in for $\sigma_X$ in the central limit theorem and this works okay for large sample sizes but it fails for small sample sizes.
++ Instead, we use the Student's $t$-distribution.
+
+---
+
+### Properties of the $t$-distribution
++ The $t$-distribution is defined by a single parameter called the degrees of freedom.
++ For each sample size $n$ there is a different $t$-distribution with $n-1$ degrees of freedom.
++ The $t$-distribution is similar to a normal curve.
++ As the degrees of freedom increase, the $t$-distribution gets closer and closer to the normal distribution.
+
+```{r, echo=FALSE}
+ggplot(data.frame(x = c(-5, 5)), aes(x = x)) +
+        stat_function(fun = dt, args = list(df = 1), aes(col = '1'), lwd=1, linetype = 'dashed') +
+        stat_function(fun = dnorm, args = c(0,1), aes(col = 'normal'), lwd=1) +
+        stat_function(fun = dt, args=list(6), aes(col = '6'), lwd=1, linetype = 'dashed') +
+      stat_function(fun = dt, args=list(15), aes(col = '15'), lwd=1, linetype = 'dashed') +
+        scale_color_manual(name = "DF", values = c("red", "blue", "purple", "darkgreen"))
+```
+
++ Since the $t$-distribution approaches the normal distribution, we tend to use the $t$-distribution any time the population standard deviation is unknown (even if the sample is large)
++ If you know the population standard deviation, use the normal distribution.
+ 
+
+
+---
+
+### **Hypothesis Testing for sample means**
+
+The process for hypothesis testing is exactly the same, we just find probabilities using the $t$-distribution instead of the normal distribution. To find the **$t$-score** of a sample mean (which is the $Z$-score equivalent but for the $t$-distribution) we compute:
+
+$$ \displaystyle  \frac{\overline{x \ }-\mu}{SE} $$
+where $SE$ is the standard error $\displaystyle SE = \frac{s}{\sqrt{n}}$ from the CLT.
+
++ The $t$-scores follow a $t$-distribution with degrees of freedom $= n-1$.
+
+---
+
+#### **Example:** 
+A child is seeing how long they can hold their breathe under water. The child thinks they can hold their breathe for $150$ seconds on average. The child's dad thinks it less than that. He samples his daughter holding her breathe eight times and the results are $144$, $152$, $138$, $144$, $136$, $162$, $158$, and $142$. Perform a hypothesis test using a $5 \%$ level of significance. Does the data provide sufficient evidence to reject the null hypothesis? 
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# there are not any significant outliers in the data so the normality condition is satisfied. (you don't need to check this condition, we will assume normality is satisfied) 
+
+# assume the null hypothesis is true
+
+sample <- c(144,152,138,144,136,162,158,142)
+
+# mean assuming the null hypothesis (mu)
+
+# sample mean (mean)
+
+# sample standard deviation (s)
+
+# standard error (se = s/sqrt(n))
+
+# t-score (mean-mu/se)
+
+# p-value (draw picture for pt or 1-pt)
+
+
+```
+
+
+
+---
+
+#### **Exercise:** 
+A candy company makes candies that are meant to be one inch long. An employee in quality control takes a random sample and measures the following candy lengths: 
+$1.11, 1.07, 1.11, 1.07, 1.12, 1.08, .98, .98, 1.02, .95, .95$
+Is there convincing evidence that the average length of a candy is greater than one? Use a significance level of $0.05$ and assume that the normality condition is satisfied. 
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+
+# assume the null hypothesis is true
+
+sample <- c(1.11, 1.07, 1.11, 1.07, 1.12, 1.08, .98, .98, 1.02, .95, .95)
+
+# mean assuming the null hypothesis (mu)
+
+# sample mean (mean)
+
+# sample standard deviation (s)
+
+# standard error (se = s/sqrt(n))
+
+# t-score (mean-mu/se)
+
+# p-value (draw picture for pt or 1-pt)
+
+
+```
+
+
+
+---
+
+## **Difference of means**
+
+For the difference of sample means we use standard error
+
+$$\displaystyle SE = \sqrt{\frac{(s_1)^2}{n_1} + \frac{(s_2)^2}{n_2}}$$
+with $t$-distribution whose degrees of freedom are the smaller of $n_1-1$ and $n_2-1$.
+
++ $s_1$ and $s_2$ are the standard deviations of each sample. If you know the population standard deviations, substitute those in instead.
+
++ For hypothesis testing, we assume there is no difference between the means, $\mu_{n_1}=\mu_{n2}$.
+
+
+
+#### **Example:** 
+
+It is thought that middle school age boys and girls spend an equal time on average watching tv. A study is done for $25$ randomly selected children. The study had $16$ boys and $9$ girls. The $16$ boys watched tv for an average of $3.22$ hours per day with a sample standard deviation of $1$. The $9$ girls watched an average of two hours of television per day with a sample standard deviation of $.866$. Does the study suggest a statistically significant difference in the two population means using a significance level of $.05$?
+
+
+```{r}
+
+# assume the null hypothesis is true
+
+# mean assuming the null hypothesis (mu)
+
+# difference in sample means (mean1-mean2)
+
+# sample standard deviations (s1 and s2)
+
+# standard error (se = sqrt(s1^2/n_1 + s2^2/n_2))
+
+# t-score (diff-mu/se)
+
+# p-value (draw picture for pt or 1-pt)
+
+
+```
+
+<div>
+:::{#answer}
+
+Conclusion here.
+
+:::
+</div>
+
+---
+
+## Class Activity
+
+1. A study is done by two colleges to determine which one graduates students who have taken more math classes. College A samples $11$ graduates. Students from College A on average take $4$ math classes before graduating with a standard deviation of $1.5$. College B samples nine graduates. Their average is $3.5$ math classes with a standard deviation of $1$. People in the community have the impression that College A is more STEM focused and therefore graduates have taken more math classes on average. Set up a hypothesis test for this claim with a $1 \%$ significance level. 
+
+$H_0:$
+
+$H_A:$
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+2. A hospital is testing blood of newborn babies for presence of certain toxins. The blood was tested for $430$ industrial compounds, pollutants, and other chemicals. There are $20$ babies in the sample and the hospital recorded the number of toxins found for each baby: $79,	145,	147,	160,	116,	100,	159,	151,	156,	126, 137,	83,	156,	94,	121,	144,	123,	114,	139,	99$. Use this sample data to construct a $90 \%$ confidence interval for the mean number of toxins to be found.
+
+
+
+```{r}
+# Insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div> 
+
+3. A particular brand of tires claims that its deluxe tire averages at least $50,000$ miles before it needs to be replaced. From past studies of this tire, the standard deviation is known to be $8,000$. A survey of owners of that tire design is conducted. From the $28$ tires surveyed, the mean lifespan was $46,500$ miles with a standard deviation of $9,800$ miles. Using a significance level of $0.05$, is the data highly inconsistent with the claim?
+
+$H_0:$
+
+$H_A:$
+
+
+```{r}
+# Insert code here
+```
+
+<div>
+:::{#answer}
+
+Write your answer here
+
+:::
+</div>
+
+
+  
+
+  
+
