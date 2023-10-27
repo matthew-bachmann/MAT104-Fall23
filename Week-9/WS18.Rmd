@@ -1,0 +1,224 @@
+---
+title: "WS 18: Power Calculations"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Error Types
+- Power Testing Examples
+
+---
+
+## Error types
+
+Recall, 
+
+| |$H_0$ is True | $H_0$ is False |
+|:--|:--|:--|
+|Do not reject $H_0$ | Correct conclusion | Type II error
+|Reject $H_0$ | Type I error | Correct conclusion |
+
++ Probability of a Type I error is equal to the significance level. 
++ Probability of a Type II error takes a bit more work to find.
+
+### Type II error
+
++ In a type II error, the null hypothesis is false but we fail to reject it.
++ The probability of a Type II error is usually referred to as $\beta$.
++ The probability of correctly rejecting the null hypothesis when it is false is called the **power**.
++ The power is $1- \beta$.
+
+---
+
+#### **Example:** Suppose we do a random sample of $15$ values from a population where $\sigma =20$ and $\mu$ is unknown. We want to perform a hypothesis test using a significance level $\alpha = .08$ where:
+
+$H_0: \mu = 50$
+$H_A: \mu < 50$
+
+#### What sample averages would cause us to reject the null hypothesis?
+
+```{r}
+# sampling distribution:
+
+# value
+
+```
+
+#### If $\mu =40$, what is the probability of a Type II error?
+
+```{r}
+# probability
+
+```
+
+#### If $\mu =40$, what is the power of the test?
+
+```{r}
+# probability
+
+```
+
+#### How large of a sample size will lead to a power of $80 \%
+
+```{r}
+# 80th on standard normal curve:
+
+# need 40 + 80th*SE = 42.38
+
+```
+
+
+### Notes:
+
++ The two distributions we drew are distributions we've been drawing: the first is the distribution we use for hypothesis testing, the second is the one we use for confidence intervals.
++ The areas under the distribution curve centered at the null hypothesis give
+- The probability of not rejecting the null hypothesis if it is true
+- The probability of rejecting the null hypothesis if it is true (Type I error= $\alpha$)
++ The areas under the distribution curve centered at a sample statistic or proposed alternate value give
+- The probability of not rejecting the null hypothesis if it is false (Type II error= $\beta$)
+- The probability of rejecting the null hypothesis if it is false (**power** $1-\beta$).
+
+#### **Example:** Suppose we do a random sample of $15$ values and the sample standard deviation is $s =20$ and $\mu$ is unknown. We want to perform a hypothesis test using a significance level $\alpha = .08$ where:
+
+$H_0: \mu = 50$
+$H_A: \mu < 50$
+
+#### What sample averages would cause us to reject the null hypothesis?
+
+```{r}
+# sampling distribution:
+
+# value
+
+```
+
+#### If $\mu =40$, what is the probability of a Type II error?
+
+```{r}
+# probability
+
+```
+
+#### If $\mu =40$, what is the power of the test?
+
+```{r}
+# probability
+
+```
+
+#### How large of a sample size will lead to a power of $80 \%
+
+```{r}
+# 80th on t-distribution:
+
+# need 40 + 80th*SE = 42.38
+
+```
+
+
+#### **Example:** Suppose we do a random sample of $20$ values. The sample has standard deviation $16$. We want to perform a hypothesis test using a significance level $\alpha = .2$ where:
+
+$H_0: \mu = 78$
+$H_A: \mu \neq 78$
+
+#### What sample averages would cause us to reject the null hypothesis?
+
+```{r}
+# sampling distribution:
+
+# value: 73.415 to 82.585
+
+
+```
+
+#### If $\mu =72$, what is the probability of a Type II error?
+
+```{r}
+# probability
+
+```
+
+#### If $\mu =72$, what is the power of the test?
+
+```{r}
+# probability
+
+```
+
+
+---
+
+## Class Activity
+
+1. **Example:** Suppose we do a random sample of $200$ values. The sample has standard deviation $22$. We want to perform a hypothesis test using a significance level $\alpha = .1$ where:
+
+$H_0: \mu = 53$
+$H_A: \mu \neq 53$
+
+#### What sample averages would cause us to reject the null hypothesis?
+
+```{r}
+
+```
+
+#### If $\mu =57$, what is the probability of a Type II error?
+
+```{r}
+
+```
+
+#### If $\mu =57$, what is the power of the test?
+
+```{r}
+
+```
+
+2. Suppose we do a random sample of $8$ values from a population where the sample standard deviation is $s =2.2$ and $\mu$ is unknown. We want to perform a hypothesis test using a significance level $\alpha = .05$ where:
+
+$H_0: \mu = 13$
+$H_A: \mu < 13$
+
+#### What sample averages would cause us to reject the null hypothesis?
+
+```{r}
+
+```
+
+#### If $\mu =10$, what is the probability of a Type II error?
+
+```{r}
+
+```
+
+#### If $\mu =10$, what is the power of the test?
+
+```{r}
+
+```
+
+#### How large of a sample size will lead to a power of $80 \%
+
+```{r}
+
+```
