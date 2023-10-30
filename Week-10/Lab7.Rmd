@@ -1,0 +1,166 @@
+---
+title: "Lab 7"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: ./style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(openintro)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+1. An inventor has developed a new, energy-efficient engine. He claims that the engine will run continuously for more than $5$ hours ($300$ minutes) on a single gallon of regular gasoline. From his stock of engines, the inventor selects a simple random sample of $50$ engines for testing. The engines run for an average of $305$ minutes. The true standard deviation $\sigma$ is $30$ minutes. Test hypothesis that the mean run time is more than $300$ minutes. Use a $0.05$ level of significance. 
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+2. If the true mean of the new engine is $309$ minutes, find the power of the test from the last problem.
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+3. Natural cork in wine bottles is subject to deterioration, and as a result wine in such bottles may experience contamination. In a simple random sample of $91$ wine bottles, $16$ of them were found to be spoiled to some extent by cork deterioration. Does this data provide strong evidence for concluding that more than $15 \%$ of all such bottles are contaminated in this way? Use a significance level equal to $0.10$. 
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+4. If the true proportion of contaminated wine bottles is $23 \%$, find the power of the test from the last problem.
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+5. An engineer hypothesizes that the mean hardness score of the concrete mixture they are using is higher than $170$. The engineer measured the hardness of $20$ slabs of concrete and calculated the sample mean to be $174.52$ and the sample standard deviation to be $10.31$. Perform a hypothesis test that the true average score is not equal to $170$. Set $\alpha = 0.10$.
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+6. If the true mean hardness of the concrete is  $176$ minutes, find the power of the test from the last problem.
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+7. A student at a four-year college claims that mean enrollment at four–year colleges is higher than at community colleges. Two surveys are conducted. Of the $15$ community colleges surveyed, the mean enrollment was $5,068$ with a standard deviation of $4,777$. Of the $5$ four-year colleges surveyed, the mean enrollment was $5,466$ with a standard deviation of $8,191$.
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+8. Researchers conducted a study to find out if there is a difference in the use of eReaders by different age groups. Randomly selected participants were divided into two age groups. In the $16$ to $29$-year-old group, $7 \%$ of the $628$ surveyed use eReaders, while $11\ %$ of the $2,309$ participants $30$ years old and older use eReaders. Conduct a hypothesis test to see if this data shows a statistically significant difference in the populations. Set $\alpha = 0.05$
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+
+9. Driver error can be listed as the cause of approximately $40 \%$ of all fatal auto accidents. Thirty randomly selected fatal accidents are examined, and it is determined that $14$ were caused by driver error. Using $\alpha = 0.05$, does the data suggest the true proportion of accidents caused by driver error is greater than $40 \%$?
+
+$H_0:$
+
+$H_A:$
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
+
+10. Suppose the true proportion of accidents caused by driver error is $60 \%$, what is the power of the test?
+
+```{r}
+# insert code here
+```
+
+<div>
+:::{#answer}
+ANSWER HERE
+:::
+</div>
