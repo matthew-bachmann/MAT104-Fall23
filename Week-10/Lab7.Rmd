@@ -76,7 +76,7 @@ ANSWER HERE
 :::
 </div>
 
-5. An engineer hypothesizes that the mean hardness score of the concrete mixture they are using is higher than $170$. The engineer measured the hardness of $20$ slabs of concrete and calculated the sample mean to be $174.52$ and the sample standard deviation to be $10.31$. Perform a hypothesis test that the true average score is not equal to $170$. Set $\alpha = 0.10$.
+5. An engineer hypothesizes that the mean hardness score of the concrete mixture they are using is higher than $170$. The engineer measured the hardness of $20$ slabs of concrete and calculated the sample mean to be $174.52$ and the sample standard deviation to be $10.31$. Perform a hypothesis test that the true average score is greater than $170$. Set $\alpha = 0.10$.
 
 $H_0:$
 
