@@ -1,0 +1,185 @@
+---
+title: "WS 19: Chi-square test for Goodness of Fit"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Today's Agenda
+
+- Goodness of fit measures
+- Discuss chi-square
+- Examine two-way tables
+
+
+---
+
+## How well does data fit a distribution
+
++ When data fits into bins (categorical data, discrete data), we can test how well it fits a particular distribution
+
+**Example:** On a fair six sided die, each side is expected to be equally likely. However, many die are constructed so that the numbers are marked by hollowed out pips. This should, in theory, cause the sides with more pips to be lighter than the sides with fewer pips. A person conjectures that the five and six should show up more often when rolling a six sided die since those sides are the lightest sides and the heavier sides should be on the bottom. Over many, many weeks, they roll a die $300,000$ times and record their results:
+
+
+| Outcome | Observed | Expected |
+|:--:|:--:|:--:|
+|$1$ | $50,611$ | $50,000$
+|$2$ | $49,523$ | $50,000$
+|$3$ | $49,812$ | $50,000$
+|$4$ | $49,924$ | $50,000$
+|$5$ | $49,672$ | $50,000$
+|$6$ | $50,458$ | $50,000$
+| Total: | $300,000$ | $300,000$
+
++ How do we test if the variation is due to randomness or not?
+
+$H_0$: There is no inconsistency between the observed and the expected counts. The observed counts follow the same distribution as the expected counts. 
+
+$H_A$: There is an inconsistency between the observed and the expected counts. The observed counts do not follow the same distribution as the expected counts. There is a bias in which side comes up on the roll of a die.
+
+### Calculating $\chi^2$
+
+The statistic we will use to test how good of a fit we have is called $\chi$-square. It is computed via:
+
+$$ \displaystyle \sum \frac{ (\text{observed}- \text{expected})^2}{\text{expected}}$$
+
+| Outcome | Observed | Expected | $\sum \frac{ (\text{observed}- \text{expected})^2}{\text{expected}}$ |
+|:--:|:--:|:--:|:--:|
+|$1$ | $50,611$ | $50,000$ | $7.46642$
+|$2$ | $49,523$ | $50,000$ | $4.55058$
+|$3$ | $49,812$ | $50,000$ | $0.070688$
+|$4$ | $49,924$ | $50,000$ | $0.11552$
+|$5$ | $49,672$ | $50,000$ | $2.15168$
+|$6$ | $50,458$ | $50,000$ | $4.19528$
+| Total: | $300,000$ | $300,000$ | $18.55017$
+
++ Notice the similarity of this calculation to computing the variance.
++ How do we quantify the rarity of the number we just computed?
+
+---
+
+## Chi-square distribution.
+
++ The chi-square statistic follows a chi-square distribution.
++ We will use this distribution to compute the $p$-values.
+
+**Characteristics:**
+
++ Defined by a single parameter (degrees of freedom) 
++ Sometimes used to describe statistics that are positive and right skewed
+
+The degrees of freedom used depends on the type of test you are doing:
++ for goodness of fit tests (where you want to determine if your data fits a particular distribution) the degrees of freedom is the number of bins $-1$.
+
+**Example:** To find the probability with regard to how rare $\chi^2 = 18.55017$ is, we use the following code:
+
+```{r}
+# rarity of chi-square of 18.55017 with 6 bins
+1-pchisq(18.55017,5)
+```
+
+Returning to hypothesis testing:
+
+$H_0$: There is no inconsistency between the observed and the expected counts. The observed counts follow the same distribution as the expected counts. 
+
+$H_A$: There is an inconsistency between the observed and the expected counts. The observed counts do not follow the same distribution as the expected counts. There is a bias in which side comes up on the roll of a die.
+
++ no inconsistency corresponds to a chi-square with a low p-value
++ inconsistency corresponds to a chi-square with a high p-value
+
+Since $.002<.05$, we the data provide strong evidence that the die is unfair.
+
+---
+
+### Conditions
+Just as with success-failure for CLT of proportions, and the normality condition for the $t$-tests, for a chi-square test we need:
+
++ Cases must be **independent** from each other.
++ **Sample size** each expected bin needs to have at least $5$ values
+
+
+**Example:** Suppose it is known that the distribution of males age $18$ to $24$ in the U.S. population is as follows:
+
+| Marital Status | Percent | 
+|:--:|:--:|
+| never married | $31.3$ |
+| married | $56.1$ | 
+| widowed | $2.5$ |
+|divorced/separated | $10.1$ | 
+
+From a random sample of $400$ mean ages $18$ to $24$, the following data is collected:
+
+| Marital Status | Count | 
+|:--:|:--:|
+| never married | $140$ |
+| married | $238$ | 
+| widowed | $2$ |
+|divorced/separated | $20$ | 
+
+Perform a goodness of fit test with significance level of $.05$.
+
+```{r}
+# insert code here
+```
+
+---
+
+
+## Class Activity
+
+1. Employers want to know which days of the week employees are absent in a five-day work week. Most employers would like to believe that employees are absent equally during the week. Suppose a random sample of $60$ managers were asked on which day of the week they had the highest number of employee absences. The results were distributed as:
+
+|  | Monday | Tuesday | Wednesday | Thursday | Friday | Total |  
+|:--:|:--:|:--:|:--:|:--:|
+| number of absences | 15 | 12 | 9 | 9 | 15 | 60 |
+
+Suppose there are $60$ absences in an average week. Test the goodness of fit of this data to a uniform distribution with a significance level of $.05$.
+
+```{r}
+
+```
+
+
+2. One study indicates that the number of televisions that American families have is distributed (this is the given distribution for the American population):
+
+| Number of Televisions | Percent | 
+|:--:|:--:|
+| $0$ | $10$ |
+| $1$ | $16$ | 
+| $2$ | $55$ |
+| $3$ | $11$ | 
+| $4+$ | $8$ | 
+
+A random sample of 600 families in North Carolina gave the following results:
+
+| Number of Televisions | Count | 
+|:--:|:--:|
+| $0$ | $66$ |
+| $1$ | $119$ | 
+| $2$ | $340$ |
+| $3$ | $60$ | 
+| $4+$ | $15$ |
+
+At the $1 \%$ significance level, does it appear that the distribution of number of televisions in North Carolina is different from the distribution for the American population as a whole?
+
+```{r}
+
+```
