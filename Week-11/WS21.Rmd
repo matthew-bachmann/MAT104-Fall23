@@ -1,0 +1,263 @@
+---
+title: "WS 21: ANOVA and Correlation"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+
+---
+
+## ANOVA review
+
+ANOVA is used to compare the mean across multiple groups.
+
+Criteria
+
++ the observations are independent within and across groups
++ the data within each group are nearly normal (symmetric, unimodal, not many outliers)
++ the variability across the groups is about equal (no variance is more than double another)
+
+Then we can use `aov()` to compute the $F$-statistic and $p$-values. The $p$-value is computed assuming the means are equal across groups.
+
++ The null hypothesis for ANOVA is that there is no difference between the means for different groups.
++ A large $p$-value means the probability of seeing data as rare or more rare than the sample data is high. So, we fail to reject the null hypothesis.
++ A small $p$-value means the same probability is low. Meaning our sample data is quite rare and this supports rejecting the null hypothesis. Thus, the data suggests that there is a statistically significant difference between the means.
+
+---
+
+## Correlation
+
+For the following section we will use data from: "Learning Statistics with R" by Danielle Navarro:
+
+```{r}
+load("~/Documents/data/parenthood.Rdata")
+load("~/Documents/data/pearson_correlations.Rdata")
+```
+
++ This data captures how grumpy Danielle is, how much she slept in a day, and how much her baby slept in a day.
+
+Consider the following plots:
+
+```{r}
+ggplot(parenthood, aes(x=dan.sleep, y=dan.grump)) + geom_point()
+```
+
+```{r}
+ggplot(parenthood, aes(x=baby.sleep, y=dan.grump)) + geom_point()
+```
+
++ They both display a negative association.
++ If you want to make a prediction about Danielle's mood both graphs can help but the first graph seems like it will make a *better* prediction.
+
+### Covariance
+
+To capture this relationship, we introduce the covariance:
+
+$$\displaystyle COV(X,Y) = \frac{1}{N-1} \sum (X_i - \bar{X})(Y_i-\bar{Y})$$
+
+
+The R code to compute the covariance is 
+```{r}
+X <- parenthood$dan.sleep
+Y <- parenthood$dan.grump
+cov(X,Y)
+
+X2 <- parenthood$baby.sleep
+cov(X2,Y)
+```
+
++ Both values are negative, representing a negative association.
++ The units of the measurement are in $grumpiness \times hours$, which makes the numbers difficult to compare.
++ We need to standardize the measurements using the standard deviation
+
+### Correlation coefficient
+
+The Pearson correlation coefficient $r_{XY}$ is a standardized covariance measure:
+
+$$r_{XY} = \frac{COV(X,Y)}{s_Xs_Y} $$
+
+where $s_x$ and $s_y$ are the sample standard deviations. 
+
+The R code for the Pearson correlation coefficient is:
+```{r}
+cor(X,Y)
+cor(X2,Y)
+```
+
+### Properties of $r_{XY}$
+
++ always between $-1$ and $1$
++ $-1$ is a perfect negative relationship
++ $1$ is a perfect positive relationship
++ $0$ is no relationship at all
++ Numbers closer to $0$ represent a weaker relationship
++ Numbers closer to $1$ or $-1$ represent a stronger relationship
+
+Since $X$ and $Y$ have a correlation coefficient closer to $-1$ that means Danielle's sleep and her grumpiness level are more strongly associated than the Danielle's sleep and the baby's sleep.
+
+The `cor()` function in R is actually more powerful than how we previously used it. We can find all Pearson coefficients at once by plugging in the data frame:
+
+```{r}
+cor(parenthood)
+```
+
+### Interpreting the Pearson correlation coefficient
+
+Below is data with various Pearson correlation coefficients:
+
+```{r}
+ggplot(outcomes, aes(x=V1,y=V2))+geom_point() + facet_wrap(~pearson)
+```
+
++ Exactly what constitutes as a strong correlation depends on the context.
++ You can, however, use these general guidlines:
+
+| Correlation | Strength | Direction |
+|:--|:--|:--|
+| $-1$ to $-0.9$ | Very Strong | Negative | 
+| $-0.9$ to $-0.7$ | Strong | Negative | 
+| $-0.7$ to $-0.4$ | Moderate | Negative | 
+| $-0.4$ to $-0.2$ | Weak | Negative | 
+| $-0.2$ to $0$ | Negligible | Negative | 
+| $0$ to $0.2$ | Negligible | Positive | 
+| $0.2$ to $0.4$ | Weak | Positive | 
+| $0.4$ to $0.7$ | Moderate | Positive | 
+| $0.7$ to $0.9$ | Strong | Positive | 
+| $0.9$ to $1$ | Very Strong | Positive |
+
+### Caution
+
++ Use caution when interpreting a pearson correlation coefficient.
++ The correlation may not tell you what you think it does about the data.
+
+Consider the following data set:
+```{r}
+cor(anscombe$x1,anscombe$y1)
+```
+
++ Based on the correlation coefficient we might imagine a scatter plot with a slight positive linear association. 
++ We would be correct!
+
+```{r}
+ggplot(anscombe, aes(x=x1,y=y1))+geom_point()
+```
+
+Now let's check
+```{r}
+cor(anscombe$x2,anscombe$y2)
+```
+
++ The same correlation coefficient! We should get a similar graph right?
+
+```{r}
+ggplot(anscombe, aes(x=x2,y=y2))+geom_point()
+```
+
++ Nope, what about the others?
+```{r}
+cor(anscombe$x3,anscombe$y3)
+
+cor(anscombe$x4,anscombe$y4)
+```
+
+
+```{r}
+ggplot(anscombe, aes(x=x3,y=y3))+geom_point()
+ggplot(anscombe, aes(x=x4,y=y4))+geom_point()
+```
+
+---
+
+### Shortcomings and Alternatives
+
++ You should always make a scatter plot before using the pearson correlation coefficient to conclude any thing about the shape of your data.
++ The Pearson correlation coefficient measures how close the data is to fitting on a specific line.
++ It is looking for a **linear** relationship. 
++ This is not always what we want, sometimes we want an **ordinal** relationship.
+
+**Example:** It's reasonable to assume that studying more hours should increase your grade in a course. However, this relationship is not linear. Putting in just a little bit of time every day (like simply going to class) will increase your grade a lot (maybe from $0 \%$ to $40 \%$). However, if you already study $2$ hours every day and have an $85 \%$ in a class, studying for a third hour will probably have a smaller effect on your grade.
+
++ In this situation, our instinctly wants to say that studying more perfectly correlates to better grades. 
+
++ Since the relationship is not linear, though, the Pearson correlation coefficient will most likely not be $1$.
+
+Consider,
+```{r}
+load("~/Documents/data/effort.Rdata")
+ggplot(effort,aes(x=hours,y=grade))+geom_point()
+cor(effort$hours,effort$grade)
+```
+
++ To fix this, we no longer want our axis to be interpreted numerically, we'd rather they just be interpreted in order of their rank. 
++ So we want to adjust our data type from numerical discrete to categorical ordinal.
+
+```{r}
+hours.rank <- rank(effort$hours)
+grade.rank <- rank(effort$grade)
+ranked_effort <- data.frame(hours.rank,grade.rank)
+ggplot(ranked_effort,aes(x=hours.rank,y=grade.rank))+geom_point()
+cor(hours.rank,grade.rank)
+```
+
+This is called **Spearman's rank order correlation**.
+A quicker way to do this in R is to change the `method` used to `spearman`:
+```{r}
+cor(effort$hours,effort$grade, method="spearman")
+```
+
+---
+
+## Class Activity
+
+1. Make a scatter plot for penguin body mass vs. flipper length with facets by species. Looking only at the plots, can you tell for which species the body mass has the strongest relationship to flipper length? What about the weakest?
+
+```{r}
+
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+2. Use the `filter()` and `cor()` function to find the Pearson correlation coefficient for body mass and flipper length for each species. Which species has the strongest relationship?
+
+
+```{r}
+
+```
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+3. Calculate the correlations again, but use the Spearman correlation method. 
+
+
+```{r}
+
+```
