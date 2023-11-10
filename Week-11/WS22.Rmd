@@ -1,0 +1,251 @@
+---
+title: "WS 22: Linear Regressionw"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+library(car)
+library(rgl)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+
+---
+
+## Linear Regression
+```{r}
+load("./parenthood.Rdata")
+```
+
+Let's go back to the parenthood data we used last class:
+
+```{r}
+ggplot(parenthood, aes(x=dan.sleep,y=dan.grump))+geom_point()
+```
+
+The data looks like there is a linear relationship between `dan.sleep` and `dan.grump`, so let's add a line to our plot that represents this relationship.
+
+### Meaning of the Parameters
+
+To make an equation for a line we use the slope-intercept formula:
+
+$$y=mx+b$$
+where $m$ is the slope of the line and $b$ is the $y$-intercept. 
+
+In statistics, we typically use different letters but the equation is the same:
+$$\hat{Y_i} = b_1 X_i + b_0$$
+where $b_1$ is the slope and $b_0$ is the $y$-intercept. The values $b_1$ and $b_0$ are called coefficients. 
+
+1. Interpret $b_1$, $b_0$, $X_i$, and $\hat{Y}_i$ in the context of the parenthood data. Make a best guess for $b_0$ and $b_1$.
+
+<div>
+:::{#answer}
+
+ANSWER HERE
+
+:::
+</div>
+
+Let's add the line we predicted to the graph
+
+```{r}
+
+ggplot(parenthood, aes(x=dan.sleep,y=dan.grump)) +
+  geom_point() + 
+  geom_abline(intercept = 0, slope = 0, color="blue") 
+
+```
+
+Notice that the points don't all land directly on the line (in fact none of them do). So, when we plug an $X$ value into the line, all we get is a *prediction* of the $y$-value (this is why there is a hat on the $Y_i$ in the equation).
+
+
+### Residuals
+
++ We can do better than estimating by eye though. 
++ We should choose the line that minimize the error in our predictions.
+
+The graph below displays the error between our prediction and the true data in red:
+
+```{r, eval=FALSE}
+# Use our slope and intercept guesses to predict the y-values
+predictions <- data.frame(Y_hat = -10*parenthood$dan.sleep + 135)
+
+# Plot segments joining the actual points and the predicted points
+ggplot(parenthood, aes(x=dan.sleep,y=dan.grump)) +
+  geom_point() + 
+  geom_abline(intercept = 0, slope = 0, color="blue") + 
+  geom_segment(aes(xend = dan.sleep, yend = predictions$Y_hat, color = "resid"))
+
+```
+
+To lengths of these little red segments are called **residuals**. We can find how big the residuals are by finding the difference between the predicted value and the actual value:
+
+$$\epsilon_i = Y_i - \hat{Y}_i$$
+
+2. Calculate the residual corresponding to the first day, $\epsilon_1$. Find the residual corresponding to the grumpiest day.
+
+```{r}
+
+```
+
++ the residual is negative when our prediction is an overestimate
++ the residual is positive when our prediction is an underestimate.
+
+Putting these ideas together, we can see that our real data is equal to our prediction plus the residuals:
+
+$$Y_i = \hat{Y}_i + \epsilon_i = b_1X_i + b_0 + \epsilon_i$$
+
+---
+
+## Minimizing error
+
++ The residuals describe the error in our model.
++ We want to choose the line that minimizes the residuals.
++ One approach for this is to minimize the so called **sum of the squared residuals**:
+
+$$ \sum \epsilon_i^2 = \sum (Y_i - \hat{Y}_i)^2$$
+
+```{r, eval=FALSE}
+
+# finding the sum of the squared residuals for the parenthood data
+SSR_guess <- sum((parenthood$dan.grump - predictions)^2)
+
+```
+
++ Find $\hat{b}_1$ and $\hat{b}_0$ so that $\sum \epsilon_i^2$ is minimized (there are hats here because we are finding these values from a sample, so they are estimates of the population parameters). 
++ This is not too difficult with some calculus and linear algebra, but is beyond the scope of this course.
++ We will use R to find the coefficients that minimize the sum of the square regressions.
+
+---
+
+### Using R to find the fits
+
+To find the best fitting regression line we use `lm()`:
+
+```{r}
+regression1 <- lm(formula = dan.grump ~ dan.sleep, data = parenthood)
+```
+
+So, the best fitting line from before is:
+
+```{r}
+ggplot(parenthood, aes(x=dan.sleep,y=dan.grump))+geom_point() + geom_abline(intercept = 0, slope = 0, color="blue") 
+```
+
+## Multiple Regression
+
++ When we plotted Danielle's grumpiness against the baby's sleep, we also saw an association. 
++ It is possible that Danielle's grumpiness is affected by a combination of her sleep and her baby's sleep.
++ Every hypothesis we have tested so far we looked at the effect of a single predictor on an outcome 
++ In reality, many different values have influence on an outcome.
++ Adding more predictors makes the calculus and linear algebra that goes into finding the best  fit a bit more complex. 
++ However, the general concept and R code are incredibly simple. 
+
+The model we use for two predictors is:
+$$\hat{Y}_i = b_2 X_{i,2} + b_1 X_{i,1} + b_0$$
+
+where $X_{i,2}$ is the amount of sleep the baby got on day $i$ and $X_{i,1}$ is the amount of sleep Danielle got on day $i$.
+
++ If we had three predictors the equation would be:
+$$\hat{Y}_i = b_3 X_{i,3} + b_2 X_{i,2} + b_1 X_{i,1} + b_0$$
++ Our goal is still to choose the coefficients in order to minimize the sum of the squared residuals.
+
+To find the best fitting regression line we use `lm()`:
+
+```{r}
+regression2 <- lm(formula = dan.grump ~ dan.sleep + baby.sleep, data = parenthood)
+```
+```{r}
+scatter3d(dan.grump ~ dan.sleep + baby.sleep, parenthood)
+rglwidget()
+```
+
+3. Find the residual corresponding to the first day using this new model with two predictors.
+
+```{r}
+
+```
+
+---
+
+## Class Activity
+
+1. Using the penguins data set, perform a simple linear regression to model body mass using the predictor variable bill length. What values do you get for $\hat{b}_0$ and $\hat{b}_1$? Graph a scatter plot for the data and include your regression model in the plot.
+
+```{r}
+
+```
+
+<div>
+:::{#answer}
+
+$\hat{b}_0 = $
+
+$\hat{b}_1 = $
+
+:::
+</div>
+
+2. Find the sum of the square residuals for the model in exercise 1.
+
+```{r}
+
+```
+
+3. Use `cor()` to find the strength of the correlation between bill length and body mass. 
+
+
+```{r}
+
+```
+
+
+
+4. Use simple linear regression to model the relationship between flipper length and body mass for the penguin data. What values do you get for $\hat{b}_0$ and $\hat{b}_1$? Plot a scatter plot for the data with the line you found.
+
+```{r}
+
+```
+
+<div>
+:::{#answer}
+
+$\hat{b}_0 = $
+
+$\hat{b}_1 = $
+
+:::
+</div>
+
+5. Use multiple linear regression to model the body mass using the predictors flipper length and bill length for the penguin data. Assuming $X_1$ is flipper length and $X_2$ is bill length, what values do you get for $\hat{b}_0$,  $\hat{b}_1$, and $\hat{b}_2$? 
+
+```{r}
+
+```
+
+<div>
+:::{#answer}
+
+$\hat{b}_0 = $
+
+$\hat{b}_1 = $
+
+$\hat{b}_2 = $
+
+:::
+</div>
+
