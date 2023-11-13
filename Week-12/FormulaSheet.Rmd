@@ -1,0 +1,360 @@
+---
+title: "Formula Cheat Sheet"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+
+---
+
+## Descriptive Statistics
+
+### Mean
+Let $x_1,x_2, \dots, x_n$ be a sample of $n$ observed values, then the **sample mean** is
+
+<div>
+:::{#formula}
+$$ \overline{x} \ \ \ = \frac{x_1+ \dots + x_n}{n}$$
+:::
+</div>
+
+The `R` code for computing the mean is `mean()`.
+
+
+### Median
+Let $x_1,x_2, \dots, x_n$ be a sample of $n$ observed values, then the **median** is
+<div>
+:::{#formula}
+$$\displaystyle \widetilde{x} \ \ = \begin{cases}
+x_{\left({\frac{n+1}{2}} \right)} & \text{ Where $n$ is odd}\\ 
+ & \\
+\frac{1}{2}\left(x_{\left({\frac{n}{2}} \right)} + x_{\left({ 1+ \frac{n}{2}} \right)} \right) & \text{ Where $n$ is even}\\ 
+\end{cases}$$
+:::
+</div>
+
+The `R` code for computing the median is `median()`.
+
+
+### Mode
+
+The **mode** is the value that occurs the most frequently. 
+
+The `R` code for finding the mode is `which.max(table())` which will return the most frequent value and the location that it occurs in the data frame.
+
+
+### Range
+
+The **range** is the difference between the maximum and minimum. 
+
+The `R` code for finding the range is `max()-min()`. You can also use `range()` which will return the largest and smallest value, but you still need to subtract them.
+
+The `R` code for finding the mode is `which.max(table())` which will return the most frequent value and the location that it occurs in the data frame.
+
+
+### Interquartile Range
+
+The **interquartile range** (IQR) is the middle $50 \%$ of the data:
+<div>
+:::{#formula}
+$$Q_3-Q_1$$
+:::
+</div>
+
+where $Q_3$ and $Q_1$ is the data value in the 75th and 25th percentile respectively.
+
+The `R` code for finding the quartiles is `quantile` and for finding IQR is `IQR()`.
+
+
+### Variance
+
+Let $x_1,x_2, \dots, x_n$ be a sample of $n$ observed values, then the **variance** is
+
+<div>
+:::{#formula}  
+$$\displaystyle s^2 = \frac{(x_1-\overline{x} \ \ \ )^2+ (x_2-\overline{x} \ \ \ )^2 + (x_3-\overline{x} \ \ \ )^2 + ...(x_n-\overline{x} \ \ \ )^2}{n-1}$$
+:::
+</div>
+
+The `R` code for computing variance is `var()`.
+
+
+### Standard Deviation
+
+The **standard deviation** is
+
+<div>
+:::{#formula}
+$$s = \sqrt{\text{variance}}$$
+:::
+</div>
+
+The `R` code for computing standard deviation is `sd()`.
+
+---
+
+## Probability
+
+### Probability of $A$ or $B$
+
+<div>
+:::{#formula}
+$$P(A \text{ or }B)= P(A) + P(B) - P(A \text{ and }B)$$
+:::
+</div>
+
+### Probability of $A$ and $B$
+
+If $A$ and $B$  are **independent** then
+<div>
+:::{#formula}
+$$P(A \text{ and }B)= P(A) \cdot P(B)$$
+:::
+</div>
+
+### Conditional Probability
+
+The probability of $A$ occurring given that $B$ occurred is 
+<div>
+:::{#formula}
+$$ \displaystyle P(A | B)= \frac{P(A \text{ and } B )}{ P(B)}$$
+:::
+</div>
+
+### Law of Total Probability
+
+<div>
+:::{#formula}
+$$ \displaystyle P(B)= P(B \text{ and } A) + P(B \text{ and } A^c)$$
+:::
+</div>
+
+### Bayes' Theorem
+
+ Suppose $A_1,A_2,\dots,A_k$ are all possible out comes for a variable. Then:
+
+<div>
+:::{#formula}
+$$\displaystyle P(A_i|B) = \frac{P(B|A_i) P(A_i)}{P(B)}= \frac{P(B|A_i) P(A_i)}{P(B|A_1)P(A_1)+P(B|A_2)P(A_2) + \dots + P(B|A_k)P(A_k)}$$ 
+:::
+</div>
+
+Considering $A$ and $A^c$ as the only two possible outcomes, then Bayes' theorem says:
+<div>
+:::{#formula}
+$$ \displaystyle  P(A|B) =  \frac{P(B|A) P(A)}{P(B|A)P(A)+P(B|A^c)P(A^c)}$$ 
+:::
+</div>
+
+### Expected Value
+
+Let $X$ be a random variable that can take on the values $x_1, \dots, x_k$ then the **expected value** is the weighted average
+<div>
+:::{#formula}
+$$ \displaystyle \mu = E(X) = \sum_{i=1}^k x_i \cdot P(X = x_i)$$ 
+:::
+</div>
+
+### Variance of a Random Variable
+
+Let $X$ be a random variable that can take on the values $x_1, \dots, x_k$ then the **variance** is 
+<div>
+:::{#formula}
+$$ \displaystyle \sigma^2 = Var(X) = \sum_{i=1}^k (x_i-E(X))^2 \cdot P(X = x_i)$$
+:::
+</div>
+
+### Standard Deviation of a Random Variable
+
+Let $X$ be a random variable that can take on the values $x_1, \dots, x_k$ then the **standard deviation** is 
+<div>
+:::{#formula}
+$$ \displaystyle \sigma = SD(X) = \sqrt{Var(X)}$$
+:::
+</div>
+
+---
+
+## Distributions
+
+### Z-scores
+Let $x$ be an observation then the $Z$-score of the observation is
+<div>
+:::{#formula}
+$$ \displaystyle Z = \frac{x-\mu }{\sigma} $$
+:::
+</div>
+The `R` code to find a $Z$-score is `(x-mean())/sd()`. If you know the percentile of your observation you can use `qnorm(percentile,0,1)`. You can find the percentile with `pnorm(x,mean(),sd())`. 
+
+### The Central Limit Theorem for Sample Means
+
+Let $X$ be a random variable and let $\mu_X$ denote the mean of $X$ and $\sigma_X$ denote the standard deviation of $X$. Then for a sample of size $n$, the random variable $\overline{X}$, which is the sample mean, tends toward a normal distribution with mean $=\mu_X$ and standard deviation $=\frac{\sigma_X}{\sqrt{n}}$ as $n$ gets large:
+
+<div>
+:::{#formula}
+$$\displaystyle \overline{X} \sim N \left(\mu_X,\frac{\sigma_X}{\sqrt{n}} \right) $$
+:::
+</div>
+
+### The Central Limit Theorem for the Difference of Sample Means
+
+Let $\mu_{1}$ and $\mu_{2}$ denote population means and $\sigma_1$ and $\sigma_2$ be the standard deviations. Then for a samples of size $n_1$ and $n_2$, the sample distribution of $\hat{\mu_1}-\hat{\mu_2}$ tends toward a normal distribution with mean $\mu_1-\mu_2$ and standard deviation $=\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}$ as $n$ gets large:
+
+<div>
+:::{#formula}
+$$\displaystyle \hat{\mu_1} - \hat{\mu_s} \sim N \left(\mu_1-\mu_2,\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} \right) $$
+:::
+</div>
+
+### The Central Limit Theorem for Sums of Random Variables
+
+Suppose $X$ be a random variables with mean $\mu_X$ and standard deviation $\sigma_X$. Then for a sample of size $n$, the random variable $S_n = n \cdot X$  tends toward a normal distribution with mean $=n \cdot \mu_X$ and standard deviation $=\sqrt{n}\cdot \sigma_X$ as $n$ gets large:
+
+<div>
+:::{#formula}
+$$\displaystyle S_n \sim N \left(n \cdot \mu_X,\sqrt{n}\sigma_X \right)$$
+:::
+</div>
+
+### The Central Limit Theorem for Proportions
+
+Suppose $\hat{p}$ is the proportion of data points in your sample that satisfy some criteria. Then for a sample of size $n$, the random variable $\hat{p}$  tends toward a normal distribution with mean $=p$ (where $p$ is the proportion of data that actually satisfy the criteria) and standard deviation $=\sqrt{\frac{p(1-p)}{n}}$ as $n$ gets large:
+
+<div>
+:::{#formula}
+$$\displaystyle \hat{p} \sim N \left(p,\sqrt{\frac{p(1-p)}{n}} \right) $$
+:::
+</div>
+
+### Success-Failure Condition
+
+For a sample of size $n$ and proportion $p$, the CLT applies if 
+
+<div>
+:::{#formula}
+$$ np \geq 10 \text{ and } n(1-p) \geq 10 $$
+:::
+</div>
+
+### Finding a sample size
+
+To be within $x \%$ of the true population proportion for a given confidence interval then you need to use the formula
+<div>
+:::{#formula}
+$$n = Z^2 \cdot \frac{.5^2}{x^2}$$
+:::
+</div>
+
+where $z$ is the $Z$-score corresponding to the desired confidence interval.
+
+### The Central Limit Theorem for Difference of Proportions
+
+Suppose $\hat{p_1}$ and $\hat{p_2}$ are proportion of data points in your sample that satisfy some criteria. Then for a sample sizes $n_1$ and $n_2$, the random variable $\hat{p_1} - \hat{p_2}$ tends toward a normal distribution with mean $=p_1-p_2$ (where $p_1$ and $p_2$ are the proportions of data that actually satisfy the criteria) and standard deviation $=\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$ as $n$ gets large:
+
+<div>
+:::{#formula}
+$$\displaystyle \hat{p_1}-\hat{p_2} \sim N \left(p_1-p_2,\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}} \right) $$
+:::
+</div>
+
+### Success-Failure Condition
+
+For sample sizes $n_1$ and $n_2$, the CLT applies if 
+
+<div>
+:::{#formula}
+$$ n_1p_1 \geq 10 \text{ and } n_1(1-p_1) \geq 10 $$
+:::
+</div>
+
+and
+
+<div>
+:::{#formula}
+$$ n_2p_2 \geq 10 \text{ and } n_2(1-p_2) \geq 10 $$
+:::
+</div>
+
+### Assuming the proportions are equal
+
+If our null hypothesis is that the proportions are equal, then we need to calculate the pooled proportion:
+
+<div>
+:::{#formula}
+$$ p_{pooled}= \displaystyle \frac{\text{total successes}}{\text{total sample}} = \frac{\hat{p_1}\cdot n_1 + \hat{p_2}\cdot n_2}{n_1+n_2}$$
+:::
+</div>
+
+Then the success failure condition needs to be checked for both sample sizes against the pooled proportion:
+
+<div>
+:::{#formula}
+$$ n_1p_{pooled} \geq 10 \text{ and } n_1(1-p_{pooled}) \geq 10 $$
+:::
+</div>
+
+and
+
+<div>
+:::{#formula}
+$$ n_2p_{pooled} \geq 10 \text{ and } n_2(1-p_{pooled}) \geq 10 $$
+:::
+</div>
+
+## Hypothesis testing
+
+### t-distribution
+
++ Use the $t$-distribution for hypothesis testing means and differences of means whenever the population standard deviation is unknown. 
++ If the sample size is larger than $30$, the normal distribution and $t$-distribution are very similar. 
++ When the sample size is large, you get very similar answers regardless of which distribution you use (though you should still techinically use the $t$-distribution when the pop. sd. is unknown).
+
+### goodness of fit
+
+The statistic we will use to test how good of a fit we have is called $\chi$-square. It is computed via:
+
+<div>
+:::{#formula}
+$$ X^2 = \displaystyle \sum \frac{ (\text{observed}- \text{expected})^2}{\text{expected}}$$
+:::
+</div>
+
++ The degrees of freedom is the number of bins $-1$.
+
+### independence
+
+Expected values:
+<div>
+:::{#formula}
+$$ \text{expected} = \displaystyle \frac{ (\text{row total} \cdot \text{column total})}{\text{table total}}$$
+:::
+</div>
+
+The test statistic is the same:
+<div>
+:::{#formula}
+$$ X^2 = \displaystyle \sum \frac{ (\text{observed}- \text{expected})^2}{\text{expected}}$$
+:::
+</div>
+
++ The degrees of freedom is the $(\#$ of rows $-1) \times (\#$ of columns $-1)$ 
+
+
+

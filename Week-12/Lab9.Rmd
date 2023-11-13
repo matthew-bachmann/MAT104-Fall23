@@ -1,0 +1,149 @@
+---
+title: "Lab 9"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: ./style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(openintro)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+1. $635$ Democrats and $372$ Republicans were polled on their opinion of driving while impaired by marijuana. $25 \%$ of Democrats and $35 \%$ of Republicans said that driving while impaired by marijuana poses a very serious threat, compared to alcohol, prescription painkillers, and prescription antidepressants. Conduct a hypothesis test to evaluate whether the proportions of Democrats and Republicans who think that driving while impaired by marijuana poses a very serious threat are different. 
+
+```{r}
+# insert code here
+
+# p-value: .0007
+```
+
+<div>
+:::{#answer}
+Answer here
+:::
+</div>
+
+2. Create and interpret a $90 \%$ confidence interval of the difference between the proportions in exercise 1.
+
+```{r}
+# insert code here
+
+# (-.38556,.185556)
+```
+
+<div>
+:::{#answer}
+Answer here
+:::
+</div>
+
+3. The nutrition label on a bag of potato chips says that a one ounce ($28$ gram) serving of potato chips has $130$ calories and contains ten grams of fat, with three grams of saturated fat. A random sample of $35$ bags yielded a confidence interval for the number of calories per bag of $132.2$ to $139.8$ calories. Is there evidence that the nutrition label does not provide an accurate measure of calories in the bags of potato chips?
+
+<div>
+:::{#answer}
+Answer here
+:::
+</div>
+
+4. A national survey conducted among a simple random sample of $507$ adults shows that $53 \%$ of Americans think the Civil War is still relevant to American politics and political life. Conduct a hypothesis test to determine if these data provide strong evidence that the majority of the Americans think the Civil War is still relevant. 
+
+```{r}
+# insert code here
+
+# p-value: .0883
+```
+
+5. Calculate a $90 \%$ confidence interval for the proportion of Americans who think the Civil War is still relevant. Interpret the interval in this context, and comment on whether or not the confidence interval agrees with the conclusion of the hypothesis test.
+
+```{r}
+# insert code here
+
+#(.49354, .56646)
+```
+
+<div>
+:::{#answer}
+Answer here
+:::
+</div>
+
+6. If the true proportion of Americans who think the Civil War is still relevant is $57 \%$, calculate the power of the hypothesis test from exercise 4.
+
+```{r}
+# insert code here
+
+# .93605
+```
+
+
+7. Run the code below. Answer the following questions about the data: (A) Does there seem to be an association between $x$ and $y$? (B) Is `cor()` a good measurement for detecting this association? Why or why not?
+
+```{r}
+x <- seq(-5,5,.1)
+y <- (-1.2*(x+2)^2+4*(x+2)+10)
+y <- y + 5*(runif(101)-.5)
+df <- data.frame(x,y)
+ggplot(df, aes(x,y))+geom_point()
+```
+
+<div>
+:::{#answer}
+Answer here
+:::
+</div>
+
+8. A professor using an open source introductory statistics book predicts that $60 \%$ of the students will purchase a hard copy of the book, $25 \%$ will print it out from the web, and $15 \%$ will read it online. At the end of the semester he asks his students to complete a survey where they indicate what format of the book they used. Of the $126$ students, $71$ said they bought a hard copy of the book, $30$ said they printed it out from the web, and $25$ said they read it online. Conduct a hypothesis test for the professors prediction with a significance level of $.05$.
+
+```{r}
+# insert code here
+
+# p-value = 0.31347
+```
+
+9. A survey polled $180$ adults and asked what gender they identify as and which gift they would prefer to recieve from a romantic partner. The results are displayed below. Do the results of the survey provide sufficient evidence to believe that a person's preferred gift depends on their gender identity?
+
+| | Male | Female | Total |
+|--|--|--|--|
+|Chocolate | 44 | 65 | 109 |
+|Flowers | 30 | 13 | 43 |
+|Poem | 13 | 15 | 28 |
+
+
+```{r}
+# insert code here
+
+# p-value = 0.00470
+```
+
+10. Each year the US Environmental Protection Agency (EPA) releases fuel economy data on cars manufactured in that year. Below are summary statistics on fuel efficiency (in miles/gallon) from random samples of cars with manual and automatic transmissions. Do these data provide strong evidence of a difference between the average fuel efficiency of cars with manual and automatic transmissions in terms of their average city mileage? Use a significance level of $.05$ and assume that normality and independence are satisfied.
+
+| MPG | Automatic | Manueal | Total |
+|--|--|--|--|
+| mean | 16.2 |19.85 |
+| SD| 3.58 | 4.51 | 
+| n | 26 | 27 |
+
+
+```{r}
+# insert code here
+
+# p-value = 0.0256
+```
+
+11. Use the data set `mpg` to plot a scatter plot for highway mpg on the y-axis and city mpg on the x-axis. Find the linear regression coefficients and use `geom_abline()` to add the best fitting line to your plot.
+
+```{r}
+# insert code here
+```
+
