@@ -1,0 +1,92 @@
+---
+title: "WS 23: Review"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Problem Solving Strategy
+
++ Identify the type of problem: Hypothesis test, power, confidence intervals
+
+### Hypothesis Testing
+
+For conducting a hypothesis test, perform the following steps:
+
++ Identify the type of problem (a proportion, mean, difference of proportions, difference of means, goodness of fit, independence)
++ State the null and alternate hypothesis
++ Check the conditions for inference (success-failure for proportions, observations at least $5$ for chi-square)
++ Identify the appropriate sample distribution (normal, t-distribution, chi-squared)
++ Use CLT to find the standared error or degrees of freedom
++ Draw a picture with the distribution centered at the null hypothesis and place the observation on the plot
++ Find the area that is as rare or more rare than the observations using `pnorm`, `pt`, or `pchisquare`.
++ Compare to the significance level and form a conclusion
+
+### Power
+
+Power is a measurement that refers to a hypothesis test. To compute the power of a test:
+
++ First, use the significance level of the hypothesis test to find the cut-off value for rejecting the null hypothesis. For this you will need to use `qnorm` or `qt` 
++ Draw a picture with two curves, one centered at the null hypothesis and the other centered at the proposed "true" value.
++ Calculate the standard error for both curves (they may not have the same standard error)
++ Find the area under the curve centered at the true value that is passed the cut-off you found in the first step. For this you will use `pnorm` or `pt`.
+
+### Confidence Intervals
+
+A confidence interval does not use the null hypothesis
+
++ Identify the type of problem (a proportion, mean, difference of proportions, difference of means)
++ Check the conditions for inference (success-failure for proportions)
++ Identify the appropriate sample distribution (normal, t-distribution)
++ Use CLT to find the standard error or degrees of freedom
++ Draw a picture with the distribution centered at the observation 
++ Use `qnorm` or `qt` to find the appropriate percentiles
+
+#### **Example:** Suppose $634$ people were randomly surveyed and $47 \%$ of them support a policy. Conduct a hypothesis test to determine if these data provide strong evidence that less than $50 \% of people support the policy using a $5 \%$ significance level. 
+
+```{r}
+# distribution: 
+
+# 1. check conditions 
+
+# 2. find probability of observing a sample as rare or more rare than the given sample
+
+# 3. form a conclusion
+
+```
+
+#### **Example:** Find the power of the previous test.
+
+```{r}
+# 1. find the percentiles corresponding to the significance level 
+
+# 2. Find probability of rejecting the null hypothesis
+
+```
+
+#### **Example:** Find a $90 \% confidence interval for the situation in the example. 
+
+```{r}
+# 1. check conditions
+
+# 2. find the appropriate percentiles
+
+```
