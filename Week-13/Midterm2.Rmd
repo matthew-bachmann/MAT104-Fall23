@@ -1,0 +1,408 @@
+---
+title: "Midterm 2"
+author: Student Name
+output:
+  html_document:
+    css: ./style.css
+    theme: cosmo
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(openintro)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+### Instructions
+
++ This is the take home midterm due on Tuesday, November 21st, at 5:00 pm.
+
++ There are 20 possible points on this assignment.
+
++ This midterm should take you 1.5-2 hours to complete. Do NOT exceed 5 hours of working on the exam. You may work on the exam at various points between now and the due date but the total time cannot exceed 5 hours. 
+
++ **Rules:**
+
+  - You are allowed to use any course materials on this midterm. This includes the course texts, previous worksheets, and previous labs.
+
+  - You should not be using google or any other website at any point during this exam. 
+  - If you are having trouble using `R` (graphing, for example), look through old worksheets and labs for example code. You will not be asked to do anything in `R` that you have not done before. (If you really need to, you can google how to do something in `R`, but that is the only time you are permitted to use outside resources)
+  - You are not permitted to speak with any one other than me about the midterm till after the due date. (Even if you finish early, don't talk to your class mates about it since they might not be finished).
+  - Please attempt the exam early so that we can fix any knitting issues on Monday or early Tuesday. Your midterm will not be accepted if it does not knit.
+
++ Answer `R` questions by writing code where you are asked to `## insert code here`
++ Answer written questions in the space provided where it says "Write your answer here".
++ Written answers need to be in complete sentences. 
++ You need to show your work or `R` code for any calculations.
+
+
+#### How to **submit** this assignment.
+
+* When you are finished, click the "Knit" button at the top of this panel. If there are no errors, an HTML file should pop up after a few seconds.
+
+* Take a look at the resulting HTML file that pops up. Make sure everything looks correct, your name is listed at the top, and that there is no 'junk' code or output. 
+
+* Save the HTML file (to your local computer) as: **lastname_midterm12**.
+
+* Upload your HTML file to Moodle. **Do not** upload the original .Rmd version. 
+
+
+
+---
+
+##### **Exercise 1. Consider the `fastfood` data from `openintro`. There are $8$ restaurants represented in the data. Determine if there is a statistically significant difference between the average amount of sodium in a food item for the restaurants using a significance level of $1 \%$.**
+
+(A.) Multiple choice: Which of the following best describes the type of data we are analyzing in this problem:<br>
+**a. Difference of Proportions** <br>
+**b. Independence of Variables** <br>
+**c. ANOVA** <br>
+**d. Goodness of Fit** <br>
+**e. Sample Proportion** <br>
+**f. Sample Mean** <br>
+**g. Difference of Sample Means** <br>
+
+
+(B.) What are the hypothesis for evaluating the relationship between the averages?
+
+(C.) Conduct a hypothesis test.
+
+(D.) Based on the $p$-value found in part (C.), write the conclusion from your hypothesis test. Write your conclusion within the context of the problem.
+
+<div>
+:::{#answer}
+
+(A.) Write your answer here in a complete sentence
+
+(B.) $H_0:$
+
+$H_A:$
+
+:::
+</div>
+
+```{r}
+## insert code for (C.) here
+# you do not need to check the conditions for inference in this problem, assume the conditions hold and perform the appropriate test.
+
+# p-value: 0.000167
+```
+
+<div>
+:::{#answer}
+
+(D.) Write your conclusion within the context of the problem here.
+
+:::
+</div>
+
+
+
+---
+
+##### **Exercise 2. Determine whether the following statement is true or false, and explain your reasoning: “With large sample sizes, even small differences between the null hypothesis and the observation can be statistically significant.” (0.5) points**
+
+<div>
+:::{#answer}
+
+Write your answer here in a complete sentence
+
+:::
+</div> 
+
+---
+
+##### **Exercise 3. A national survey conducted among a simple random sample of $1190$ adults shows that $52 \%$ of Americans support off-shore drilling. We want to test if the majority of Americans support off-shore drilling using a significance level of $.10$. (2.5 points)**
+
+
+(A.) Multiple choice: Which of the following best describes the type of data we are analyzing in this problem:<br>
+**a. Difference of Proportions** <br>
+**b. Independence of Variables** <br>
+**c. ANOVA** <br>
+**d. Goodness of Fit** <br>
+**e. Sample Proportion** <br>
+**f. Sample Mean** <br>
+**g. Difference of Sample Means** <br>
+
+
+(B.) What are the hypothesis for evaluating whether the majority of American adults support off-shore drilling?
+
+(C.) Conduct a hypothesis test.
+
+(D.) Based on the $p$-value found in part (C.), write the conclusion from your hypothesis test. Write your conclusion within the context of the problem.
+
+<div>
+:::{#answer}
+
+(A.) Write your answer here in a complete sentence
+
+(B.) $H_0:$
+
+$H_A:$
+
+
+:::
+</div>
+
+```{r}
+## insert code for (C.) here
+
+# p-value: 0.08381564
+```
+
+<div>
+:::{#answer}
+
+
+(D.) Write your conclusion within the context of the problem here.
+
+:::
+</div>
+
+
+---
+
+
+##### **Exercise 4. The following questions refer to the scenario in Exercise 3. (2.5 points)**
+
+
+(A.) Find a $90 \%$ confidence interval for the proportion of Americans that support off-shore drilling.
+
+(B.) Is the null hypothesis from Exercise 3 inside the confidence interval? 
+
+(C.) If we test the hypothesis from Exercise 3 using a $90 \%$ confidence interval instead of $p$-values, would we come to the same conclusion as in Exercise 3? 
+
+(D.) If the true proportion of Americans that support off-shore drilling is $53 \%$, find the power of the test in Exercise 3. 
+
+```{r}
+## insert code for (A.) here
+
+# 90% confidence interval: (0.4961781,0.5438219)
+```
+
+<div>
+:::{#answer}
+
+(B.) Write your answer here in a complete sentence
+
+(C.) Write your answer here in a complete sentence
+
+:::
+</div>
+
+```{r}
+## insert code for (D.) here
+```
+
+
+---
+
+##### **Exercise 5. A study suggests that the average college student spends $10$ hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample $60$ students from your dorm and find that on average they spent $13.5$ hours a week communicating with others online. A friend of yours, who offers to help you with the hypothesis test, comes up with the following set of hypotheses. Indicate any errors you see. In addition to describing the errors you see, provide correct hypotheses for the test. (1 points)**
+
+$H_0: p < 10$ hours
+
+$H_A: p > 13.5$ hours
+
+
+<div>
+:::{#answer}
+
+Write your answer here in a complete sentence
+
+$H_0:$
+
+$H_A:$
+
+:::
+</div>
+
+
+---
+
+##### **Exercise 6. Determine if the following statements are true or false. If false, explain why. (1 point)**
+
+(A.) A correlation coefficient of $-0.9$ indicates a stronger linear relationship than a correlation of $0.7$.
+
+(B.) Correlation is a measure of the association between any two variables.
+
+<div>
+:::{#answer}
+
+(A.) If false, write your explanation here in a complete sentence. If true, no explanation needed.
+
+(B.) If false, write your explanation here in a complete sentence. If true, no explanation needed.
+
+:::
+</div>
+
+---
+
+##### **Exercise 7. The expected percentage of the number of pets students have in their homes has the distribution as in the `expected_pets` data frame below. A simple random sample of $1000$ students resulted in the data in `sample_pets` below. Does the data provide evidence that the expected distribution of pets is correct at a $1 \%$ significance level? (2.5 points)**
+
+```{r}
+expected_pets <- data.frame(num_pets = c("0","1","2","3","4+"), percent = c(18,25,30,18,9))
+
+sample_pets <- data.frame(num_pets = c("0","1","2","3","4+"), count = c(210,240,320,140,90))
+```
+
+(A.) Multiple choice: Which of the following best describes the type of data we are analyzing in this problem:<br>
+**a. Difference of Proportions** <br>
+**b. Independence of Variables** <br>
+**c. ANOVA** <br>
+**d. Goodness of Fit** <br>
+**e. Sample Proportion** <br>
+**f. Sample Mean** <br>
+**g. Difference of Sample Means** <br>
+
+
+(B.) What are the hypotheses for evaluating whether the expected distribution of pets is correct?
+
+(C.) Conduct a hypothesis test.
+
+(D.) Based on the $p$-value found in part (C.), write the conclusion from your hypothesis test. Write your conclusion within the context of the problem.
+
+<div>
+:::{#answer}
+
+(A.) Write your answer here in a complete sentence
+
+(B.) $H_0:$
+
+$H_A:$
+
+:::
+</div>
+
+
+```{r}
+## insert code for (C.) here
+
+# p-value: 0.003570329
+```
+
+<div>
+:::{#answer}
+
+(D.) Write your conclusion within the context of the problem here.
+
+:::
+</div>
+
+
+
+---
+
+##### **Exercise 8. A random survey of $1000$ people reported which genre of book was their favorite and the results are collected below. Answer the questions about the results  (2 points)**
+
+| | Classics | Fantasy | Romance | Young Adult | Historical Fiction | Mystery | 
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $10$-$20$ | $20$ | $39$ | $38$ | $50$ | $21$ | $30$ |
+| $20$-$30$ | $36$ | $51$ | $51$ | $38$ | $44$ | $43$ |
+| $30$-$40$ | $35$ | $48$ | $51$ | $35$ | $45$ | $48$ |
+| Over $40$ | $39$ | $54$ | $55$ | $21$ | $52$ | $56$ |
+
+
+(A.) What is the expected number of people in the $20$-$30$ age range whose favorite genre of book is fantasy? What is the expected number of people in the $10$-$20$ age range whose favorite genre of book is young adult?
+
+(B.) Suppose we want to test whether age range and favorite good genre are independent. We compute the $X^2$ statistic for the above table and find a value of $34.37$. What is the $p$-value? 
+
+```{r}
+## insert code for (A.) here
+```
+
+```{r}
+## insert code for (B.) here
+```
+
+
+---
+
+##### **Exercise 9. In a political poll of $738$ randomly sampled Americans with $400$ Democrats and $338$ Republicans, the results found that $165$ Republicans support a new policy proposal and $215$ Democrats support it.  (2 points)**
+
+(A.) Suppose you perform a hypothesis test with null hypothesis that there is no difference between the two proportions. Calculate the pooled proportion.
+
+(B.) The sampling distribution for the difference of proportions will follow a normal distribution. Assuming the null hypothesis is true, what value is at the center of the distribution? What is the standard error?
+
+(C.) If you instead find a confidence interval for the difference between the proportions that support the new policy,
+what value is at the center of the sampling distribution? What is the standard error?
+
+```{r}
+## insert code (work) for (A.) here
+```
+
+```{r}
+## insert code (work) for (B.) here
+```
+
+```{r}
+## insert code (work) for (C.) here
+```
+
+<div>
+:::{#answer}
+
+(A.) Write your answer here in a complete sentence
+
+(B.) Write your answer here in a complete sentence
+
+(C.) Write your answer here in a complete sentence
+
+:::
+</div> 
+
+
+---
+
+
+##### **Exercise 10. Two samples are shown in the table below. Assume that the conditions for inference are satisfied (normality and independence). The means for the two populations are thought to be the same. Is there a difference in the means? Test at the $5 \%$ level of significance. (2.5 points)**
+
+| | sample size | sample mean | sample standard deviation |
+|:--:|:--:|:--:|:--:|
+| Population A | $25$ | $5.35$ | $1$ |
+| Population B| $16$ | $4.7$ | $1.2$ |
+
+(A.) What are the hypothesis for evaluating the relationship between the means?
+
+(B.) Conduct a hypothesis test.
+
+(C.) Based on the $p$-value found in part (B.), write the conclusion from your hypothesis test. Write your conclusion within the context of the problem.
+
+<div>
+:::{#answer}
+
+(A.) Write your answer here
+
+(B.) $H_0:$
+
+$H_A:$
+
+:::
+</div>
+
+```{r}
+## insert code for (C.) here
+
+# p-value: 0.0915475
+```
+
+<div>
+:::{#answer}
+
+(D.) Write your conclusion within the context of the problem here.
+
+:::
+</div>
+
+---
+
+##### **Exercise 11. From the `fastfood` data set in the `openintro` package, graph a scatter plot with $x$-axis total fat and $y$-axis calories. Include in the graph the best fitting regression line. (1 point)**
+
+```{r}
+# insert code here
+```
+
+
+
+
