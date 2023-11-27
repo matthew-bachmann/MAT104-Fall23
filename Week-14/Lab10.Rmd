@@ -1,0 +1,259 @@
+---
+title: "Lab 10"
+author: Student 1 Name, Student 2 Name
+output:
+  html_document:
+    css: ./style.css
+    toc: no
+    toc_float: no
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(openintro)
+library(tidyverse)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+In this lab you will explore using Bayes' Theorem to conduct hypothesis tests.
+
+Recall that the **conditional probability** of $A$ occurring given that $B$ occurred is 
+
+$$\displaystyle P(A|B) = \frac{P(A \text{ and } B)}{P(B)}$$
+
+and Bayes' Theorem states that: 
+
+$$ \displaystyle P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} $$
+
+## A guiding example
+
+We will use a Bayesian perspective in order to analyze the following hypotheses:
+
+$H_0:$ It will rain today
+
+$H_A:$ It won't rain today
+
+In order to test these hypotheses, we will observe whether or not I brought an umbrella to school. Viewing me with or with out an umbrella will be data in support or against our hypothesis.
+
+This example is a bit silly, but it will help us understand how Bayesian hypothesis testing works. 
+In order to proceed with the experiment, we first need to establish our initial degree of belief in our hypotheses. That is, we need to conjecture how likely it is to rain or not rain. In order to inform our initial hypotheses about rainfall I looked up the average number of rainy days in Davidson for November and found that about $30 \%$ of days in November are rainy. So, we will use this for our initial beliefs:
+
+| Hypothesis | Degree of Belief|
+|:--|:--|
+|Rainy | $.30$ |
+|Not Rainy | $.70$ |
+
+This is called a **prior distribution**.
+
+**Note:** Degree of belief can vary from person to person. For example, I could have looked at historical data for Monday, November 27, found how many times it rained on that date, and the used that to form my hypotheses. Or I could have just used my gut feelings. Since I woke up and the sun was out, maybe I would start with really small odds that it will rain. In any case, this first step of establishing initial degrees of belief can be different depending on the person running the experiment. Some people take issue with this part of a Bayesian statistical analysis because this process seems a bit arbitrary. Philosohically, one may argue that people's personal beliefs should be irrelevant to a statistical analysis. For now, we will set aside such disputes and just make one small comment: with enough data, it does not matter what your prior beliefs were. We will use data to update and revise our beliefs. So, regardless of where you start with your beliefs, the data should direct you toward the truth. 
+
+Continuining with the assumptions. Suppose that on rainy days I remember to bring my umbrella about $60 \%$ of the time. About $5 \%$ of the time I bring my umbrella but it doesn't rain. So, we can describe all of this with the following table of conditional probabilities:
+
+| Hypothesis | Umbrella| No Umbrella |
+|:--|:--|:--|
+|Rainy | $.60$ | $.40$ |
+|Not Rainy | $.05$ | $.95$ |
+
+Each cell in this table describes the probability of observing the data (umbrella or no umbrella) given the truth of each hypothesis (rain or no rain). This is called the **likelihood** of the data given each hypothesis.
+
+1. From the likelihood table above, find the following probabilities:
+
+<div>
+:::{#answer}
+
+(A.) $P(\text{umbrella}|\text{rain}) =$
+
+(B.) $P(\text{umbrella}|\text{no rain}) =$
+
+(C.) $P(\text{no umbrella}|\text{rain}) =$
+
+(D.) $P(\text{no umbrella}|\text{no rain}) =$
+
+:::
+</div>
+
+Now we have written down our prior beliefs and the likelihood, we are ready to do Bayesian inference. We now want to use our these in order to find the probability of every possible outcome.
+
+2. Use the conditional probability formula to find the following probabilities:
+
+<div>
+:::{#answer}
+
+(A.) $P(\text{umbrella and rain}) =$
+
+(B.) $P(\text{umbrella and no rain}) =$
+
+(C.) $P(\text{no umbrella and rain}) =$
+
+(D.) $P(\text{no umbrella and no rain}) =$
+
+:::
+</div>
+
+3. Add your results from exercise $2$ to the table below:
+
+| Hypothesis | Umbrella| No Umbrella |
+|:--|:--|:--|
+|Rainy | *(A.) here* | *(B.) here* |
+|Not Rainy | *(C.) here* | *(D.) here* |
+
+
+4. (A.) What does the first row of the table add up to? Interpret this number within the context of the problem. (B.) What does the first column add up to? Interpret this number within the context of the problem. (C.) What is the probability of me not bringing an umbrella?
+
+<div>
+:::{#answer}
+(A.) answer here
+
+(B.) answer here
+
+(C.) answer here
+:::
+</div>
+
+You have created a **probability distribution table** for all possible outcomes. 
+
+
+The table we made in exercise $3$ describes all logical possibilities and exactly how confident we are in each possible outcome. Now we need some data! 
+ + You observe me with an umbrella. 
+We need to update our probability distribution table to reflect this new data. A couple of the cells should now be zero, and I'll leave the other two cells blank for the moment:
+
+| Hypothesis | Umbrella| No Umbrella |
+|:--|:--|:--|
+|Rainy |  | $0$ |
+|Not Rainy |  | $0$ |
+
+In the table above we will fill in the probability of each hypothesis given that we have observed me with an umbrella. 
+
+5. Find the following probabilities using the conditional probability formula: 
+
+<div>
+:::{#answer}
+
+(A.) $P(\text{rain} | \text{umbrella}) =$
+
+(B.) $P(\text{no rain} | \text{umbrella}) =$
+
+:::
+</div>
+
+So, based on the data that I am carrying an umbrella, the probability that it will rain is about $84 \%.
+
+And that's all there is to it! To conduct a Bayesian hypothesis test, we start with some prior beliefs, run an experiment in order to gather some data, and then revise our beliefs based on the data. The initial beliefs are called the **prior probabilities** and the revised beliefs are called the **posterior probabilities**.
+
+Finally, one way to summarize the results is to express the posterior probabilities as a ratio:
+
+$$.84/.16 = 5.25,$$
+
+so there are approximately $5:1$ odds in favor of today being a rainy day.
+
+
+## Hypothesis Testing
+
+In summary, we consider two hypothesis, the null and the alternate. We start with some **prior beliefs** about the probability of each hypothesis and the **likelihood** of our hypotheses in the face of data. We then run an experiment and obtain data in order to update our beliefs. To update our beliefs, we calculate the **posterior probability** of the null hypothesis:
+
+$$\displaystyle P(H_0 | \text{ data }) = \frac{P(\text{data}|H_0)\cdot P(H_0)}{P(\text{data})}$$
+
+And the **posterior probability** of the alternate hypothesis:
+
+$$\displaystyle P(H_A | \text{ data }) = \frac{P(\text{data}|H_A)\cdot P(H_A)}{P(\text{data})}$$
+
+After we calculate the posterior probabilities, we express the result as an odds ratio:
+
+$$ \displaystyle \frac{P(H_A | \text{ data })}{P(H_0 | \text{ data })} $$
+
+or 
+
+$$ \displaystyle \frac{P(H_0 | \text{ data })}{P(H_A | \text{ data })} $$
+depending on which is more clear. This ratio is sometimes referred to as the **Bayes factor**.
+
+|Bayes factor | Interpretation |
+|:--|:--|
+|1-3|Negligible|
+|3-20|Positive Evidence|
+|20-150|Strong Evidence|
+|>150|Very Strong Evidence|
+
+In the rain example, we observed positive evidence for the hypothesis that it would rain, but the evidence is not very strong.
+
+## Comparing traditional and Bayesian methods
+
+6. In the **console** below, install the package `BayesFactor`. Then in the code chunk, load the package using `library`. 
+
+```{r}
+# insert code here
+```
+
+7. In the file directory for Week-14, click on the `harpo.Rdata` file and load the data. Copy the code from the console into the code chunk below.
+
+```{r}
+# insert code here
+```
+
+8. Use `filter()` to save two separate data frames, one for the tutor Anastasia and the other for the tutor Bernadette. 
+
+```{r}
+# insert code here
+```
+
+9. Find and save the mean and standard deviation for the two data sets.
+
+```{r}
+# insert code here
+```
+
+Now let's perform a traditional hypothesis test for the difference between the average scores for each tutor. 
+
+10. Perform a hypothesis test.
+
+$H_0$: the mean score for both tutors is the same
+
+$H_A$: the mean score for each tutor is different
+
+```{r}
+# what is the sampling distribution?
+
+# find the standard error using CLT for difference of means
+
+# find the t-score for the true difference
+
+# find the probability for how rare the observation is
+
+# write your conclusion using a significance level of 0.10
+
+```
+
+
+Alternatively, we can use Bayesian methods by running the following code (change FALSE to TRUE):
+
+```{r, eval = FALSE}
+ttestBF( formula = grade ~ tutor, data = harpo)
+```
+
+The value $1.75$ is the Bayes' factor in favor of the alternate hypothesis. That is, there are approximately $2:1$ odds in favor of the alternate hypothesis, which is negligible. The hypothesis test suggested we reject the null hypothesis. In general, Bayesian methods are usually more stringent in rejecting the null hypothesis. 
+
+11. Use `filter()` to create a data frame from the `fastfood` data that only has data from Mcdonalds and Taco Bell. Perform a Bayesian t-test using `ttestBF()` to determine if the average number of calories at the two restaurants is different.
+
+```{r}
+#insert code here
+```
+
+12. Perform a traditional hypothesis test using the $t$-distribution. Do you obtain the same conclusion?
+
+```{r}
+# sampling distribution: t-distribution
+
+# find the standard error using CLT for difference of means
+
+# find the t-score for the true difference
+
+# find the probability for how rare the observation is
+
+# write your conclusion using a significance level of 0.05
+
+```
+
