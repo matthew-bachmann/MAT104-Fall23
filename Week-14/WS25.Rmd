@@ -1,0 +1,239 @@
+---
+title: "WS 25: Bayesian Inference"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+library(openintro)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Main Ideas for Bayesian Inference
+
++ Think of probability as measuring our "degree of belief"
++ Degree of belief is *subjective*
++ This comes with some advantages and some disadvantages
+
+
+## Steph Curry Vs. LeBron James
+
+### An Example 
+
++ Current NBA superstars Steph Curry and LeBron James plan to play 1 on 1 basketball games against each other in order to determine who is better. 
++ We will obtain data from them playing each other a few times.
++ From this data, we will try to make inferences about who is better (ie. who do we think will win the next game played)
+
+Let's start with some hypotheses:
+
+$H_0$ : They are about equal. The games are determined by random chance and we expect each person to win half the games
+
+$H_A$ : Steph Curry is better and will win more games.
+
+We can represent this mathematically by looking at the *proportion* $p$ of games Steph Curry wins. Translating the hypotheses we have:
+
+$H_0: p = 0.5$
+
+$H_A: p > 0.5$
+
+---
+
+## Frequentist Methods
+
++ Once we have hypotheses, we assume the null hypothesis is true.
++ Next we find the $p$-value. 
++ The $p$-value gives the probability of observing data as rare or more rare than our data is, assuming the null hypothesis is true. 
++ The $p$-value **does not** tell us the probability that either of our hypotheses are true. 
+
+---
+
+## Bayesian Methods
+
+
+### Priors
+
+If the question we're interested in is actually:
+
++ What is the probability that Steph Curry will win the next game?
+
+Then frequentist methods will not help us. 
+
+What can we do instead?
+
++ We don't actually know who will win. If we did, I doubt many people would be interested in watching.
++ Instead, let's test a bunch of possibilities at once and guess how likely each one is.
++ In the table below, $p$ represent the proportion of games Steph wins.
++ prob. represents how likely we think each possibility is.
+
+---
+
+| p |$0$ | $.1$ |$.2$ |$.3$ |$.4$ |$.5$ |$.6$ |$.7$ |$.8$ |$.9$ |$1$ |
+|:--|:-- |:--  |:-- |:--  |:-- |:-- |:-- |:-- |:-- |:-- |:-- |
+| prob.  | $0$ |$.02$ |$.03$ |$.05$ |$.10$ |$.15$ |$.20$ |$.25$ |$.15$ |$.05$ |$0$ |
+
+---
+
+```{r}
+# we will need these later, so let's save them
+prob_of_win_in_model <- c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+prob_of_model <- c(0,.02,.03,.05,.1,.15,.20,.25,.15,.05,0)
+```
+
++ This table contains the **prior probabilities**
++ This is a bit biased toward thinking Steph Curry will win since we've said that values of $p>.5$ are more likely.
++ That's okay for a Bayesian analysis, our data should help us correct this.
+
+1. Based on the prior probability distribution above, what is the probability of the null hypothesis from before? What is the probability of Steph winning more often than LeBron?
+
+
+```{r}
+# probability of null hypothesis
+
+# probability of Steph winning more often
+
+# prior odds
+
+```
+
++ We don't actually know how often Steph Curry wins since any of the possibilities could be the correct one.
++ We can, though, use the law of total probability to find the chance that Steph wins the next game based on our prior distribution.
+
+2. Find the probability that Steph wins the next game (call this event $S$)
+
+```{r}
+
+# Find P(S)
+# To do this, find the probability that Steph wins in each model
+
+```
+
+---
+
+### Updating with Data
+
+Now we need some data. 
+
++ Steph and LeBron play three games. 
++ Steph wins the first game 
++ LeBron wins the next two. 
++ Before they play the next game, let's update our distribution with the additional information. 
++ Out goal is to calculate the probability of each model given the data. 
++ For example, we want to calculate:
+
+$$P(.7|D)= \text{ the probability of the model where Steph Curry wins $70 \%$ of the time given the data $D$ }$$
+$$ P(.7|D)= \frac{P(D|.7) \cdot P(.7)}{P(D)}$$
+
++ We expect this particular probability to go down a bit, because Steph Curry did not win $70 \%$ of games in our data.
++ Then we need to repeat this process for every other model.
++ These are called the **posterior probabilities**.
+
+---
+
+### Likelihoods
+
++ In order to calculate the posterior probabilities we need to be able to calculate 
+
+$$P(D|.7)$$
++ this is called the **likelihood** of the data if that model is true.
++ For this, we should make a tree diagram
+
+3. Find the likelihood of the data for each model.
+
+```{r}
+#likelihoods
+
+```
+
+4. Now calculate the numerator for all the posterior probabilities by multiplying the likelihoods by the prior probabilities.
+
+```{r}
+#likelihoods * priors
+
+```
+
+---
+
+### Posterior Probabilities
+Recall, we are trying to find 
+
+$$ P(.7|D)= \frac{P(D|.7) \cdot P(.7)}{P(D)}$$
+for each model.
+
+5. Find the denominator by finding the sum of all the likelihoods times the priors.
+
+```{r}
+# P(D)
+
+```
+
+6. Find the posterior probabilities.
+
+```{r}
+# posterior probabilities
+
+```
+
+---
+
+### Evaluating the results
+
+Finally, we return to our hypotheses:
+
+$H_0: p = 0.5$
+
+$H_A: p \neq 0.5$
+
+We want to know 
+
+$$P(H_0|D) \text{ and }P(H_A|D)$$
+
+the ratio of these two is called the **posterior odds**:
+
+$$ \displaystyle \frac{P(H_A|D)}{P(H_0|D)} = \frac{P(D|H_A)}{P(D|H_0)} \cdot \frac{P(H_A)}{P(H_0)}$$
+
+the second piece is the Bayes factor, and the last piece is the prior odds. When we assume the prior odds are 1, then the Bayes factor is the same as the posterior odds.
+
+7. What is the posterior probability of the null hypothesis?
+
+```{r}
+# posterior of null
+
+```
+
+8. What is the posterior probability of the alternate hypothesis?
+
+```{r}
+# posterior of alternate
+
+```
+
+9. What are the posterior odds?
+
+```{r}
+# posterior odds
+
+```
+
+10. What is the Bayes factor?
+
+```{r}
+#Bayes factor
+
+```
+
+---
