@@ -1,0 +1,224 @@
+---
+title: "WS 26: Bayesian Inference Pt. 2"
+output:
+  html_document:
+    css: ./style.css
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+```{r global_options, include = FALSE}
+library(knitr)
+library(tidyverse)
+library(openintro)
+knitr::opts_chunk$set(eval = TRUE, results = TRUE)
+```
+
+---
+
+## Steps for Bayesian Inference
+
++ Write down the prior probabilities
++ Calculate likelihoods for each model using a tree diagram
++ find the posterior probabilities
+  - Multiply prior probabilities and likelihoods for each model (this is the numerator for each fraction)
+  - Add together everything in the last step (this is the denominator for every fraction)
+  - divide each number from two steps ago (the numerators) by the number from the last step (the denominator)
++ interpret your results and find the Bayes factor.
+
+## Effectiveness of a new treatment
+
+### An Example 
+
++ A study will be performed for a new medication. 
++ Three doctors have very different opinions about how effective.
++ Dr. A is open minded about the effectiveness, it could be effective or not with equal probability.
++ Dr. B is more optimistic about the medication and thinks it will be fairly effective.
++ Dr. C refuses to believe that the medication does anything at all.
+
+We will measure the proportion of people in the study that feel better:
+
++ $p > .5$ means the medication is effective
++ $p=.5$ means the medication has no effect
++ $p < .5$ means the medication is detrimental
+
+Here are the prior distributions for each doctor:
+
+### Dr. A
+
+---
+
+| p |$0$ | $.1$ |$.2$ |$.3$ |$.4$ |$.5$ |$.6$ |$.7$ |$.8$ |$.9$ |$1$ |
+|:--|:-- |:--  |:-- |:--  |:-- |:-- |:-- |:-- |:-- |:-- |:-- |
+| prob.  | $1/11$ |$1/11$ | $1/11$ |$1/11$ | $1/11$ |$1/11$ | $1/11$ |$1/11$ | $1/11$ |$1/11$ | $1/11$ |
+
+
+```{r}
+# Dr. A priors
+p <- c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+dr_A <- data.frame( p=p, priors = c(1/11,1/11,1/11,1/11,1/11,1/11,1/11,1/11,1/11,1/11,1/11))
+
+ggplot(dr_A, aes(x = p,y=priors)) + 
+  geom_col() +
+  scale_x_continuous(breaks = seq(0,1, by = .1)) +
+  scale_y_continuous(limits = c(0, 3/11), breaks = seq(0, 3/11, by = 1/11), labels=c("0","1/11","2/11","3/11")) +
+  labs(title = "Dr. A Priors")
+``` 
+
+```{r}
+# chance of medication being beneficial for a patient according to Dr. A's priors
+
+```
+
+---
+
+### Dr. B
+
+---
+
+| p |$0$ | $.1$ |$.2$ |$.3$ |$.4$ |$.5$ |$.6$ |$.7$ |$.8$ |$.9$ |$1$ |
+|:--|:-- |:--  |:-- |:--  |:-- |:-- |:-- |:-- |:-- |:-- |:-- |
+| prob.  | $0$ |$1/55$ | $2/55$ |$3/55$ | $4/55$ | $5/55$ | $6/55$ |$7/55$ | $8/55$ | $9/55$ | $10/55$ |
+
+
+```{r}
+# Dr. B priors
+dr_B <- data.frame( p=p, priors = c(0,1/55,2/55,3/55,4/55,5/55,6/55,7/55,8/55,9/55,10/55))
+
+ggplot(dr_B, aes(x = p,y=priors)) + 
+  geom_col() +
+  scale_x_continuous(breaks = seq(0,1, by = .1)) +
+  scale_y_continuous(limits = c(0, 10/55), breaks = seq(0, 10/55, by = 2/55), labels=c("0","2/55","4/55","6/55","8/55","10/55")) +
+  labs(title = "Dr. B Priors")
+``` 
+
+```{r}
+# chance of medication being beneficial for a patient according to Dr. B's priors
+
+```
+
+---
+
+### Dr. C
+
+---
+
+| p |$.5$ |
+|:--|:-- |
+| prob.  | $1$ |
+
+
+```{r}
+# Dr. A priors
+dr_C <- data.frame( p=p, priors = c(0,0,0,0,0,1,0,0,0,0,0))
+
+ggplot(dr_C, aes(x = p,y=priors)) + 
+  geom_col() +
+  scale_x_continuous(breaks = seq(0,1, by = .1)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, by = .5), labels=c("0","0.5","1")) +
+  labs(title = "Dr. C Priors")
+``` 
+
+```{r}
+# chance of medication being beneficial for a patient according to Dr. C's priors
+
+```
+---
+
+## Data
+
++ 21 people are studied, and it is recorded if they feel better or worse, the results are given below
++ B W B B B   B B B B B   W B B B B   B W B B B   B 
++ $18/21$ of people feel better
+
+---
+
+## Likelihoods
+
+```{r}
+# the likelihood of this data depends on what model is correct
+
+l_0 <- 1 * 0 * 0 * 0 * 0 * 0 * 0 * 1 * 0 * 0
+l_1 <- .1 * .9 * .1 * .1 * .1 * .1 * .1 * .1 * .1 * .1 * .9 * .1 * .1 * .1 * .1 * .1 * .9 * .1 * .1 * .1 * .1
+l_2 <- .8^3*.2^18
+l_3 <- .7^3*.3^18
+l_4 <- .6^3*.4^18
+l_5 <- .5^3*.5^18
+l_6 <- .4^3*.6^18
+l_7 <- .3^3*.7^18
+l_8 <- .2^3*.8^18
+l_9 <- .1^3*.9^18
+l_10 <- 0^3*1^18
+likelihoods <- c(l_0,l_1,l_2,l_3,l_4,l_5,l_6,l_7,l_8,l_9,l_10)
+
+```
+
+---
+
+## Posterior Probabilities
+
+```{r}
+# Dr. A 
+# find numerators by multiplying priors and likelihoods 
+
+# Dr. B
+# find numerators by multiplying priors and likelihoods 
+
+# Dr. C 
+# find numerators by multiplying priors and likelihoods 
+
+```
+
+```{r}
+# Dr. A 
+# find denominator by adding together previous step 
+
+# Dr. B
+# find denominator by adding together previous step  
+
+# Dr. C 
+# find denominator by adding together previous step 
+
+```
+
+```{r}
+# Dr. A 
+# find posteriors
+
+# Dr. B
+# find posteriors 
+
+# Dr. C 
+# find posteriors
+
+```
+
+
+### Evaluating results
+
++ Even though Dr. A and Dr. B had very different prior beliefs, the posterior distribution is pretty similar.
++ Dr. C still doesn't know anything new because he never allowed for any different possibilities
++ One take-away from this: keeping an open mind in a Bayesian analysis is a good idea. 
+
+1. What is the probability that the medicine has a positive effect for Dr. A? What about for Dr. B?
+
+```{r}
+
+```
+
+2. If new person takes the medication what does Dr. A what is the probability that they feel better according to Dr. A? What about for Dr. B?
+
+```{r}
+
+```
+
+
+---
